@@ -1,10 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>Parking Booking Ticketing</title>
+
+<div th:include="ShareLink.html"></div>
+<link type="text/css" src="css/style.css">
+
 </head>
 <body>
-
+	<div class="container-fluid">
+		<div th:include="Layout/Navbar.html"></div>
+		<div th:include="Layout/Content.html"></div>
+		<div th:include="Layout/footer.html"></div>
+	</div>
 </body>
 </html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www:thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>{{title}}</title>
+
+</head>
+<body>
+	<div th:include="ShareLink.html"></div>
+	<div class="row">
+		<div class="col-md-8 offset-md-2">
+			<form>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="firstName">FirstName <span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i class="fa fa-user"></i>
+										</span>
+									</div>
+									<input type="text" name="fName" class="form-control"
+										placeholder="Enter FirstName here " required>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="LastName">LastName <span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i class="fa fa-user"></i>
+										</span>
+									</div>
+									<input type="text" name="lName" class="form-control"
+										placeholder="Enter LastName here " required>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="email">Email<span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i class="fa fa-evelop"></i>
+										</span>
+									</div>
+									<input type="email" name="Email" class="form-control"
+										placeholder="Enter Email here " required>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="mobile">Mobile <span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i class="fa fa-phone"></i>
+										</span>
+									</div>
+									<input type="text" name="Mobile" class="form-control"
+										placeholder="Enter Mobile here " required>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="password">Password<span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i
+											class="fa fa-security"></i>
+										</span>
+									</div>
+									<input type="password" name="Password" class="form-control"
+										placeholder="Enter Password here " required>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="gender">Gender <span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i class="fa fa-phone"></i>
+										</span>
+									</div>
+									<input type="radio" name="Gender" class="form-control"
+										value="Male"> Male <input type="radio" name="Gender"
+										class="form-control" value="Male"> Female
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="birth">DateofBirth<span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i
+											class="fa fa-callendar"></i>
+										</span>
+									</div>
+									<input type="datetime-local" name="Dob" class="form-control"
+										placeholder="Enter DOB here " required>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="row">
+							<div class="col-md-3">
+								<label for="gender">Gender <span class="asterik">*</span></label>
+							</div>
+							<div class="col-md-9">
+								<div class="form-group input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text"> <i class="fa fa-phone"></i>
+										</span>
+									</div>
+									<input type="radio" name="Gender" class="form-control"
+										value="Male"> Male <input type="radio" name="Gender"
+										class="form-control" value="Male"> Female
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="row mt-2">
+					<div class="col-md-6">
+						<input type="file" name="Profile">
+					</div>
+					<div class="col-md-6">
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="Agrement">
+							<label class="form-check-label" for="Agrement">Check me
+								out</label>
+						</div>
+					</div>
+				</div>
+
+
+
+
+				<div class="container-fluid">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>
