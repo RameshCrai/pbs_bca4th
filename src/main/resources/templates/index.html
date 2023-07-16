@@ -1,18 +1,26 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Parking Booking Ticketing</title>
 
-<div th:include="ShareLink.html"></div>
-<link type="text/css" src="css/style.css">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Parking Booking Ticketing</title>
+
+	<div th:include="ShareLink.html"></div>
 
 </head>
+
 <body>
+
 	<div class="container-fluid">
-		<div th:include="Layout/Navbar.html"></div>
-		<div th:include="Layout/Content.html"></div>
-		<div th:include="Layout/footer.html"></div>
+		<div th:include="Layout/Navbar.html"> </div>
 	</div>
+	<div th:include="Layout/Content.html"> </div>
+	<div class="container-fluid foot">
+		<!-- footer  -->
+		<div th:include="Layout/footer.html"> </div>
+	</div>
+
 </body>
+
 </html>

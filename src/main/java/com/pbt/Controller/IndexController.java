@@ -1,4 +1,4 @@
-package com.pbt.controller;
+package com.pbt.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +14,7 @@ public class IndexController {
 	
 	@GetMapping("/***")
 	public String pageInvalid() {
-		return "Components/pagenotfound";		
+		return "Layout/pagenotfound";		
 	}
 
 }

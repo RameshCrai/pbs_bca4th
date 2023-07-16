@@ -1,17 +1,28 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Page not Found</title>
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<title>PagenotFound</title>
+
+	<div th:include="ShareLink.html"></div>
+	<link rel="stylesheet" th:href="@{/css/style.css}" />
 </head>
+
 <body>
-<div th:include="ShareLink.html"></div>
- <div class="row mt-4">
-    <div class="col-md-8 offset-md-2">
-      <h1>404</h1>
-      <h1>Page not Found !!</h1>
-    </div>    
- </div>
+
+	<div class="row mt">
+		<div class="col-md-8 offset-md-2">
+			<h1 class="op"><strong>O</strong>ops<strong>!</strong></h1>
+			<h2>404 - PAGE NOT FOUND</h2>
+			
+			<button class="btn btn-primary hbtn"> <a href="/" style="color: black;">Go to HOMEPAGE</a> </button>
+		</div>
+	</div>
+
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-package com.pbt.model;
+package com.pbt.Model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,8 +11,8 @@ import jakarta.persistence.ManyToOne;
 @Entity
 public class UserRole {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long userroleID;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private String userroleID;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
@@ -25,18 +25,18 @@ public class UserRole {
 		
 	}
 
-	public UserRole(Long userroleID, User user, Role role) {
+	public UserRole(String userroleID, User user, Role role) {
 		super();
 		this.userroleID = userroleID;
 		this.user = user;
 		this.role = role;
 	}
 
-	public Long getUserroleID() {
+	public String getUserroleID() {
 		return userroleID;
 	}
 
-	public void setUserroleID(Long userroleID) {
+	public void setUserroleID(String userroleID) {
 		this.userroleID = userroleID;
 	}
 

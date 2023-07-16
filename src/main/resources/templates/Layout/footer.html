@@ -1,17 +1,75 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8">
-<title>Footer  </title>
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<link src="css/style.css">
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<div th:include="ShareLink.html"></div>
+
+	<title>Footer</title>
 </head>
+
 <body>
-<div th:include="ShareLink.html"></div>
-    <div class="row" style="background-color:#d3d7de;">
-        <div class="col-md-10 offset-md-1">
-            <h1>This is project footer</h1>
-        </div>
-    </div>
+
+	<div class="row foottercolor">
+		<div class="col-md-10 offset-md-1 mb-4 mt-4">
+			<div class="row">
+				<div class="col-md-4">
+					<article>PBS Technology</article>
+					<hr>
+					<span>Kathmandu, Nepal</span><br>
+					<span>Bagmati-3</span><br><br>
+					<span><b>Postal-code:</b> 44600</span><br>
+					<span><b>Gmail:</b> pbs@gmail.com</span><br>
+
+
+				</div>
+				<div class="col-md-4">
+					<article>PBS Links</article>
+					<hr>
+					<span>Home</span><br>
+					<span>Services</span><br>
+					<span>About-us</span><br>
+					<span>Contact-us</span><br>
+					<span>Privacy Policy</span><br>
+
+				</div>
+				<div class="col-md-4">
+					<article>Subscribe pbs</article>
+					<hr>
+					<label>Email </label><br>
+					<div class="row">
+						<div class="col-md-9">
+							<div class="form-group input-group">
+								<div class="input-group-prepend">
+									<span class="input-group-text">
+										<i class="fa fa-envelope"></i>
+									</span>
+								</div>
+								<input type="email" name="Email" class="form-control"
+									placeholder="Email" required>
+							</div>
+						</div>
+						<div class="col-md-3">
+							 <button type="submit" class="btn btn-primary mb-0">Submit</button>
+						</div>
+					</div>						
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row foooottercolr">
+		<div class="col-md-10 offset-md-1">
+			<div class="row">
+				<div class="col-md-12 text-center mt-3">
+					<p>&#169; Copyright <b>PBS Technology.</b> All Right Reserve</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
 </body>
+
 </html>

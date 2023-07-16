@@ -1,9 +1,135 @@
-*{
-	background-color: #3d3846;
+.navbarheader {
+	width: 100%;
+	background-color: #dedcdc;
+	color: white;
+	overflow: hidden;
+	position: fixed;
+	z-index: -1;
+
 }
-.modal-header{
-	background-color:#aecdd6;
+
+.ml {
+	margin-left: 720px;
 }
-.ml{
-	margin-left: 400px;
+
+.main {
+	width: 100%;
+
+	position: absolute;
+	z-index: -3;
+	margin-top: 56px;
+
+}
+
+
+
+.foot {
+	width: 100%;
+	margin-top: 1150px;
+	position: absolute;
+}
+
+
+.lhead {
+	background-color: rgb(36, 31, 49);
+	color: white;
+}
+
+.cbackgroundcolor {
+	background-color: #f2f2f2;
+}
+
+.sbackgroundcolor {
+	background-color: #ededed;
+}
+
+.abackgroundcolor {
+	background-color: #ebebf5;
+}
+
+.conbackgroundcolor {
+	background-color: #e8e8e8;
+}
+
+.foottercolor {
+	background-color: #f2f2f2;
+	color: black;
+}
+
+.foooottercolr {
+	background-color: #e8e8e8;
+	color: black;
+}
+
+.card-header {
+	background-color: #dedcdc;
+}
+
+.asterik {
+	color: red;
+}
+
+.mtlog {
+	margin-top: 70px;
+}
+
+.mt {
+	margin-top: 30px;
+
+}
+
+.mb {
+	margin-bottom: 30px;
+}
+
+.hbtn {
+	padding: 15px;
+	border-radius: 20px;
+	color: antiquewhite;
+
+}
+
+strong {
+	font-size: 24px;
+	font-weight: bolder;
+}
+
+figcaption {
+	font-size: 22px;
+	font-weight: bold;
+}
+
+
+.op {
+	font-size: 150px;
+}
+
+article {
+	font-size: 18px;
+}
+
+span {
+	font-size: 13px;
+}
+
+
+@media only screen and (max-width: 860px) {
+	.ml {
+		margin-left: 0px;
+		
+	}
+
+	.card {
+		margin-bottom: 35px;
+	}
+	.con{
+		text-align: center;
+	}
+
+	.foot {
+		width: 100%;
+		text-align: center;
+		margin-top: 1780px;
+	}
+
 }

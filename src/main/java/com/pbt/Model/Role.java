@@ -1,4 +1,4 @@
-package com.pbt.model;
+package com.pbt.Model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,8 +16,8 @@ import jakarta.persistence.Table;
 @Table(name = "Role")
 public class Role {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long roleID;
+	@GeneratedValue(strategy=GenerationType.UUID)
+	private String roleID;
 	private String roleName;
 	
 	@OneToMany(mappedBy = "role", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
@@ -29,18 +29,18 @@ public class Role {
 	}
 
 // Parameter Object of Role
-	public Role(Long roleID, String roleName, Set<UserRole> setUserRole) {
+	public Role(String roleID, String roleName, Set<UserRole> setUserRole) {
 		super();
 		this.roleID = roleID;
 		this.roleName = roleName;
 		this.setUserRolename = setUserRole;
 	}
 
-	public Long getRoleID() {
+	public String getRoleID() {
 		return roleID;
 	}
 
-	public void setRoleID(Long roleID) {
+	public void setRoleID(String roleID) {
 		this.roleID = roleID;
 	}
 
