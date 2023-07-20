@@ -1,26 +1,31 @@
 package com.pbt.Controller;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.pbt.Dao.UserRepository;
 import com.pbt.ExceptionHandler.MessageMaster;
 import com.pbt.Model.User;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/pbt")
 public class SignupInfoController {
+	private static final String UPLOAD_DIRECTORY = "src/main/resources/static/profile";
 
 	@Autowired
 	private UserRepository userRepository;
@@ -29,60 +34,72 @@ public class SignupInfoController {
 	public String SingupInformation(Model model) {
 
 		model.addAttribute("title", "Signup Form !");
-
-		model.addAttribute("user", new User());
-
 		return "Layout/Signup";
 	}
 
-//	User Demographic Info 
-	@RequestMapping(value = "/signup_user", method = RequestMethod.POST)
-	public String SingupUserDemographicInformation(@Valid @ModelAttribute("user") User user, BindingResult result,
-			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model, HttpSession session) {
+	@PostMapping("/signup_user")
+	public String SingupUserDemographicInformation(@ModelAttribute User user,
+			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement,
+			@RequestParam("image") MultipartFile file, Model model, HttpSession session) {
 
 		try {
+			if (!file.isEmpty()) {
+
+				StringBuilder fileNames = new StringBuilder();
+
+				Path fileNameAndPath = Paths.get(UPLOAD_DIRECTORY, file.getOriginalFilename());
+				fileNames.append(file.getOriginalFilename());
+
+				// Save the file to the upload directory
+				Files.write(fileNameAndPath, file.getBytes());
+
+				String profileName = file.getOriginalFilename();
+
+				user.setProfile(profileName);
+
+				model.addAttribute("msg", "Uploaded images: " + fileNames.toString());
+
+			} else {
+				user.setProfile("default.png");
+				throw new Exception("Image File Empty ?? ");
+
+			}
 
 			if (!agreement) {
-		
+
 				throw new Exception("You have not agreed the Terms and conditions ??");
-
-
 			}
 
-			if (result.hasErrors()) {
-				System.out.println("Form binding error ");
-				String er = result.toString();
-				System.out.println("ERROR=" + er);			
+			User local = this.userRepository.findByEmail(user.getEmail());
+			if (local == null) {
 
-				return "Layout/Signup";
+				String password = user.getPassword();
+				String Encryptpass = DigestUtils.md5Hex(password);
+				user.setPassword(Encryptpass);
+
+				user.setUserRoleName("ADMIN");
+
+				this.userRepository.save(user);
+
+				session.setAttribute("mesg", new MessageMaster("Signup Successfully ", "alert-success"));
+
+			} else {
+				session.setAttribute("mesg",
+						new MessageMaster("Email Is Already over there please User other Email ??? ", "alert-danger"));
 			}
-			
-			
-			String password = user.getPassword();
-			String Encryptpass = DigestUtils.md2Hex(password);
-			user.setPassword(Encryptpass);
-			
-			
-			user.setProfileImage("default.png");
-
-			User u = this.userRepository.save(user);
-			System.out.printf("user details = ", u);
-
-		
-			session.setAttribute("mesg", new MessageMaster("Signup Successfully ", "alert-success"));
 
 			return "Layout/Signup";
 
 		} catch (Exception e) {
 			System.out.println("Terms and condition isEmpty ??");
 			e.printStackTrace();
-			
-			session.setAttribute("mesg", new MessageMaster("Something went wrong The terms and Conditions "+agreement, "alert-danger"));
+
+			session.setAttribute("mesg",
+					new MessageMaster("Something went wrong The terms and Conditions " + agreement, "alert-danger"));
 
 			return "Layout/Signup";
 
 		}
-
 	}
 
 }

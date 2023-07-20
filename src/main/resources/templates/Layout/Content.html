@@ -5,26 +5,30 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
 	<div th:include="ShareLink.html"></div>
-
+	
+	<script th:src="@{/js/script.js}"></script>
 
 	<title>content</title>
 	<style>
 		article {
 			font-family: cursive;
 			font-size: x-large;
+			color: white;
+			
 		}
 
 		h2 {
 			font-family: cursive;
 			font-size: large;
 			font-weight: bolder;
+			color: white;
 		}
 
 		.pbstool {
 			position: relative;
 			display: inline-block;
+			color: white;
 		}
 
 		.pbstool .pbstooltxt {
@@ -50,20 +54,19 @@
 
 <body onload="AutomaticText()">
 	<div class="container-fluid main">
-
 		<!-- Content page of slide -->
 		<div class="row cbackgroundcolor">
 			<div class="col-md-10 offset-md-1 mt mb">
 				<div class="row">
-					<div class="col-md-12 text-center">
+					<div class="col-md-12 text-center"><br><br>
 						<h2 class="pbstool">PBS Automation
 							<span class="pbstooltxt"><b> Parking Booking System</b></span>
 						</h2>
-						<article id="demo"></article><br>
+						<article id="autoTxt"></article><br><br>
 						<button class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
 							aria-expanded="false" aria-controls="collapseExample">
 							Get Started
-						</button>
+						</button><br><br>
 					</div>
 				</div>
 				<div class="collapse" id="collapseExample">
@@ -172,8 +175,8 @@
 									<img src="/img/s1.png" style="width: 80px; border-radius: 50%;">
 									<figcaption>PayToPark</figcaption>
 									<a href="">Current Time Park</a>
-                                </div>
-							
+								</div>
+
 
 
 							</div>
@@ -194,7 +197,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div><br><br>
 			</div>
 		</div>
 
@@ -305,6 +308,7 @@
 			</div>
 		</div>
 	</div>
-</body>
+
+	</body>
 
 </html>

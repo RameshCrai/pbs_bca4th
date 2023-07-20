@@ -12,14 +12,16 @@
 
 	<title>Navbar</title>
 	<link rel="stylesheet" th:href="@{/css/style.css}" />
+	<div th:include="ShareLink.html"></div>
+	
 </head>
 
 <body>
-	<div th:include="ShareLink.html"></div>
+	
 	<div class="row navbarheader">
 		<div class="col-md-10 offset-md-1">
-			<nav class="navbar navbar-expand-lg navbar-light">
-				<span> <a class="navbar-brand" href="#"><img style="width: 50px;" src="/img/p1.jpeg"> </a><strong style="color: black;">PBS</strong> 
+			<nav class="navbar navbar-expand-lg navbar-dark">
+				<span> <a class="navbar-brand" href="#"><img style="width: 50px;" src="/img/p1.jpeg"> </a><strong style="color: white;">PBS</strong> 
 				</span>
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
 					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

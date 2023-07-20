@@ -1,190 +1,225 @@
 package com.pbt.Model;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-import javax.validation.constraints.*;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
+
 
 @Entity
 @Table(name = "user")
 public class User {
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private String userID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long userID;
 
-	@NotBlank(message = "FirstName is Required")
-	private String fName;
+
+	private String fname;
 	private String mName;
-	@NotBlank(message = "LastName is Required")
-	private String lName;	
-
+	private String lname;	
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate Dob;
+	private LocalDate dob;
 
 	@Column(unique = true)
-	@Pattern(regexp = "^[a-zA-Z0-9]+@[a-zA-Z0-9.-]+$")
-	private String Email;
+	private String email;
 
-	@Size(min = 0, max = 10)
-	@Pattern(regexp = "(^$|[0-9]{10})")
+
 	@Column(unique = true)
-	private String Mobile;
+	private String mobile;
 
-	@NotBlank(message = "Password Can not be Empty !!")
-	@Size(min = 10, max = 12, message = "Password must be between 10  12 character !!")
-	private String Password;
+
+	private String password;
 
 	private String gender;
-	@AssertTrue(message = "Must be agreed terms and condition !!")
+	
 	private boolean agreement;
 
-	private String profileImage;
+	
+	@Column(length = 500)
+	private String profile;
+	
+	private String userRoleName;
 
-	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<UserRole> setUserRole = new HashSet<>();
+
 
 	public User() {
 		super();
 	}
 
-	public User(String userID, String fName, String mName, String lName, LocalDate dob, String email, String mobile,
-			String password, String gender, boolean agreement, String profileImage, Set<UserRole> setUserRole) {
+
+
+	public User(Long userID, String fname, String mName, String lname, LocalDate dob, String email, String mobile,
+			String password, String gender, boolean agreement, String profile, String userRoleName) {
 		super();
 		this.userID = userID;
-		this.fName = fName;
+		this.fname = fname;
 		this.mName = mName;
-		this.lName = lName;
-		Dob = dob;
-		Email = email;
-		Mobile = mobile;
-		Password = password;
+		this.lname = lname;
+		this.dob = dob;
+		this.email = email;
+		this.mobile = mobile;
+		this.password = password;
 		this.gender = gender;
 		this.agreement = agreement;
-		this.profileImage = profileImage;
-		this.setUserRole = setUserRole;
+		this.profile = profile;
+		this.userRoleName = userRoleName;
 	}
 
-	public String getUserID() {
+
+
+	public Long getUserID() {
 		return userID;
 	}
 
-	public void setUserID(String userID) {
+
+
+	public void setUserID(Long userID) {
 		this.userID = userID;
 	}
 
-	public String getfName() {
-		return fName;
+
+
+	public String getFname() {
+		return fname;
 	}
 
-	public void setfName(String fName) {
-		this.fName = fName;
+
+
+	public void setFname(String fname) {
+		this.fname = fname;
 	}
+
+
 
 	public String getmName() {
 		return mName;
 	}
 
+
+
 	public void setmName(String mName) {
 		this.mName = mName;
 	}
 
-	public String getlName() {
-		return lName;
+
+
+	public String getLname() {
+		return lname;
 	}
 
-	public void setlName(String lName) {
-		this.lName = lName;
+
+
+	public void setLname(String lname) {
+		this.lname = lname;
 	}
+
+
 
 	public LocalDate getDob() {
-		return Dob;
+		return dob;
 	}
+
+
 
 	public void setDob(LocalDate dob) {
-		Dob = dob;
+		this.dob = dob;
 	}
+
+
 
 	public String getEmail() {
-		return Email;
+		return email;
 	}
+
+
 
 	public void setEmail(String email) {
-		Email = email;
+		this.email = email;
 	}
+
+
 
 	public String getMobile() {
-		return Mobile;
+		return mobile;
 	}
+
+
 
 	public void setMobile(String mobile) {
-		Mobile = mobile;
+		this.mobile = mobile;
 	}
+
+
 
 	public String getPassword() {
-		return Password;
+		return password;
 	}
 
+
+
 	public void setPassword(String password) {
-		Password = password;
+		this.password = password;
 	}
+
+
 
 	public String getGender() {
 		return gender;
 	}
 
+
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+
+
 
 	public boolean isAgreement() {
 		return agreement;
 	}
 
+
+
 	public void setAgreement(boolean agreement) {
 		this.agreement = agreement;
 	}
 
-	public String getProfileImage() {
-		return profileImage;
+
+
+	public String getProfile() {
+		return profile;
 	}
 
-	public void setProfileImage(String profileImage) {
-		this.profileImage = profileImage;
+
+
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
 
-	public Set<UserRole> getSetUserRole() {
-		return setUserRole;
+
+
+	public String getUserRoleName() {
+		return userRoleName;
 	}
 
-	public void setSetUserRole(Set<UserRole> setUserRole) {
-		this.setUserRole = setUserRole;
+
+
+	public void setUserRoleName(String userRoleName) {
+		this.userRoleName = userRoleName;
 	}
 
-	@Override
-	public String toString() {
-		return "User [userID=" + userID + ", fName=" + fName + ", mName=" + mName + ", lName=" + lName + ", Dob=" + Dob
-				+ ", Email=" + Email + ", Mobile=" + Mobile + ", Password=" + Password + ", gender=" + gender
-				+ ", agreement=" + agreement + ", profileImage=" + profileImage + ", setUserRole=" + setUserRole + "]";
-	}
+
 
 }

@@ -8,8 +8,16 @@
 	<title th:text="${title}"></title>
 
 	<style>
+		body {
+			background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+		}
+
 		#messageHIDE {
 			display: none;
+		}
+
+		.mb0 {
+			margin-bottom: 200px;
 		}
 	</style>
 
@@ -17,21 +25,21 @@
 
 <body>
 
-	<div class="container-fluid mtlog">
-		<div class="row">
+	<div class="container-fluid mtlog mb-0">
+		<div class="row mb0">
 			<div class="col-md-7 offset-md-3">
 				<div class="card">
-					<div class="card-header">
-						<div id="messageHIDE" th:if="${session.mesg}" th:classappend="${session.mesg.typeofMessage}" class="alert mb-2"
-							role="alert">
-							<p  th:text="${session.mesg.message}"></p>
+					<div class="card-header lhead">
+						<div id="messageHIDE" th:if="${session.mesg}" th:classappend="${session.mesg.typeofMessage}"
+							class="alert mb-2" role="alert">
+							<p th:text="${session.mesg.message}"></p>
 
 						</div>
 
-						<h3 class="mb-0">Signup here !</h3>
+						<h3 class="mb-0 text-center">Signup here !</h3>
 					</div>
 					<div class="card-body">
-						<form novalidate action="#" th:action="@{/pbt/signup_user}" method="post" th:object="${user}">
+						<form novalidate th:action="@{/pbt/signup_user}" method="post" enctype="multipart/form-data">
 
 							<div class="row">
 								<div class="col-md-6">
@@ -42,17 +50,14 @@
 										<div class="col-md-9">
 											<div class="form-group input-group">
 												<div class="input-group-prepend">
-													<span class="input-group-text"> <i class="fa fa-user"></i>
-													</span>
+													<span class="input-group-text"><i class="fa fa-user"></i></span>
 												</div>
-												<input type="text" name="fName" class="form-control is-invalid"
-													th:classappend="${#fields.hasErrors('fName')?'is-invalid':''}"
-													placeholder="FirstName" />
+												<input id="fname" type="text" name="fname" class="form-control"
+													placeholder="First Name" />
 											</div>
+
 										</div>
-										<div th:each="e : @{#fields.errors('fName')}" th:text="${e}"
-											class="invalid-feedback">
-										</div>
+										<div class="error"></div>
 									</div>
 
 
@@ -63,14 +68,17 @@
 										<div class="col-md-9">
 											<div class="form-group input-group">
 												<div class="input-group-prepend">
-													<span class="input-group-text"> <i class="fa fa-user"></i>
-													</span>
+													<span class="input-group-text"><i class="fa fa-user"></i></span>
 												</div>
 												<input type="text" name="mName" class="form-control"
-													placeholder="MiddleName " required>
+													placeholder="Middle Name" />
 											</div>
+
 										</div>
+
 									</div>
+
+
 									<div class="row">
 										<div class="col-md-3">
 											<label for="LastName">LastName<span class="asterik">*</span></label>
@@ -78,38 +86,33 @@
 										<div class="col-md-9">
 											<div class="form-group input-group">
 												<div class="input-group-prepend">
-													<span class="input-group-text"> <i class="fa fa-user"></i>
-													</span>
+													<span class="input-group-text"><i class="fa fa-user"></i></span>
 												</div>
-												<input type="text" name="lName" class="form-control"
-													th:classappend="@{#fields.hasErrors('lName') ? 'is-invalid':''}"
-													placeholder="LastName " required>
+												<input id="lname" type="text" name="lname" class="form-control"
+													placeholder="last Name" />
 											</div>
+
 										</div>
-										<div class="invalid-feedback" th:each="e : @{#fields.errors('lName')}"
-											th:text="${e}">
-										</div>
+										<div class="error"></div>
 									</div>
-									<div class="form-group row">
+									<div class="row">
 										<div class="col-md-3">
 											<label for="email">Email<span class="asterik">*</span></label>
 										</div>
+
+
 										<div class="col-md-9">
 											<div class="form-group input-group">
 												<div class="input-group-prepend">
 													<span class="input-group-text"> <i class="fa fa-envelope"></i>
 													</span>
 												</div>
-												<input type="email" name="Email" class="form-control"
-													th:classappend="@{#fields.hasErrors('Email') ? 'is-invalid':''}"
-													placeholder="Email " required>
+												<input id="email" type="email" name="email" class="form-control"
+													placeholder="Email " />
 											</div>
 
 										</div>
-										<div class="invalid-feedback" th:each="e : @{#fields.errors('Email')}"
-											th:text="${e}">
-
-										</div>
+										<div class="error"></div>
 									</div>
 									<div>
 
@@ -118,7 +121,7 @@
 										<div class="col-md-12">
 											<div class="form-check">
 												<input type="checkbox" class="form-check-input" name="agreement"
-													id="agreement">
+													id="agreement" />
 												<label class="form-check-label" for="Agrement">Terms and Conditions
 												</label>
 											</div>
@@ -128,7 +131,7 @@
 
 								<div class="col-md-6">
 
-									<div class="form-group row">
+									<div class="row">
 										<div class="col-md-3">
 											<label for="mobile">Mobile <span class="asterik">*</span></label>
 										</div>
@@ -138,15 +141,12 @@
 													<span class="input-group-text"> <i class="fa fa-phone"></i>
 													</span>
 												</div>
-												<input type="text" name="Mobile" class="form-control"
-													th:classappend="@{#fields.hasErrors('Mobile') ? 'is-invalid':''}"
-													maxlength="10" placeholder="Mobile " required>
+												<input id="mobile" type="text" name="mobile" class="form-control"
+													maxlength="10" placeholder="Mobile " />
 											</div>
 										</div>
-										<div class="invalid-feedback" th:each="e : @{#fields.errors('Mobile')}"
-											th:text="${e}">
+										<div class="error"></div>
 
-										</div>
 									</div>
 
 									<div class="row">
@@ -159,17 +159,14 @@
 													<span class="input-group-text"> <i class="fas fa-unlock"></i>
 													</span>
 												</div>
-												<input type="password" name="Password" maxlength="12"
-													th:classappend="@{#fields.hasErrors('Password') ? 'is-invalid':''}"
-													class="form-control is-invalid" placeholder="Password " required>
+												<input id="password" class="form-control" type="password"
+													name="password" maxlength="12" placeholder="Password " />
 											</div>
 										</div>
-										<div class="invalid-feedback" th:each="e : @{#fields.errors('Password')}"
-											th:text="${e}">
-
-										</div>
-
+										<div class="error"></div>
 									</div>
+
+
 
 									<div class="row">
 										<div class="col-md-3">
@@ -182,8 +179,8 @@
 															class="fas fa-hourglass-start"></i>
 													</span>
 												</div>
-												<input type="date" name="Dob" class="form-control"
-													placeholder="Data of Birth " required>
+												<input type="date" id="dob" name="Dob" class="form-control"
+													placeholder="Data of Birth " />
 											</div>
 										</div>
 									</div>
@@ -192,8 +189,8 @@
 											<label for="gender">Gender </label>
 										</div>
 										<div class="col-md-9">
-											<input type="radio" name="Gender" value="Male"> Male <input type="radio"
-												name="Gender" value="Female" class="ml-4">
+											<input type="radio" name="Gender" value="Male" /> Male <input type="radio"
+												name="Gender" value="Female" class="ml-4" />
 											Female
 										</div>
 
@@ -205,7 +202,7 @@
 											<label>ProfileImage</label>
 										</div>
 										<div class="col-md-9">
-											<input type="file" name="Profile">
+											<input type="file" name="image" accept="image/*" class="form-control-file">
 										</div>
 
 									</div>
@@ -213,9 +210,14 @@
 								</div>
 							</div>
 							<hr>
-							<div class="container-fluid text-center mt-4">
-								<button type="submit" class="btn btn-primary"><a style="color: white;">Submit</a>
+							<div class="container-fluid text-left mt-4">
+								<h5>Return home page ?<a href="/" style="color: black;"> <i class="fas fa-laptop-house" style="font-size:24px"></i>
+									</a> </h5>
+							</div>
+							<div class="container-fluid text-right">
+								<button type="submit" class="btn btn-primary">Submit
 								</button>
+								<button class="btn btn-primary btnlogin"> <a href="/pbt/login" style="color: white;">Log in</a> </button>
 							</div>
 						</form>
 					</div>
@@ -224,20 +226,20 @@
 		</div>
 	</div>
 	<div th:include="ShareLink.html"></div>
-	
-<script th:inline="javascript">
-    var duration = 5000; // 5 seconds
-    
 
-    var messageElement = document.getElementById('messageHIDE');
-    messageElement.style.display = 'block';
-    
-    setTimeout(function() {
-        messageElement.style.display = 'none';
-    }, duration);
-</script>
+	<script th:inline="javascript">
+		var duration = 5000; // 5 seconds
 
-	
+
+		var messageElement = document.getElementById('messageHIDE');
+		messageElement.style.display = 'block';
+
+		setTimeout(function () {
+			messageElement.style.display = 'none';
+		}, duration);
+	</script>
+
+
 </body>
 
 </html>

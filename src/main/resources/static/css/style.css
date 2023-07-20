@@ -1,69 +1,67 @@
 .navbarheader {
 	width: 100%;
-	background-color: #dedcdc;
-	color: white;
+	background-color: #0f2027;
 	overflow: hidden;
 	position: fixed;
 	z-index: -1;
 
 }
 
-.ml {
-	margin-left: 720px;
-}
-
 .main {
 	width: 100%;
-
 	position: absolute;
 	z-index: -3;
 	margin-top: 56px;
 
 }
 
-
-
 .foot {
 	width: 100%;
-	margin-top: 1150px;
+	margin-top: 1300px;
 	position: absolute;
 }
 
 
+.ml {
+	margin-left: 720px;
+}
+
 .lhead {
-	background-color: rgb(36, 31, 49);
+	background-color: #0f2027;
 	color: white;
 }
 
 .cbackgroundcolor {
-	background-color: #f2f2f2;
+	background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+
 }
 
 .sbackgroundcolor {
-	background-color: #ededed;
+	background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+	color: white;
 }
 
 .abackgroundcolor {
-	background-color: #ebebf5;
+	background-image: linear-gradient(to left, #0f2027, #203a43, #2c5364);
+	color: white;
 }
 
 .conbackgroundcolor {
-	background-color: #e8e8e8;
+	background-image: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+	color: white;
+
 }
 
 .foottercolor {
-	background-color: #f2f2f2;
-	color: black;
+	background-color: #0f2027;
+	color: white;
 }
 
 .foooottercolr {
-	background-color: #e8e8e8;
-	color: black;
+	background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+	color: white;
 }
 
-.card-header {
-	background-color: #dedcdc;
-}
 
 .asterik {
 	color: red;
@@ -100,9 +98,6 @@ figcaption {
 }
 
 
-.op {
-	font-size: 150px;
-}
 
 article {
 	font-size: 18px;
@@ -116,13 +111,14 @@ span {
 @media only screen and (max-width: 860px) {
 	.ml {
 		margin-left: 0px;
-		
+
 	}
 
 	.card {
 		margin-bottom: 35px;
 	}
-	.con{
+
+	.con {
 		text-align: center;
 	}
 

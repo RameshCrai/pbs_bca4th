@@ -1,13 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>{{title}}</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title th:text="${title}"></title>
+	<div th:include="ShareLink.html"></div>
 
 
 </head>
+
 <body>
-  <div th:include="ShareLink.html"></div>
-  
+	<div class="container-fluid">
+		<div th:include="pages/Dashboard/Header.html"></div>
+		<div class="row">
+			<div class="col-md-2">
+				<div class="sidbar">
+					<h2>Side bar</h2>
+				</div>
+			</div>
+			<div class="col-md-10">
+				<div class="content">
+					<p>This isi main contennt</p>
+				</div>
+			</div>
+		</div>
+		<div th:if="${session.logsuccess}" th:classappend="${session.logsuccess.typeofMessage}" class="alert mb-2"
+			role="alert">
+			<p th:text="${session.logsuccess.message}"></p>
+
+		</div>
+	</div>
 </body>
+
 </html>

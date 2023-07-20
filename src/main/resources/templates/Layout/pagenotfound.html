@@ -10,17 +10,31 @@
 
 	<div th:include="ShareLink.html"></div>
 	<link rel="stylesheet" th:href="@{/css/style.css}" />
+
+	<style>
+		* {
+			background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+			color: white;
+
+		}
+
+		.op {
+			font-size: 150px;
+		}
+		button{
+			color: white;
+		}
+	</style>
 </head>
 
 <body>
 
-	<div class="row mt">
-		<div class="col-md-8 offset-md-2">
-			<h1 class="op"><strong>O</strong>ops<strong>!</strong></h1>
-			<h2>404 - PAGE NOT FOUND</h2>
-			
-			<button class="btn btn-primary hbtn"> <a href="/" style="color: black;">Go to HOMEPAGE</a> </button>
-		</div>
+	<div class="container-fluid text-center mt">
+		<br><br>
+		<h1 class="op">OOPs</h1>
+		<h2>404 - PAGE NOT FOUND</h2>
+		<hr>
+		<button class="btn btn-primary hbtn"> <a href="/" >Go to HOMEPAGE</a> </button>
 	</div>
 
 </body>

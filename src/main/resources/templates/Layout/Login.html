@@ -8,28 +8,37 @@
 	<title th:text="${title}"></title>
 
 	<div th:include="ShareLink.html"></div>
+	
+	<style>
+		body{
+				background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+		}
+		.mb0{
+			margin-bottom:320px;
+		}
+	</style>
 
 
 </head>
 
 <body>
 	<div class="container-fluid mtlog">
-		<div class="row">
+		<div class="row mb0">
 			<div class="col-md-4 offset-md-4">
 			
 				<div class="card">
 					<div class="card-header lhead">
-						<h3 class="mb-0">Login here !!</h3>
+						<h3 class="mb-0 text-center">Login here !!</h3>
 					</div>
 					<div class="card-body">
-						<form>
+						<form th:action="@{/pbt/login_username_password}" method="post">
 							<div class="form-group input-group">
 								<div class="input-group-prepend">
 									<span class="input-group-text">
 										<i class="fa fa-envelope"></i>
 									</span>
 								</div>
-								<input type="email" name="Email" class="form-control"
+								<input type="email" name="email" class="form-control"
 									placeholder="Phone number,or Email" required>
 							</div>
 
@@ -39,7 +48,7 @@
 										<i class="fas fa-unlock"></i>
 									</span>
 								</div>
-								<input type="password" name="Password" class="form-control" placeholder="Password"
+								<input type="password" name="password" class="form-control" placeholder="Password"
 									required>
 							</div>
 
