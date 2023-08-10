@@ -14,13 +14,10 @@ import com.pbt.Model.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 	
-	public User findByEmail(String email);
+	User findByEmail(String email);
 	
-	public User findByMobile(String mobile);
+	User findByEmailAndPassword(String email, String passw);
 	
-	public User findByEmailAndPassword(String email, String passw);
-	
-	public User findByFname(String fname);
 	
 //	@Query("select u From User u WHERE u.Email =:e and u.Password=:p")
 //	public User getLogin(@Param("e") String Email, @Param("p") String Password);

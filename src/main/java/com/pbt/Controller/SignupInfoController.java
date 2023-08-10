@@ -61,8 +61,6 @@ public class SignupInfoController {
 
 			} else {
 				user.setProfile("default.png");
-				throw new Exception("Image File Empty ?? ");
-
 			}
 
 			if (!agreement) {
@@ -77,7 +75,7 @@ public class SignupInfoController {
 				String Encryptpass = DigestUtils.md5Hex(password);
 				user.setPassword(Encryptpass);
 
-				user.setUserRoleName("ADMIN");
+				user.setUserrolename("ADMIN");
 
 				this.userRepository.save(user);
 

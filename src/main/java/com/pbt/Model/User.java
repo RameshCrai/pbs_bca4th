@@ -1,23 +1,26 @@
 package com.pbt.Model;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
 
 
 @Entity
-@Table(name = "user")
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,7 +52,10 @@ public class User {
 	@Column(length = 500)
 	private String profile;
 	
-	private String userRoleName;
+	private String userrolename;
+	
+	@OneToMany(mappedBy = "user", fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+	private List<Vehicle> hasVehicle = new LinkedList<Vehicle>();
 
 
 
@@ -59,8 +65,12 @@ public class User {
 
 
 
+	
+
+
 	public User(Long userID, String fname, String mName, String lname, LocalDate dob, String email, String mobile,
-			String password, String gender, boolean agreement, String profile, String userRoleName) {
+			String password, String gender, boolean agreement, String profile, String userrolename,
+			List<Vehicle> hasVehicle) {
 		super();
 		this.userID = userID;
 		this.fname = fname;
@@ -73,8 +83,13 @@ public class User {
 		this.gender = gender;
 		this.agreement = agreement;
 		this.profile = profile;
-		this.userRoleName = userRoleName;
+		this.userrolename = userrolename;
+		this.hasVehicle = hasVehicle;
 	}
+
+
+
+
 
 
 
@@ -210,15 +225,43 @@ public class User {
 
 
 
-	public String getUserRoleName() {
-		return userRoleName;
+
+
+
+	public String getUserrolename() {
+		return userrolename;
 	}
 
 
 
-	public void setUserRoleName(String userRoleName) {
-		this.userRoleName = userRoleName;
+
+
+
+	public void setUserrolename(String userrolename) {
+		this.userrolename = userrolename;
 	}
+
+
+
+
+
+
+	public List<Vehicle> getHasVehicle() {
+		return hasVehicle;
+	}
+
+
+
+
+
+
+	public void setHasVehicle(List<Vehicle> hasVehicle) {
+		this.hasVehicle = hasVehicle;
+	}
+
+
+
+	
 
 
 

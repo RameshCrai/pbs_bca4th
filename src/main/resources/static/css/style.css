@@ -1,3 +1,13 @@
+* {
+	margin: 0px;
+	padding: 0px;
+	box-sizing: border-box;
+}
+
+body {
+	font-family: "Raleway", sans-serif;
+}
+
 .navbarheader {
 	width: 100%;
 	background-color: #0f2027;
@@ -17,7 +27,7 @@
 
 .foot {
 	width: 100%;
-	margin-top: 1300px;
+	margin-top: 1730px !important;
 	position: absolute;
 }
 
@@ -107,12 +117,7 @@ span {
 	font-size: 13px;
 }
 
-
-@media only screen and (max-width: 860px) {
-	.ml {
-		margin-left: 0px;
-
-	}
+@media (max-width: 860px) {
 
 	.card {
 		margin-bottom: 35px;
@@ -128,4 +133,82 @@ span {
 		margin-top: 1780px;
 	}
 
+}
+
+
+.tophead {
+	width: 100%;
+	background-image: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	z-index: 3;
+	position: fixed;
+
+}
+
+.brandlogo {
+	color: #fff;
+	font-size: 2.1rem;
+	padding-left: 20px;
+
+}
+
+.menulines {
+	font-size: 30px;
+	cursor: pointer;
+	margin-right: 20px;
+	color: white;
+
+}
+
+.mainpart {
+	margin-top: 80px;
+	position: absolute;
+	width: 100%;
+	z-index: 1;
+
+}
+
+.sidenav {
+	height: 100%;
+	width: 0;
+	position: fixed;
+	overflow-x: hidden;
+	padding-top: 60px;
+	top: 0;
+	left: 0;
+	z-index: 3;
+	background-image: linear-gradient(to top, #0f2027, #203a43, #2c5364);
+	transition: all 0.5s;
+
+}
+
+.sidenav a {
+	text-decoration: none;
+	font-size: 20px;
+	color: #fff;
+	display: block;
+	padding: 10px 0 10px 25px;
+}
+
+.sidenav a i {
+	padding-right:8px;
+}
+
+.sidenav a:hover {
+	color: rgba(255, 255, 255, 0.7);
+}
+
+.closeBtn {
+	position: absolute;
+	top: -4px;
+	right: 10px;
+	font-size: 45px !important;
+}
+
+@media (max-width: 768px) {
+	.brandlogo {
+		font-size: 1.8rem;
+	}
 }

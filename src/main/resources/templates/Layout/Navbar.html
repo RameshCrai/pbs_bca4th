@@ -13,40 +13,87 @@
 	<title>Navbar</title>
 	<link rel="stylesheet" th:href="@{/css/style.css}" />
 	<div th:include="ShareLink.html"></div>
-	
+
+	<style>
+		ul {
+			width: 100%;
+
+		}
+
+		ul li {
+			list-style-type: none;
+
+		}
+
+		ul li a {
+			text-decoration: none;
+			float: right;
+			padding: 20px;
+			color: white;
+
+		}
+
+		.menubtn {
+			color: white;
+			font-size: xx-large !important;
+			float: right;
+			padding-top: 10px;
+			display: none;
+		}
+        .btn{
+			margin-top: 18px;
+		}
+		#pbt {
+			color: white;
+			font-size: xx-large;
+			
+		}
+
+		@media (max-width: 960px) {
+			.menubtn {
+				display: block;
+			}
+
+			ul li {
+				width: 100px;
+				left: 0;
+			}
+
+			ul li a {
+				margin-left: 10px;
+				float: left;
+
+			}
+
+			a {
+				display: none;
+			}
+			#log{
+				display: none;
+			}
+		}
+	</style>
+
 </head>
 
 <body>
-	
+
+
 	<div class="row navbarheader">
 		<div class="col-md-10 offset-md-1">
-			<nav class="navbar navbar-expand-lg navbar-dark">
-				<span> <a class="navbar-brand" href="#"><img style="width: 50px;" src="/img/p1.jpeg"> </a><strong style="color: white;">PBS</strong> 
-				</span>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
+			<ul>
 
-				<div class="collapse navbar-collapse ml" id="navbarSupportedContent">
-					<ul class="navbar-nav mr-auto">
-						<li class="nav-item active"><a class="nav-link" href="/">Home</a></li>						
-						<li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-						<li class="nav-item"><a class="nav-link" href="#aboutus">About
-								us</a></li>
-						<li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-					</ul>
+				<span class="menubtn" onclick="Showmenu()">&#9776;</span>
+				<li><a id="log" href="/pbt/login" class="btn btn-outline-primary" style="color: white;">Log in</a></li>
+				<li><a id="n" href="#aboutus">About</a></li>
+				<li><a id="n" href="#contact">Contact us</a></li>
+				<li><a id="n" href="#services">Services</a></li>
+				<li class="active"><a id="n" href="/">Home</a></li>
+				<span id="pbt">PBT</span>
 
-
-					<!-- Button trigger modal -->
-					<button type="button" class="btn btn-primary"> <a href="/pbt/login" style="color: white;">Login</a></button>					
-
-				</div>
-			</nav>
+			</ul>
 		</div>
 	</div>
-
 
 
 </body>

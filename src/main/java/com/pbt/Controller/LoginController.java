@@ -1,7 +1,5 @@
 package com.pbt.Controller;
 
-
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,49 +18,80 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/pbt")
 public class LoginController {
-	
+
 	@Autowired
 	private UserRepository userRepo;
-	
-	
 
 	@GetMapping("/login")
 	public String userSignup(Model model) {
-		model.addAttribute("title", "Login Component");         
-		
+		model.addAttribute("title", "Login Component");
+
 		return "Layout/Login";
 	}
-	
-	
+
+	@SuppressWarnings("unused")
 	@PostMapping("/login_username_password")
 	public String getLoginuserDemographic(@ModelAttribute User user, HttpSession session, Model model) {
-		
-		
 		user.setPassword(DigestUtils.md5Hex(user.getPassword().getBytes()));
-		
-		User emailAnpassword = this.userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
-		if(emailAnpassword == null) {
-			
-			session.setAttribute("logfailed", new MessageMaster("Username and Password not Match ??", "alert-danger"));
-			
+
+		User userNameAndPassword = this.userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+
+		if (userNameAndPassword == null) {
+			model.addAttribute("title", "Not Found !!");
+			session.setAttribute("log", new MessageMaster("Username and Password not Match ??", "alert-danger"));
 			return "Layout/Login";
-			
-		}else {
-			
-			
-			model.addAttribute("title","System Dashboard ");
-			
-			session.setAttribute("logsuccess", new MessageMaster("Login Successfully ??","alert-success"));
-			
-			
-			
-			return "/pages/Dashboard/SystemDashboard";
+		} else {
+			String userRole = userNameAndPassword.getUserrolename();
+
+			if (userRole == null) {
+				session.setAttribute("log", new MessageMaster("Invalid User Role ??", "alert-danger"));
+				return "Layout/Login";
+			} else {
+				if ("ADMIN".equals(userRole)) {
+					model.addAttribute("title", "System Dashboard ");
+					model.addAttribute("user", userNameAndPassword);
+					session.setAttribute("log", new MessageMaster("Login Successfully ??", "alert-success"));
+					return "/pages/Dashboard/SystemDashboard";
+				} else if ("NORMAL".equals(userRole)) {
+					model.addAttribute("title", "Normal Dashboard ");
+					
+					model.addAttribute("user", userNameAndPassword);
+					return "/pages/Dashboard/NormalDashboard";
+				} else {
+					session.setAttribute("log", new MessageMaster("Maintain Authentication ??", "alert-danger"));
+				}
+			}
 		}
-		
-		
+
+		return "Layout/Login";
+	}
+
+	@GetMapping("/Admin_dashboard")
+	public String getDashboardSystem(HttpSession session) {
+		if (session.getAttribute("user") == null) {
+
+			session.setAttribute("log", new MessageMaster("You haven't  Authentication ??", "alert-danger"));
+
+			return "Layout/Login";
+		}
+		return "/pages/Dashboard/SystemDashboard";
+	}
+
+	@GetMapping("/normal_dashboard")
+	public String getNormalDashboardSystem() {
+
+		return "/pages/Dashboard/NormalDashboard";
 	}
 	
-	
-	
+
+
+
+	@GetMapping("/logout")
+	public String getLogout(HttpSession session) {
+
+		session.invalidate();
+
+		return "index";
+	}
 
 }

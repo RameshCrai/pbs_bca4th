@@ -8,13 +8,25 @@
 	<title th:text="${title}"></title>
 
 	<div th:include="ShareLink.html"></div>
-	
+
 	<style>
-		body{
-				background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+		body {
+			background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
 		}
-		.mb0{
-			margin-bottom:320px;
+
+		#messageHIDE {
+			display: none;
+		}
+
+
+		.mb0 {
+			margin-bottom: 320px;
+		}
+
+		.error {
+			color: red;
+			display: none;
+			font-size: large;
 		}
 	</style>
 
@@ -25,32 +37,42 @@
 	<div class="container-fluid mtlog">
 		<div class="row mb0">
 			<div class="col-md-4 offset-md-4">
-			
+
 				<div class="card">
 					<div class="card-header lhead">
+						<div id="messageHIDE" th:if="${session.log}" th:classappend="${session.log.typeofMessage}"
+							class="alert mb-2" role="alert">
+							<p th:text="${session.log.message}"></p>
+						</div>
 						<h3 class="mb-0 text-center">Login here !!</h3>
 					</div>
 					<div class="card-body">
-						<form th:action="@{/pbt/login_username_password}" method="post">
-							<div class="form-group input-group">
+						<form novalidate  th:action="@{/pbt/login_username_password}" method="post" id="Formvalidation">
+							<label>Email <span class="asterik">*</span> </label><br>
+							<div class="form-group input-group mb-0">
 								<div class="input-group-prepend">
 									<span class="input-group-text">
 										<i class="fa fa-envelope"></i>
 									</span>
 								</div>
-								<input type="email" name="email" class="form-control"
-									placeholder="Phone number,or Email" required>
-							</div>
+								<input type="email" id="email" name="email" class="form-control"
+									placeholder="Phone number,or Email">
 
-							<div class="form-group input-group">
+							</div>
+							<span id="emailError" class="error"></span>
+
+                            <label for="password" class="mt-2">Password<span class="asterik">*</span> </label><br>
+							<div class="form-group input-group mb-0">
 								<div class="input-group-prepend">
 									<span class="input-group-text">
 										<i class="fas fa-unlock"></i>
 									</span>
 								</div>
-								<input type="password" name="password" class="form-control" placeholder="Password"
-									required>
+								<input type="password" id="password" name="password" class="form-control"
+									placeholder="Password" />
+
 							</div>
+							<span id="passwordError" class="error"></span>
 
 
 							<div class="row mt-4">
@@ -82,6 +104,60 @@
 			</div>
 		</div>
 	</div>
+
+	<script th:inline="javascript">
+		// form validation 
+
+/*
+		const form = document.getElementById('Formvalidation');
+
+		form.addEventListener('submit', function (event) {
+			event.preventDefault();
+
+			const email = document.getElementById('email').value;
+			const pass = document.getElementById('password').value;
+
+			const emailError = document.getElementById('emailError');
+			if (!email) {
+				emailError.textContent = 'Please Enter Email ';
+				emailError.style.display = 'block';
+				return;
+			} else {
+				emailError.style.display = 'none';
+			}
+			
+			const emailMatch = /^\S+@\S+\.\S+$/;
+			if(!emailMatch.test(email)){
+				emailError.textContent = 'Please Enter Only Valid Email ?? ';
+				emailError.style.display = 'block';
+				return;
+			}else{
+				emailError.style.display = 'none';
+			}
+
+			const passError = document.getElementById('passwordError');
+			if (!pass) {
+				passError.textContent = 'please Enter Password ';
+				passError.style.display = 'block';
+				return;
+			} else {
+				passError.style.display = 'none';
+			}
+			
+			
+		});
+		
+		*/
+       
+        //Message hide by js
+		var duration = 2000; // 2 seconds
+		var messageElement = document.getElementById('messageHIDE');
+		messageElement.style.display = 'block';
+
+		setTimeout(function () {
+			messageElement.style.display = 'none';
+		}, duration);
+	</script>
 
 </body>
 

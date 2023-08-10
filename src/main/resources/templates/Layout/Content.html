@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<div th:include="ShareLink.html"></div>
-	
+
 	<script th:src="@{/js/script.js}"></script>
 
 	<title>content</title>
@@ -15,7 +15,7 @@
 			font-family: cursive;
 			font-size: x-large;
 			color: white;
-			
+
 		}
 
 		h2 {
@@ -49,6 +49,26 @@
 		.pbstool:hover .pbstooltxt {
 			visibility: visible;
 		}
+
+		.card {
+			background-image: linear-gradient(to top, #ffff, #5ef, #7aaaf7);
+		}
+
+		.card:hover {
+			background-image: linear-gradient(to bottom, #b111e11f, #99999999, #bcadfefe);
+			box-shadow: 20px 20px;
+		}
+
+		.de {
+			margin-top: 100px;
+			margin-bottom: 80px;
+		}
+
+		@media (max-width: 960px) {
+			.pbstool .pbstooltxt {
+				position: relative;
+			}
+		}
 	</style>
 </head>
 
@@ -56,11 +76,11 @@
 	<div class="container-fluid main">
 		<!-- Content page of slide -->
 		<div class="row cbackgroundcolor">
-			<div class="col-md-10 offset-md-1 mt mb">
+			<div class="col-md-10 offset-md-1 de">
 				<div class="row">
 					<div class="col-md-12 text-center"><br><br>
-						<h2 class="pbstool">PBS Automation
-							<span class="pbstooltxt"><b> Parking Booking System</b></span>
+						<h2 class="pbstool">PBT AUTOMATION
+							<span class="pbstooltxt"><b> Parking Booking Ticketing</b></span>
 						</h2>
 						<article id="autoTxt"></article><br><br>
 						<button class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
@@ -72,69 +92,10 @@
 				<div class="collapse" id="collapseExample">
 					<hr>
 					<div class="row mt-4">
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
-									<h3 class="mb-0">Select State</h3>
-								</div>
-								<div class="card-body">
-									<select class="form-control">
-										<option>Select main State</option>
-										<option>KIRAT</option>
-										<option>MADHESH</option>
-										<option>BAGMATI</option>
-										<option>GANDAKI</option>
-										<option>LUMBINI</option>
-										<option>KARNALI</option>
-										<option>SUDUR PASHCHIM</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
-									<h3 class="mb-0">Select City</h3>
-								</div>
-								<div class="card-body">
-									<select class="form-control">
-										<option>Select main city</option>
-										<option>Kathmandu</option>
-										<option>Bhaktapur</option>
-										<option>Lalitpur</option>
-										<option>Biratnagar</option>
-										<option>Pokhara</option>
-										<option>Butwal</option>
-										<option>Chitwan</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<div class="card-header">
-									<h3 class="mb-0">Select Marg</h3>
-								</div>
-								<div class="card-body">
-									<select class="form-control">
-										<option>Select main Marg</option>
-										<option>Putalisadak</option>
-										<option>Koteshwor</option>
-										<option>Darbarmarga</option>
-										<option>Sanothimi</option>
-
-									</select>
-								</div>
-							</div>
-						</div>
-					</div>
-					<hr>
-					<div class="row mt-4">
 						<div class="col-md-8 offset-md-2">
 							<div class="card">
 								<div class="card-header">
-									<h3 class="mb-0">Selected current parking location <b>Kathmandu</b> <sub>Putalisadak
-										</sub> </h3>
+									<h3 class="mb-0">Total vehicles details are listed below: </h3>
 								</div>
 								<div class="card-body">
 									<div class="row">
@@ -161,12 +122,12 @@
 
 		<!-- Services page of slide -->
 		<div class="row sbackgroundcolor">
-			<div class="col-md-10 offset-md-1 mt mb">
+			<div class="col-md-10 offset-md-1 de">
 				<div class="row">
 					<div class="col-md-12 text-center">
 						<div class="container-fluid text-center">
 							<div id="services"></div>
-							<strong>SERVICES</strong>
+							<strong>SERVICES</strong><br><br><br>
 
 						</div>
 						<div class="row mt-2">
@@ -203,7 +164,7 @@
 
 		<!-- About us page -->
 		<div class="row abackgroundcolor">
-			<div class="col-md-10 offset-md-1 mt mb">
+			<div class="col-md-10 offset-md-1 de">
 				<div class="row">
 					<div class="col-md-12 text-center">
 						<div class="container-fluid text-center">
@@ -213,7 +174,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-4">
-								<h4>Our Teams</h4>
+								<h3>This is our Team Colaboration</h3>
 							</div>
 							<div class="col-md-4">
 								<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
@@ -309,6 +270,6 @@
 		</div>
 	</div>
 
-	</body>
+</body>
 
 </html>

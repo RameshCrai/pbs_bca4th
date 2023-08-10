@@ -19,6 +19,12 @@
 		.mb0 {
 			margin-bottom: 200px;
 		}
+
+		.error {
+			color: red;
+			display: none;
+			font-size: large;
+		}
 	</style>
 
 </head>
@@ -39,25 +45,25 @@
 						<h3 class="mb-0 text-center">Signup here !</h3>
 					</div>
 					<div class="card-body">
-						<form novalidate th:action="@{/pbt/signup_user}" method="post" enctype="multipart/form-data">
+						<form novalidate id="formvalid" th:action="@{/pbt/signup_user}" method="post"
+							enctype="multipart/form-data">
 
-							<div class="row">
+							<div class="row ">
 								<div class="col-md-6">
-									<div class=" row">
+									<div class="row mb-2">
 										<div class="col-md-3">
 											<label for="firstName">FirstName<span class="asterik">*</span></label>
 										</div>
 										<div class="col-md-9">
-											<div class="form-group input-group">
+											<div class="form-group input-group mb-0">
 												<div class="input-group-prepend">
 													<span class="input-group-text"><i class="fa fa-user"></i></span>
 												</div>
 												<input id="fname" type="text" name="fname" class="form-control"
 													placeholder="First Name" />
 											</div>
-
+											<span id="fnameError" class="error"></span>
 										</div>
-										<div class="error"></div>
 									</div>
 
 
@@ -73,36 +79,32 @@
 												<input type="text" name="mName" class="form-control"
 													placeholder="Middle Name" />
 											</div>
-
 										</div>
-
 									</div>
 
 
-									<div class="row">
+									<div class="row mb-2">
 										<div class="col-md-3">
 											<label for="LastName">LastName<span class="asterik">*</span></label>
 										</div>
 										<div class="col-md-9">
-											<div class="form-group input-group">
+											<div class="form-group input-group mb-0">
 												<div class="input-group-prepend">
 													<span class="input-group-text"><i class="fa fa-user"></i></span>
 												</div>
 												<input id="lname" type="text" name="lname" class="form-control"
 													placeholder="last Name" />
 											</div>
-
+											<span id="lnameError" class="error"></span>
 										</div>
-										<div class="error"></div>
 									</div>
-									<div class="row">
+
+									<div class="row mb-2">
 										<div class="col-md-3">
 											<label for="email">Email<span class="asterik">*</span></label>
 										</div>
-
-
 										<div class="col-md-9">
-											<div class="form-group input-group">
+											<div class="form-group input-group nb-0">
 												<div class="input-group-prepend">
 													<span class="input-group-text"> <i class="fa fa-envelope"></i>
 													</span>
@@ -110,33 +112,31 @@
 												<input id="email" type="email" name="email" class="form-control"
 													placeholder="Email " />
 											</div>
-
+											<span id="emailError" class="error"></span>
 										</div>
-										<div class="error"></div>
 									</div>
-									<div>
 
-									</div>
 									<div class="row mt-2">
-										<div class="col-md-12">
-											<div class="form-check">
-												<input type="checkbox" class="form-check-input" name="agreement"
-													id="agreement" />
-												<label class="form-check-label" for="Agrement">Terms and Conditions
-												</label>
-											</div>
+										<div class="col-md-3">
+											<label for="gender">Gender </label>
+										</div>
+										<div class="col-md-9">
+											<input type="radio" name="Gender" value="Male" /> Male <input type="radio"
+												name="Gender" value="Female" class="ml-4" />
+											Female
 										</div>
 									</div>
+
 								</div>
 
 								<div class="col-md-6">
 
-									<div class="row">
+									<div class="row mb-2">
 										<div class="col-md-3">
 											<label for="mobile">Mobile <span class="asterik">*</span></label>
 										</div>
 										<div class="col-md-9">
-											<div class="form-group input-group">
+											<div class="form-group input-group mb-0">
 												<div class="input-group-prepend">
 													<span class="input-group-text"> <i class="fa fa-phone"></i>
 													</span>
@@ -144,17 +144,16 @@
 												<input id="mobile" type="text" name="mobile" class="form-control"
 													maxlength="10" placeholder="Mobile " />
 											</div>
+											<span id="mobileError" class="error"></span>
 										</div>
-										<div class="error"></div>
-
 									</div>
 
-									<div class="row">
+									<div class="row mb-2">
 										<div class="col-md-3">
 											<label for="password">Password<span class="asterik">*</span></label>
 										</div>
 										<div class="col-md-9">
-											<div class="form-group input-group">
+											<div class="form-group input-group mb-0">
 												<div class="input-group-prepend">
 													<span class="input-group-text"> <i class="fas fa-unlock"></i>
 													</span>
@@ -162,8 +161,8 @@
 												<input id="password" class="form-control" type="password"
 													name="password" maxlength="12" placeholder="Password " />
 											</div>
+											<span id="passwordError" class="error"></span>
 										</div>
-										<div class="error"></div>
 									</div>
 
 
@@ -184,19 +183,6 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-md-3">
-											<label for="gender">Gender </label>
-										</div>
-										<div class="col-md-9">
-											<input type="radio" name="Gender" value="Male" /> Male <input type="radio"
-												name="Gender" value="Female" class="ml-4" />
-											Female
-										</div>
-
-									</div>
-
-
 									<div class="row mt-3">
 										<div class="col-md-3">
 											<label>ProfileImage</label>
@@ -204,20 +190,35 @@
 										<div class="col-md-9">
 											<input type="file" name="image" accept="image/*" class="form-control-file">
 										</div>
-
 									</div>
+									<div class="row mt-2">
+										<div class="col-md-12">
+											<div class="form-check">
+												<input type="checkbox" class="form-check-input" name="agreement"
+													id="agreement" />
+												<label class="form-check-label" for="Agrement">Terms and Conditions
+												</label>
+											</div>
+										</div>
+									</div>
+
+
 
 								</div>
 							</div>
 							<hr>
 							<div class="container-fluid text-left mt-4">
-								<h5>Return home page ?<a href="/" style="color: black;"> <i class="fas fa-laptop-house" style="font-size:24px"></i>
+								<h5>Return home page ?<a href="/" style="color: black;"> <i class="fas fa-laptop-house"
+											style="font-size:24px"></i>
 									</a> </h5>
 							</div>
 							<div class="container-fluid text-right">
-								<button type="submit" class="btn btn-primary">Submit
+								<button type="submit" class="btn btn-primary btn-outline-secondary"
+									style="color: black;">Submit
 								</button>
-								<button class="btn btn-primary btnlogin"> <a href="/pbt/login" style="color: white;">Log in</a> </button>
+								<button class="btn btn-primary btnlogin btn-outline-secondary"> <a href="/pbt/login"
+										style="color: black;">Log
+										in</a> </button>
 							</div>
 						</form>
 					</div>
@@ -228,9 +229,8 @@
 	<div th:include="ShareLink.html"></div>
 
 	<script th:inline="javascript">
-		var duration = 5000; // 5 seconds
 
-
+		var duration = 2000; // 2 seconds
 		var messageElement = document.getElementById('messageHIDE');
 		messageElement.style.display = 'block';
 
