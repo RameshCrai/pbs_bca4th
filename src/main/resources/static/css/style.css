@@ -27,7 +27,7 @@ body {
 
 .foot {
 	width: 100%;
-	margin-top: 1730px !important;
+	margin-top: 1280px !important;
 	position: absolute;
 }
 
@@ -82,7 +82,7 @@ body {
 }
 
 .mt {
-	margin-top: 30px;
+	margin-top: 100px;
 
 }
 
@@ -111,6 +111,7 @@ figcaption {
 
 article {
 	font-size: 18px;
+	font-weight: bolder;
 }
 
 span {
@@ -118,6 +119,11 @@ span {
 }
 
 @media (max-width: 860px) {
+	.main{
+		height: 1550px;
+		overflow: hidden;
+		overflow: auto;
+	}
 
 	.card {
 		margin-bottom: 35px;
@@ -130,7 +136,7 @@ span {
 	.foot {
 		width: 100%;
 		text-align: center;
-		margin-top: 1780px;
+		margin-top: 1550px !important;
 	}
 
 }
@@ -174,7 +180,7 @@ span {
 	height: 100%;
 	width: 0;
 	position: fixed;
-	overflow-x: hidden;
+	overflow: hidden;
 	padding-top: 60px;
 	top: 0;
 	left: 0;

@@ -66,16 +66,6 @@ public class LoginController {
 		return "Layout/Login";
 	}
 
-	@GetMapping("/Admin_dashboard")
-	public String getDashboardSystem(HttpSession session) {
-		if (session.getAttribute("user") == null) {
-
-			session.setAttribute("log", new MessageMaster("You haven't  Authentication ??", "alert-danger"));
-
-			return "Layout/Login";
-		}
-		return "/pages/Dashboard/SystemDashboard";
-	}
 
 	@GetMapping("/normal_dashboard")
 	public String getNormalDashboardSystem() {

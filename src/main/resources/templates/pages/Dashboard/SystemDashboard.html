@@ -21,6 +21,10 @@
 			font-family: 'Ysabeau Office', sans-serif;
 
 		}
+
+		#profile {
+			display: none;
+		}
 	</style>
 
 	<script th:src="@{/js/script.js}"></script>
@@ -47,12 +51,9 @@
 		</a>
 
 		<a href="#" class="active">
-			<i class="fa fa-home"></i>Home
-		</a>
-		<a href="/pbt/Admin_dashboard">
 			<i class="fa fa-tachometer"></i>Dashboard
 		</a>
-		<a href="#">
+		<a href="#" onclick="showProfile()">
 			<i class="fa fa-user"></i>Profile
 		</a>
 		<a href="#">
@@ -74,39 +75,70 @@
 	</div>
 
 	<section class="mainpart">
-
 		<div class="container-fluid">
 			<div class="card">
+				<div class="card-body">
+					<h1>This is body section</h1>
+				</div>
+			</div>
+		</div>
+
+		<div class="container" id="profile">
+			<div class="card">
+				<div class="card-header bg-secondary text-light">
+					<div class="row">
+						<div class="col-md-11 mb-0">
+							<span style="font-size: xx-large;">User Information !</span>
+						</div>
+						<div class="col-md-1 mb-0 text-right">
+							<span style="font-size: xx-large;" onclick="cancelProfile()">&times;</span>
+						</div>
+					</div>
+				</div>
 				<div class="card-body">
 					<div class="row">
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-body">
-									<img src="/img/a1.jpeg" style="width: 100%; height: 100%;">
+									<img src="/img/a1.jpeg" style="border-radius: 80%;width: 100%; height: 100%;">
 								</div>
 							</div>
 						</div>
 						<div class="col-md-9">
-							<div class="row">
-								<div class="col-md-6">
-									<h2>FirstName : <b><span style="color: black;" th:text="${user.fname}"></span></b></h2>
-										<h2>LastName : <b><span style="color: black;" th:text="${user.lname}"></span></b></h2>
-											<h2>Email : <b><span style="color: black;" th:text="${user.email}"></span></b></h2>
-				
-								</div>
-								<div class="col-md-6">
-										<h2>Mobile  : <b><span style="color: black;" th:text="${user.mobile}"></span></b></h2>
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<h6>FullName : <b><span style="color: black;"
+														th:text="${user.fname}"></span> <span style="color: black;"
+														th:text="${user.lname}"></span></b>
+											</h6>
+											<h6>Email : <b><span style="color: black;"
+														th:text="${user.email}"></span></b></h6>
+											<h6>Mobile : <b><span style="color: black;"
+														th:text="${user.mobile}"></span></b>
+											</h6>
+
+										</div>
+										<div class="col-md-6">
+											<h6>Agreement : <b><span style="color: black;"
+														th:text="${user.agreement}"></span></b>
+											</h6>
+											<h6>Date of Birth : <b><span style="color: black;"
+														th:text="${user.dob}"></span></b>
+											</h6>
+											<h6>UserRole : <b><span style="color: black;"
+														th:text="${user.userrolename}"></span></b>
+											</h6>
+										</div>
+									</div>
 								</div>
 							</div>
-							<h3>this is dashboard</h3>
 						</div>
 					</div>
-					<span style="color: black;" th:text="${user.email}"></span>
 				</div>
 			</div>
-		</div>
-		
-		
+
 	</section>
 </body>
 

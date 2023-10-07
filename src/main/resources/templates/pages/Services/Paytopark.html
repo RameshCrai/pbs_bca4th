@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<div th:include="ShareLink.html"></div>
+
+	<script th:src="@{/js/script.js}"></script>
+
+	<title th:text="${title}"></title>
+	<style>
+		body {
+			background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+			color: black;
+
+		}
+
+		.card {
+			background-image: linear-gradient(to left, #ffff, #9999, #cedc);
+			border-right: 15px solid #0f2027;
+		}
+
+		@media (max-width: 760px) {
+			.card {
+				border-right: 1px solid #2c5364;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container mt">
+		<div class="card">
+			<div class="card-header">
+				<article>PBT PayToPark Package </article>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-7">
+						<article>ALL About This Package</article>
+						<ol class="p-3">
+							<li>It's a current time package</li>
+							<li>It has Valid Date and time (IN-TIME & OUT-TIME) </li>
+							<li>Vehicles parking cost will be determined in ENTER-TIME and EXIT-TIME</li>
+							<li>Parking will be opened 24 hours </li>
+						</ol>
+						<hr>
+						<article>Prerequisites of PBT</article>
+						<ol class="p-3">
+							<li>Vehicle should park after Verified payment</li>
+							<li>Payment should be online method like(Esewa, Khalti so on.)</li>
+							<li>can't be refund after payment</li>
+							<li>Vehicles keys should leave in the parking reception</li>
+							<li>Can't Accept Illegle vehicles</li>
+						</ol>
+					</div>
+					<div class="col-md-5">
+						<div class="container-fluid text-center">
+							<article>Parking Booking Ticketing</article>
+							<p>It's a official package which provides more reliable services</p>
+							<br><br><br>
+							<button class="btn  btn-outline-primary">PayToPark</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<p>Return privious pages </p>
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>

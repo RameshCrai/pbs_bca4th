@@ -31,3 +31,10 @@ function Showmenu() {
 
 }
 
+function showProfile(){
+	document.getElementById('profile').style.display = 'block';
+}
+
+function cancelProfile(){
+	document.getElementById('profile').style.display = 'none';
+}

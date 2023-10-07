@@ -1,10 +1,76 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<div th:include="ShareLink.html"></div>
+
+	<script th:src="@{/js/script.js}"></script>
+
+	<title th:text="${title}"></title>
+	<style>
+		body {
+			background-image: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+			color: black;
+
+		}
+
+		.card {
+			background-image: linear-gradient(to left, #ffff, #9999, #cedc);
+			border-right: 15px solid #0f2027;
+		}
+
+		@media (max-width: 760px) {
+			.card {
+				border-right: 1px solid #2c5364;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container mt">
+		<div class="card">
+			<div class="card-header">
+				<article>PBT Subscription Package </article>
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-7">
+						<article>ALL About This Package</article>
+						<ol class="p-3">
+							<li>It's a Subscription package</li>
+							<li>It has Valid Date and time </li>
+							<li>Vehicles parking cost will be determined as a subscription based</li>
+							<li>Parking will be opened 24 hours </li>
+						</ol>
+						<hr>
+						<article>Prerequisites of PBT</article>
+						<ol class="p-3">
+							<li>Vehicles should be veirified as a subscription service and take a token</li>
+							<li>Payment should be full for a subscrition</li>
+							<li>Could't accept any installment for payment</li>
+							<li>Vehicles keys should leave in the parking reception</li>
+							<li>Can't Accept Illegle vehicles</li>
+						</ol>
+					</div>
+					<div class="col-md-5">
+						<div class="container-fluid text-center">
+							<article>Parking Booking Ticketing</article>
+							<p>It's a Subscription package where you can take services as a subscription based.</p>
+							<br><br><br>
+							<button class="btn  btn-outline-primary">Subscription</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="card-footer">
+				<p>Return privious pages </p>
+			</div>
+		</div>
+	</div>
 </body>
+
 </html>

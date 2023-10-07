@@ -11,6 +11,10 @@
 
 	<title>content</title>
 	<style>
+		* {
+			color: white;
+		}
+
 		article {
 			font-family: cursive;
 			font-size: x-large;
@@ -50,18 +54,23 @@
 			visibility: visible;
 		}
 
-		.card {
+		.h {
 			background-image: linear-gradient(to top, #ffff, #5ef, #7aaaf7);
+			color: black;
+			cursor: pointer;
 		}
 
-		.card:hover {
+		.h:hover {
 			background-image: linear-gradient(to bottom, #b111e11f, #99999999, #bcadfefe);
-			box-shadow: 20px 20px;
 		}
 
 		.de {
 			margin-top: 100px;
 			margin-bottom: 80px;
+		}
+
+		.h {
+			height: 250px;
 		}
 
 		@media (max-width: 960px) {
@@ -73,110 +82,100 @@
 </head>
 
 <body onload="AutomaticText()">
-	<div class="container-fluid main">
+	<div class="container-fluid main cbackgroundcolor" id="services">
 		<!-- Content page of slide -->
-		<div class="row cbackgroundcolor">
+		<div class="row">
 			<div class="col-md-10 offset-md-1 de">
 				<div class="row">
 					<div class="col-md-12 text-center"><br><br>
 						<h2 class="pbstool">PBT AUTOMATION
 							<span class="pbstooltxt"><b> Parking Booking Ticketing</b></span>
 						</h2>
-						<article id="autoTxt"></article><br><br>
-						<button class="btn btn-primary" data-toggle="collapse" href="#collapseExample"
-							aria-expanded="false" aria-controls="collapseExample">
-							Get Started
-						</button><br><br>
-					</div>
-				</div>
-				<div class="collapse" id="collapseExample">
-					<hr>
-					<div class="row mt-4">
-						<div class="col-md-8 offset-md-2">
-							<div class="card">
-								<div class="card-header">
-									<h3 class="mb-0">Total vehicles details are listed below: </h3>
-								</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-6">
-											<p>Cars</p>
-											<hr>
-											<span style="color: green;">Vacant for parking = 100 </span><br>
-											<span style="color: red;">Already Parked = 40 </span>
-										</div>
-										<div class="col-md-6">
-											<p>Bikes</p>
-											<hr>
-											<span style="color: green;">Vacant for parking = 150 </span><br>
-											<span style="color: red;">Already Parked = 70 </span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+						<article id="autoTxt"></article>
+
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- Services page of slide -->
-		<div class="row sbackgroundcolor">
-			<div class="col-md-10 offset-md-1 de">
-				<div class="row">
+		<div class="row">
+			<div class="col-md-10 offset-md-1 ">
+				<div class="row mt-4">
 					<div class="col-md-12 text-center">
 						<div class="container-fluid text-center">
-							<div id="services"></div>
-							<strong>SERVICES</strong><br><br><br>
-
+							<strong>SERVICES</strong>
+							<p>Three kinds of Services are provided by PBT</p>
 						</div>
-						<div class="row mt-2">
+						<div class="row mt-4">
 							<div class="col-md-4">
 								<div class="container-fluid">
-									<img src="/img/s1.png" style="width: 80px; border-radius: 50%;">
-									<figcaption>PayToPark</figcaption>
-									<a href="">Current Time Park</a>
-								</div>
-
-
-
-							</div>
-							<div class="col-md-4">
-								<div class="container-fluid">
-									<img src="/img/s2.png" style="width: 80px; border-radius: 50%;">
-									<figcaption>Subscription</figcaption>
-									<a href="#">Long term subscription</a>
+									<div class="card h">
+										<div class="card-body">
+											<img src="/img/s1.png" style="width: 80px; border-radius: 50%;">
+											<figcaption>PayToPark</figcaption>
+											<a href="/pbt/paytopark_service">Current Time Park</a>
+										</div>
+									</div>
 								</div>
 							</div>
+							<div class="col-md-4">
+								<div class="container-fluid">
+									<div class="card h">
+										<div class="card-body">
+											<img src="/img/s2.png" style="width: 80px; border-radius: 50%;">
+											<figcaption>Subscription</figcaption>
+											<a href="/pbt/Subscription_Service">Long term subscription</a>
+										</div>
+									</div>
+								</div>
+							</div>
 
 							<div class="col-md-4">
 								<div class="container-fluid">
-									<img src="/img/s3.png" style="width: 80px; border-radius: 50%;">
-									<figcaption>Official</figcaption>
-									<a href="#">Official Subscription</a>
+									<div class="card h">
+										<div class="card-body">
+											<img src="/img/s3.png" style="width: 80px; border-radius: 50%;">
+											<figcaption>Official</figcaption>
+											<a href="/pbt/Official_service">Official Subscription</a>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div><br><br>
+				</div><br><br><br>
 			</div>
 		</div>
 
 		<!-- About us page -->
-		<div class="row abackgroundcolor">
+		<div class="row abackgroundcolor" id="aboutus">
 			<div class="col-md-10 offset-md-1 de">
 				<div class="row">
 					<div class="col-md-12 text-center">
 						<div class="container-fluid text-center">
-							<div id="aboutus"></div>
 							<strong>ABOUT US</strong>
-							<p>We are very familier to provide services everywhere !</p><br><br>
+							<p>We are very familier to provide services everywhere !</p>
 						</div>
 						<div class="row">
 							<div class="col-md-4">
-								<h3>This is our Team Colaboration</h3>
+								<h1>Category 0</h1>
+								<div class="card">
+									<div class="card-body">
+										<h3>This is our Team Colaboration</h3>
+									</div>
+								</div>
 							</div>
 							<div class="col-md-4">
+								<h1>Category1</h1>
+								<div class="card">
+									<div class="card-body">
+										<h3>This is our Team Colaboration</h3>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<h1>Gallery</h1>
 								<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 									<div class="carousel-inner">
 										<div class="carousel-item active">
@@ -212,62 +211,12 @@
 									</a>
 								</div>
 							</div>
-							<div class="col-md-4">
-								<h4>Our Consistency</h4>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 
-		<!-- Contact us page -->
-		<div class="row conbackgroundcolor">
-			<div class="col-md-10 offset-md-1 mt mb">
-				<div class="row">
-					<div class="col-md-12 con">
-						<div class="container-fluid text-center">
-							<div id="contact"></div>
-							<strong>CONTACT US</strong>
-							<p>Here we will be available 24<sup>th</sup> Hours !</p>
-
-						</div>
-						<div class="row">
-							<div class="col-md-4">
-								<h4>Phone </h4>
-								<span>Tel :<b>01-989829</b> </span><br>
-								<span>Mobile-1 : <b>+977:- 98672376272</b></span><br>
-								<span>Mobile-2 : <b>+977:- 98682376272</b></span><br>
-
-							</div>
-							<div class="col-md-4">
-								<h4>E-mail</h4>
-								<span><b>G-mail :- </b>pbs@gmail.com</span><br>
-								<span><b>Yahoo! :- </b>pbs@Yahoo!.com</span>
-							</div>
-
-							<div class="col-md-4">
-								<h4>Social Media</h4>
-								<div class="row">
-									<div class="col-md-6">
-										<span>Facebook</span><br>
-										<span>Twiter</span><br>
-										<span>WhatApp</span><br>
-
-									</div>
-									<div class="col-md-6">
-										<span>Viver</span><br>
-										<span>LinkedIN</span><br>
-										<span>Github</span><br>
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 
 </body>

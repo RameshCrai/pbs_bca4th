@@ -9,31 +9,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/pbt/services")
+@RequestMapping("/pbt")
 public class ServicesController {
 	
-	@GetMapping("/paytopark_services")
-	public String getPayToPark(HttpSession session, Model model) {	
+	@GetMapping("/paytopark_service")
+	public String getPayToPark(Model model1) {	
 		
-		model.addAttribute("title", "PayToPark Service");
+		model1.addAttribute("title", "PayToPark Service");
 		
 		
 		return "pages/Services/Paytopark";
 	}
 
 	@GetMapping("/Official_service")
-	public String getOfficial(HttpSession session, Model model) {
+	public String getOfficial(Model model2) {
 		
-		model.addAttribute("title", "Official Service");
+		model2.addAttribute("title", "Official Service");
 		
 		
 		return "pages/Services/Official";
 	}
 	
-	@GetMapping("/Subscription_Services")
-	public String getSubscription(HttpSession session, Model model) {	
+	@GetMapping("/Subscription_Service")
+	public String getSubscription(Model model3) {	
 		
-		model.addAttribute("title", "Subscription Service");
+		model3.addAttribute("title", "Subscription Service");
 		
 		return "pages/Services/Subscription";
 	}
