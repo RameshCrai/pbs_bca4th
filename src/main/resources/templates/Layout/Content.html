@@ -1,3 +1,4 @@
+
 <!DOCTYPE HTML>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
@@ -72,6 +73,13 @@
 		.h {
 			height: 250px;
 		}
+		.abt{
+			background-image: linear-gradient(to left, #eeff, #effe, #7aaaf7);
+			
+		}
+		li{
+			color: black !important;
+		}
 
 		@media (max-width: 960px) {
 			.pbstool .pbstooltxt {
@@ -105,7 +113,7 @@
 					<div class="col-md-12 text-center">
 						<div class="container-fluid text-center">
 							<strong>SERVICES</strong>
-							<p>Three kinds of Services are provided by PBT</p>
+							<p>Three kinds of Services are provided</p>
 						</div>
 						<div class="row mt-4">
 							<div class="col-md-4">
@@ -152,30 +160,39 @@
 		<div class="row abackgroundcolor" id="aboutus">
 			<div class="col-md-10 offset-md-1 de">
 				<div class="row">
-					<div class="col-md-12 text-center">
+					<div class="col-md-12">
 						<div class="container-fluid text-center">
 							<strong>ABOUT US</strong>
 							<p>We are very familier to provide services everywhere !</p>
 						</div>
 						<div class="row">
 							<div class="col-md-4">
-								<h1>Category 0</h1>
-								<div class="card">
-									<div class="card-body">
-										<h3>This is our Team Colaboration</h3>
+								<h1 class="text-center">Leadership</h1>
+								<div class="card abt" style="height: 240px; color: black;">
+									<div class="card-body p-4">
+										<ol>
+											<li>Fullstack ER. RAMESH RAI</li>
+											<li>Documents ER. RAHIL PANT</li>
+										</ol>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<h1>Category1</h1>
-								<div class="card">
-									<div class="card-body">
-										<h3>This is our Team Colaboration</h3>
+								<h1 class="text-center">Advantages</h1>
+								<div class="card abt" style="height: 240px;">
+									<div class="card-body p-4">
+										<ol>
+											<li>Efficient Space management</li>
+											<li>User friendly Interface</li>
+											<li>Payment Processing</li>
+											<li>Mobile Compatibility </li>
+											<li>Security</li>
+										</ol>
 									</div>
 								</div>
 							</div>
 							<div class="col-md-4">
-								<h1>Gallery</h1>
+								<h1 class="text-center">Galleries</h1>
 								<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
 									<div class="carousel-inner">
 										<div class="carousel-item active">

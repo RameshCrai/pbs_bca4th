@@ -4,12 +4,15 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -23,17 +26,21 @@ public class Payment {
 	private String discount;
 	private LocalDate paymentDate;
 	
-	@OneToMany(mappedBy = "payment", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Services service;
+	
+	@OneToMany(mappedBy = "payment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
 	private List<ParkingLocation> paidPayment = new LinkedList<ParkingLocation>();
+	
+
 
 	public Payment() {
 		super();
 	}
 
-	
-
 	public Payment(Long paymentID, String cost, String duration, String discount, LocalDate paymentDate,
-			List<ParkingLocation> paidPayment) {
+			List<ParkingLocation> paidPayment, Services service) {
 		super();
 		this.paymentID = paymentID;
 		this.cost = cost;
@@ -41,9 +48,8 @@ public class Payment {
 		this.discount = discount;
 		this.paymentDate = paymentDate;
 		this.paidPayment = paidPayment;
+		this.service = service;
 	}
-
-
 
 	public Long getPaymentID() {
 		return paymentID;
@@ -76,19 +82,14 @@ public class Payment {
 	public void setDiscount(String discount) {
 		this.discount = discount;
 	}
-	
 
 	public LocalDate getPaymentDate() {
 		return paymentDate;
 	}
 
-
-
 	public void setPaymentDate(LocalDate paymentDate) {
 		this.paymentDate = paymentDate;
 	}
-
-
 
 	public List<ParkingLocation> getPaidPayment() {
 		return paidPayment;
@@ -97,7 +98,15 @@ public class Payment {
 	public void setPaidPayment(List<ParkingLocation> paidPayment) {
 		this.paidPayment = paidPayment;
 	}
-	
+
+	public Services getService() {
+		return service;
+	}
+
+	public void setService(Services service) {
+		this.service = service;
+	}
+
 	
 	
 

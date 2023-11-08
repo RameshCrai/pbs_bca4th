@@ -1,6 +1,5 @@
 package com.pbt.Model;
 
-import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,13 +19,11 @@ public class ParkingLocation {
 	private String street;
 	private String city;
 	private String spot;
-	private LocalDate enterDate;
-	private LocalDate exitDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Vehicle vehicle;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Payment payment;
 	
 	public ParkingLocation() {
@@ -35,16 +32,13 @@ public class ParkingLocation {
 
 	
 
-	public ParkingLocation(long parkingID, String state, String street, String city, String spot, LocalDate enterDate,
-			LocalDate exitDate, Vehicle vehicle, Payment payment) {
+	public ParkingLocation(long parkingID, String state, String street, String city, String spot, Vehicle vehicle, Payment payment) {
 		super();
 		this.parkingID = parkingID;
 		this.state = state;
 		this.street = street;
 		this.city = city;
 		this.spot = spot;
-		this.enterDate = enterDate;
-		this.exitDate = exitDate;
 		this.vehicle = vehicle;
 		this.payment = payment;
 	}
@@ -89,23 +83,6 @@ public class ParkingLocation {
 
 	public void setSpot(String spot) {
 		this.spot = spot;
-	}
-
-
-	public LocalDate getEnterDate() {
-		return enterDate;
-	}
-
-	public void setEnterDate(LocalDate enterDate) {
-		this.enterDate = enterDate;
-	}
-
-	public LocalDate getExitDate() {
-		return exitDate;
-	}
-
-	public void setExitDate(LocalDate exitDate) {
-		this.exitDate = exitDate;
 	}
 
 	public Vehicle getVehicle() {

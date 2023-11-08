@@ -48,13 +48,15 @@ public class LoginController {
 				return "Layout/Login";
 			} else {
 				if ("ADMIN".equals(userRole)) {
+					session.setAttribute("user", user);
 					model.addAttribute("title", "System Dashboard ");
 					model.addAttribute("user", userNameAndPassword);
 					session.setAttribute("log", new MessageMaster("Login Successfully ??", "alert-success"));
 					return "/pages/Dashboard/SystemDashboard";
 				} else if ("NORMAL".equals(userRole)) {
+					session.setAttribute("user", user);
 					model.addAttribute("title", "Normal Dashboard ");
-					
+
 					model.addAttribute("user", userNameAndPassword);
 					return "/pages/Dashboard/NormalDashboard";
 				} else {
@@ -66,15 +68,11 @@ public class LoginController {
 		return "Layout/Login";
 	}
 
-
 	@GetMapping("/normal_dashboard")
 	public String getNormalDashboardSystem() {
 
 		return "/pages/Dashboard/NormalDashboard";
 	}
-	
-
-
 
 	@GetMapping("/logout")
 	public String getLogout(HttpSession session) {

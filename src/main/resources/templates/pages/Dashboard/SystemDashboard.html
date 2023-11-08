@@ -25,9 +25,108 @@
 		#profile {
 			display: none;
 		}
+
+		#services {
+			display: none;
+		}
+
+		#paytoparkd {
+			display: none;
+		}
+
+		#subscriptiond {
+			display: none;
+		}
+
+		#officiald {
+			display: none;
+		}
+
+		.card-header {
+			background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+			color: white;
+		}
+
+		.se {
+			background-image: linear-gradient(to bottom, #0f2027, #2c5364);
+			color: white;
+		}
+
+		.se:hover {
+			background-image: linear-gradient(to top, #0f2027, #2c5364);
+			cursor: pointer;
+			color: white;
+		}
+
+
+		.steps {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 2rem;
+			position: relative;
+		}
+
+		.step-button {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: none;
+			background-color: var(--prm-gray);
+			transition: .4s;
+		}
+
+		.step-button[aria-expanded="true"] {
+			width: 60px;
+			height: 60px;
+			background-color: var(--prm-color);
+			color: #fff;
+		}
+
+		.done {
+			background-color: var(--prm-color);
+			color: #fff;
+		}
+
+		.step-item {
+			z-index: 10;
+			text-align: center;
+		}
+
+		#progress {
+			-webkit-appearance: none;
+			position: absolute;
+			width: 95%;
+			z-index: 5;
+			height: 10px;
+			margin-left: 18px;
+			margin-bottom: 18px;
+		}
+
+		/* to customize progress bar */
+		#progress::-webkit-progress-value {
+			background-color: var(--prm-color);
+			transition: .5s ease;
+		}
+
+		#progress::-webkit-progress-bar {
+			background-color: var(--prm-gray);
+
+		}
+
+		.mb {
+			margin-bottom: 110px;
+		}
 	</style>
 
 	<script th:src="@{/js/script.js}"></script>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"
+		defer></script>
+
+
 
 </head>
 
@@ -50,24 +149,26 @@
 			<figcaption>PBT</figcaption>
 		</a>
 
-		<a href="#" class="active">
+		<a href="#" class="active" onclick="showDashboard()">
 			<i class="fa fa-tachometer"></i>Dashboard
 		</a>
 		<a href="#" onclick="showProfile()">
 			<i class="fa fa-user"></i>Profile
 		</a>
-		<a href="#">
+		<a href="#" onclick="showService()">
 			<i class="fa fa-wrench"></i>Services
 		</a>
+		<a href="#">
+			<i class="fa fa-cog"></i>Settings
+		</a>
+
 		<a href="#" target="_parent">
 			<i class="fa fa-line-chart"></i>Analytics
 		</a>
 		<a href="#">
 			<i class="fa fa-bell"></i>Notification
 		</a>
-		<a href="#" target="_blank">
-			<i class="fa fa-cog"></i>Settings
-		</a>
+
 
 		<a href="/pbt/logout">
 			<i class="fa fa-sign-out"></i>Logout
@@ -75,24 +176,658 @@
 	</div>
 
 	<section class="mainpart">
-		<div class="container-fluid">
-			<div class="card">
-				<div class="card-body">
-					<h1>This is body section</h1>
+
+		<!-- Dashboard -->
+		<div class="container mt-4" id="dashboard">
+			<div class="row">
+				<div class="col-md-12">
+					<h3 class="mb-0">Dashboard</h3>
+					<hr>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#paytopark" role="tab">
+								PayToPark
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#subscription" role="tab">
+								Subscription
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#official" role="tab">Official</a>
+						</li>
+					</ul>
+					<hr>
+					<div class="tab-content mt-4">
+						<!-- Paytopark-->
+						<div class="tab-pane active" id="paytopark" role="tabpanel">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<h3 class="mb-0">PaytoPark service prerequisites are listed below</h3>
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-7">
+											<article>ALL About This Package</article>
+											<ol class="p-3">
+												<li>It's a current time package</li>
+												<li>It has Valid Date and time (IN-TIME & OUT-TIME) </li>
+												<li>Vehicles parking cost will be determined in ENTER-TIME and EXIT-TIME
+												</li>
+												<li>Parking will be opened 24 hours </li>
+											</ol>
+											<hr>
+											<article>Prerequisites of PBT</article>
+											<ol class="p-3">
+												<li>Vehicle should park after Verified payment</li>
+												<li>Payment should be online method like(Esewa, Khalti so on.)</li>
+												<li>can't be refund after payment</li>
+												<li>Vehicles keys should leave in the parking reception</li>
+												<li>Can't Accept Illegle vehicles</li>
+											</ol>
+										</div>
+										<div class="col-md-5">
+											<div class="container-fluid text-center">
+												<article>Parking Booking Ticketing</article>
+												<p>It's a official package which provides more reliable services</p>
+												<br><br><br>
+												<button class="btn  btn-outline-primary"
+													onclick="showService()">PayToPark</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Subcription -->
+						<div class="tab-pane " id="subscription" role="tabpanel">
+							<div class="card">
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<h3 class="mb-0">Subscription service prequisites are listed below</h3>
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-7">
+											<article>ALL About This Package</article>
+											<ol class="p-3">
+												<li>It's a Subscription package</li>
+												<li>It has Valid Date and time </li>
+												<li>Vehicles parking cost will be determined as a subscription based
+												</li>
+												<li>Parking will be opened 24 hours </li>
+											</ol>
+											<hr>
+											<article>Prerequisites of PBT</article>
+											<ol class="p-3">
+												<li>Vehicles should be veirified as a subscription service and take a
+													token</li>
+												<li>Payment should be full for a subscrition</li>
+												<li>Could't accept any installment for payment</li>
+												<li>Vehicles keys should leave in the parking reception</li>
+												<li>Can't Accept Illegle vehicles</li>
+											</ol>
+										</div>
+										<div class="col-md-5">
+											<div class="container-fluid text-center">
+												<article>Parking Booking Ticketing</article>
+												<p>It's a Subscription package where you can take services as a
+													subscription based.</p>
+												<br><br><br>
+												<button class="btn  btn-outline-primary"
+													onclick="showService()">Subscription</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Official-->
+						<div class="tab-pane " id="official" role="tabpanel">
+							<div class="card">
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<h3>Official service prequisites are listed below !</h3>
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-7">
+											<article>About This Package</article>
+											<ol class="p-3">
+												<li>It's a Official package</li>
+												<li>It has Valid Date and time </li>
+												<li>Vehicles parking cost will be determined number of MIN and MAX</li>
+												<li>Parking will be opened 24 hours </li>
+											</ol>
+											<hr>
+											<article>Prerequisites of PBT</article>
+											<ol class="p-3">
+												<li>Vehicles should be identified from the Office stamp, if out of
+													people use need token</li>
+												<li>Payment should be in the time after complete month</li>
+												<li>Could't accept any installment for payment</li>
+												<li>Vehicles keys should leave in the parking reception</li>
+												<li>Can't Accept Illegle vehicles</li>
+											</ol>
+										</div>
+										<div class="col-md-5">
+											<div class="container-fluid text-center">
+												<article>Parking Booking Ticketing</article>
+												<p>It's a official package which provides more reliable services</p>
+												<br><br><br>
+												<button class="btn  btn-outline-primary"
+													onclick="showService()">Official</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
-		<div class="container" id="profile">
+		<!-- Settings-->
+		<div class="container mt-4" id="Setting">
+			<div class="row">
+				<div class="col-md-12">
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Services -->
+		<div class="container mt-4 mb" id="services">
+			<div class="row">
+				<div class="col-md-6">
+					<h3 class="mb-0" id="paytoparkd">PayToPark Service</h3>
+					<h3 class="mb-0" id="subscriptiond">Subscription Service</h3>
+					<h3 class="mb-0" id="officiald">Official Service</h3>
+				</div>
+				<div class="col-md-6 text-right">
+					<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="card">
+						<div class="card-body">
+							<div class="progress">
+								<div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
+									role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+									style="width: 2%"></div>
+							</div>
+
+							<form th:action="@{/pbt/save_services}" method="post" onsubmit="return onSubmitService()">
+								<div class="accordion mt-2" id="accordionExample">
+
+
+
+									<div class="card">
+										<div id="headingOne">
+										</div>
+
+										<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+											data-bs-parent="#accordionExample">
+											<div class="card-body">
+												<div class="row">
+													<div "col-md-12">
+														<h3 class="mb-0"><b><u>Services</u></b></h3>
+													</div>
+												</div>
+
+												<div class="row">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="service">Srvice Type</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fa fa-wrench"></i>
+																		</span>
+																	</div>
+																	<select type="text" name="serviceType"
+																		class="form-control">
+																		<option>Select type of services</option>
+																		<option value="paytopark">PayToPark</option>
+																		<option value="official">Official</option>
+																		<option value="subscription">Subscription
+																		</option>
+																	</select>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="service">Enter Date</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fa fa-calendar"></i>
+																		</span>
+																	</div>
+																	<input type="date" name="enterDate"
+																		class="form-control" />
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="row mt-3">
+
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="duration">Exit Date</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fas fa-calendar"></i>
+																		</span>
+																	</div>
+																	<input type="date" name="exitDate"
+																		class="form-control" />
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="card">
+										<div id="headingTwo">
+
+										</div>
+										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+											data-bs-parent="#accordionExample">
+											<div class="card-body">
+												<div class="row">
+													<div "col-md-12">
+														<h3 class="mb-0"><b><u>Vehicle</u></b></h3>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="Vehiclename">Vehical Type</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fas fa-car"></i>
+																		</span>
+																	</div>
+																	<input type="text" name="vehicleType"
+																		class="form-control"
+																		placeholder="vehicle Type" />
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="Vehiclenumber">model</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fa fa-copy"></i>
+																		</span>
+																	</div>
+																	<input type="text" name="model" class="form-control"
+																		placeholder="model" />
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<div class="row mt-3">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="Vehiclename">Plate Number</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fas fa-id-card"></i>
+																		</span>
+																	</div>
+																	<input type="text" name="LicencePlateNumber"
+																		class="form-control"
+																		placeholder=" Plate Number" />
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="color">License Number
+																</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fa fa-pencil"></i>
+																		</span>
+																	</div>
+																	<input type="text" name="color"
+																		placeholder="Color of vehilce"
+																		class="form-control" />
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div>
+												</div>
+											</div>
+										</div>
+
+
+
+
+										<div class="card">
+											<div id="headingThree">
+
+											</div>
+											<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+												data-bs-parent="#accordionExample">
+												<div class="card-body">
+													<div class="row">
+														<div "col-md-12">
+															<h3 class="mb-0"><b><u>Parking Location</u></b></h3>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="service">State</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-wrench"></i>
+																			</span>
+																		</div>
+																		<input type="text" placeholder="State"
+																			name="state" class="form-control">
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Street</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-pencil"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="street"
+																			class="form-control" placeholder="Street" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-3">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="service">City</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-wrench"></i>
+																			</span>
+																		</div>
+																		<input type="text" placeholder="city"
+																			name="city" class="form-control">
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Spot</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-pencil"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="spot"
+																			class="form-control" placeholder="Spot" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="card">
+											<div id="headingFour">
+
+											</div>
+											<div id="collapseFour" class="collapse" aria-labelledby="headingThree"
+												data-bs-parent="#accordionExample">
+												<div class="card-body">
+													<div class="row">
+														<div "col-md-12">
+															<h3 class="mb-0"><b><u>Payment</u></b></h3>
+														</div>
+													</div>
+													<div class="row">														
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Duration</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-calendar"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="duration"
+																			class="form-control"
+																			placeholder="Duration" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="service">Cost</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-wrench"></i>
+																			</span>
+																		</div>
+																		<input type="text" class="form-control"
+																			name="cost" placeholder="Cost">
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-3">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="service">discount</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-wrench"></i>
+																			</span>
+																		</div>
+																		<input type="text" class="form-control"
+																			name="discount" placeholder="discount" id="discount">
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Payment Date</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-calendar"></i>
+																			</span>
+																		</div>
+																		<input type="date" name="paymentDate"
+																			class="form-control"
+																			placeholder="Duration" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+										
+													<div class="row mt-4">
+														<div class="contianer">
+															<button type="submit" class="btn btn-primary">Submit</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class="steps">
+										<div class="step-item">
+											<button id="step-1-button" class="step-button text-center"
+												style="color: #0f2027;" type="button">
+												1
+											</button>
+											<div class="step-title" style="display: inline;">
+												Service
+											</div>
+										</div>
+
+										<div class="step-item">
+											<button id="step-2-button" class="step-button text-center"
+												style="color: #0f2027; display: inline;" type="button">
+												2
+											</button>
+											<div class="step-title" style="display: inline;">
+												Vehicle
+											</div>
+										</div>
+
+										<div class="step-item">
+											<button id="step-3-button" class="step-button" style="color: #0f2027;"
+												type="button">
+												3
+											</button>
+											<div class="step-title" style="display: inline;">
+												Location
+											</div>
+										</div>
+										<div class="step-item">
+											<button id="step-4-button" class="step-button text-center"
+												style="color: #0f2027;" type="button">
+												4
+											</button>
+											<div class="step-title" style="display: inline;">
+												Payment
+											</div>
+										</div>
+								
+
+									</div>
+								</div>
+
+							</form>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Profile -->
+
+		<div class="container mt-4" id="profile">
+			<div class="row">
+				<div class="col-md-6">
+					<h3 class="mb-0">Profile</h3>
+				</div>
+				<div class="col-md-6 text-right">
+					<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
+				</div>
+			</div>
+			<hr>
 			<div class="card">
-				<div class="card-header bg-secondary text-light">
-					<div class="row">
-						<div class="col-md-11 mb-0">
-							<span style="font-size: xx-large;">User Information !</span>
-						</div>
-						<div class="col-md-1 mb-0 text-right">
-							<span style="font-size: xx-large;" onclick="cancelProfile()">&times;</span>
-						</div>
+				<div class="row">
+					<div class="col-md-11">
+						<h3 class="mb-0">User Information !</h3>
+					</div>
+					<div class="col-md-1 text-right">
+						<h3 class="mb-0" onclick="cancelProfile()">&times;</h3>
 					</div>
 				</div>
 				<div class="card-body">
@@ -139,7 +874,78 @@
 				</div>
 			</div>
 
+
+			<!-- Stepper JavaScript -->
+			<script>
+				document.addEventListener("DOMContentLoaded", function () {
+					const stepButtons = document.querySelectorAll('.step-button');
+					const progress = document.querySelector('#progress');
+
+					Array.from(stepButtons).forEach((button, index) => {
+						button.addEventListener('click', () => {
+							progress.setAttribute('value', index * 100 / (stepButtons.length - 1));
+
+							stepButtons.forEach((item, secindex) => {
+								if (index > secindex) {
+									item.classList.add('done');
+								}
+								if (index < secindex) {
+									item.classList.remove('done');
+								}
+							});
+						});
+					});
+				});
+
+
+				document.addEventListener("DOMContentLoaded", function () {
+					const progressBar = document.getElementById("progress-bar");
+					const step1Button1 = document.getElementById("step-1-button");
+					const step2Button2 = document.getElementById("step-2-button");
+					const step3Button3 = document.getElementById("step-3-button");
+					const step4Button4 = document.getElementById("step-4-button");
+			
+
+
+					const step1Content1 = document.getElementById("collapseOne");
+					const step2Content2 = document.getElementById("collapseTwo");
+					const step3Content3 = document.getElementById("collapseThree");
+					const step4Content4 = document.getElementById("collapseFour");
+				
+
+
+					const stepButtons = [step1Button1, step2Button2, step3Button3, step4Button4];
+					const stepContents = [step1Content1, step2Content2, step3Content3, step4Content4];
+
+					stepButtons.forEach((button, index) => {
+						button.addEventListener("click", function (event) {
+							progressBar.style.width = `${(index + 1) * 25}%`;
+
+							stepContents.forEach((content) => {
+								content.classList.remove("show");
+							});
+
+							stepContents[index].classList.add("show");
+
+						});
+					});
+
+				});
+				
+				function onSubmitService(){
+					var dis = document.getElementById('discount').value;
+					if(dis == ""){
+						alert("Discount is Empty ?");
+						return 
+					}
+					
+				}
+
+			</script>
+
+
 	</section>
+
 </body>
 
 </html>

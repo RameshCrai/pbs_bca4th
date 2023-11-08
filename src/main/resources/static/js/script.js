@@ -30,11 +30,26 @@ function Showmenu() {
 	document.getElementById('pbt').style.display = 'none';
 
 }
-
-function showProfile(){
-	document.getElementById('profile').style.display = 'block';
-}
-
-function cancelProfile(){
+function showDashboard() {
+	document.getElementById('services').style.display = 'none';
+	document.getElementById('dashboard').style.display = 'block';
 	document.getElementById('profile').style.display = 'none';
 }
+
+function showProfile() {
+	document.getElementById('profile').style.display = 'block';
+	document.getElementById('services').style.display = 'none';
+	document.getElementById('dashboard').style.display = 'none';
+}
+
+function cancelProfile() {
+	document.getElementById('profile').style.display = 'none';
+	document.getElementById('dashboard').style.display = 'block';
+}
+
+function showService() {
+	document.getElementById('services').style.display = 'block';
+	document.getElementById('dashboard').style.display = 'none';
+	document.getElementById('profile').style.display = 'none';
+}
+
