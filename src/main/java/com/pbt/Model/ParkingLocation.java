@@ -19,6 +19,8 @@ public class ParkingLocation {
 	private String street;
 	private String city;
 	private String spot;
+	private String district;
+	private String municipality;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Vehicle vehicle;
@@ -31,19 +33,6 @@ public class ParkingLocation {
 	}
 
 	
-
-	public ParkingLocation(long parkingID, String state, String street, String city, String spot, Vehicle vehicle, Payment payment) {
-		super();
-		this.parkingID = parkingID;
-		this.state = state;
-		this.street = street;
-		this.city = city;
-		this.spot = spot;
-		this.vehicle = vehicle;
-		this.payment = payment;
-	}
-
-
 
 	public long getParkingID() {
 		return parkingID;
@@ -84,6 +73,33 @@ public class ParkingLocation {
 	public void setSpot(String spot) {
 		this.spot = spot;
 	}
+
+	public String getDistrict() {
+		return district;
+	}
+
+
+	public void setDistrict(String district) {
+		this.district = district;
+	}
+
+
+
+	public String getMunicipality() {
+		return municipality;
+	}
+
+
+
+	public void setMunicipality(String municipality) {
+		this.municipality = municipality;
+	}
+
+
+
+
+
+
 
 	public Vehicle getVehicle() {
 		return vehicle;

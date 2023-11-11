@@ -11,44 +11,32 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
 @Entity
 public class Vehicle {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long vehicleID;
 	private String vehicleType;
 	private String model;
-	private String LicencePlateNumber;
+	private String licenceNumber;
 	private String color;
-	
+	private String vehicleName;
+	private String plateNumber;
+	private int numberofVehicle;
+
 	@ManyToOne(fetch = FetchType.EAGER)
-    private User user;
-	
+	private User user;
+
 	@OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<ParkingLocation> parkAtParkingLocation = new LinkedList<ParkingLocation>();
 
 	public Vehicle() {
 		super();
-	}
-
-	
-
-	public Vehicle(long vehicleID, String vehicleType, String model,  String licencePlateNumber,
-			String color, User user, List<ParkingLocation> parkAtParkingLocation) {
-		super();
-		this.vehicleID = vehicleID;
-		this.vehicleType = vehicleType;
-		this.model = model;
-		this.LicencePlateNumber = licencePlateNumber;
-		this.color = color;
-		this.user = user;
-		this.parkAtParkingLocation = parkAtParkingLocation;
 	}
 
 
@@ -69,40 +57,54 @@ public class Vehicle {
 		this.vehicleType = vehicleType;
 	}
 
-	
-
 	public String getModel() {
 		return model;
 	}
-
-
 
 	public void setModel(String model) {
 		this.model = model;
 	}
 
-
-
-	public String getLicencePlateNumber() {
-		return LicencePlateNumber;
+	public String getLicenceNumber() {
+		return licenceNumber;
 	}
 
-
-
-	public void setLicencePlateNumber(String licencePlateNumber) {
-		LicencePlateNumber = licencePlateNumber;
+	public void setLicenceNumber(String licenceNumber) {
+		this.licenceNumber = licenceNumber;
 	}
 
+	public String getVehicleName() {
+		return vehicleName;
+	}
 
+	public void setVehicleName(String vehicleName) {
+		this.vehicleName = vehicleName;
+	}
+
+	public String getPlateNumber() {
+		return plateNumber;
+	}
+
+	public void setPlateNumber(String plateNumber) {
+		this.plateNumber = plateNumber;
+	}
 
 	public String getColor() {
 		return color;
 	}
 
-
-
 	public void setColor(String color) {
 		this.color = color;
+	}
+
+	public int getNumberofVehicle() {
+		return numberofVehicle;
+	}
+
+
+
+	public void setNumberofVehicle(int numberofVehicle) {
+		this.numberofVehicle = numberofVehicle;
 	}
 
 
@@ -122,9 +124,5 @@ public class Vehicle {
 	public void setParkAtParkingLocation(List<ParkingLocation> parkAtParkingLocation) {
 		this.parkAtParkingLocation = parkAtParkingLocation;
 	}
-	
-	
-	
 
-	
 }

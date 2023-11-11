@@ -117,6 +117,14 @@
 		.mb {
 			margin-bottom: 110px;
 		}
+
+		.input-group-text {
+			width: 40px;
+		}
+
+		#messageHIDE {
+			display: none;
+		}
 	</style>
 
 	<script th:src="@{/js/script.js}"></script>
@@ -158,13 +166,14 @@
 		<a href="#" onclick="showService()">
 			<i class="fa fa-wrench"></i>Services
 		</a>
+		<a href="/pbt/fetch_services_details" target="_parent">
+			<i class="fa fa-line-chart"></i>Analytics
+		</a>
 		<a href="#">
 			<i class="fa fa-cog"></i>Settings
 		</a>
 
-		<a href="#" target="_parent">
-			<i class="fa fa-line-chart"></i>Analytics
-		</a>
+
 		<a href="#">
 			<i class="fa fa-bell"></i>Notification
 		</a>
@@ -179,6 +188,10 @@
 
 		<!-- Dashboard -->
 		<div class="container mt-4" id="dashboard">
+			<div id="messageHIDE" th:if="${session.mes}" th:classappend="${session.mes.typeofMessage}"
+				class="alert mb-2" role="alert">
+				<p th:text="${session.mes.message}"></p>
+			</div>
 			<div class="row">
 				<div class="col-md-12">
 					<h3 class="mb-0">Dashboard</h3>
@@ -375,7 +388,7 @@
 									style="width: 2%"></div>
 							</div>
 
-							<form th:action="@{/pbt/save_services}" method="post" onsubmit="return onSubmitService()">
+							<form th:action="@{/pbt/save_services}" method="post">
 								<div class="accordion mt-2" id="accordionExample">
 
 
@@ -407,8 +420,9 @@
 																		</span>
 																	</div>
 																	<select type="text" name="serviceType"
-																		class="form-control">
-																		<option>Select type of services</option>
+																		id="servicetype" class="form-control">
+																		<option value="">Select type of services
+																		</option>
 																		<option value="paytopark">PayToPark</option>
 																		<option value="official">Official</option>
 																		<option value="subscription">Subscription
@@ -430,7 +444,7 @@
 																			<i class="fa fa-calendar"></i>
 																		</span>
 																	</div>
-																	<input type="date" name="enterDate"
+																	<input type="date" name="enterDate" id="enterdate"
 																		class="form-control" />
 																</div>
 															</div>
@@ -438,7 +452,6 @@
 													</div>
 												</div>
 												<div class="row mt-3">
-
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-3">
@@ -451,8 +464,40 @@
 																			<i class="fas fa-calendar"></i>
 																		</span>
 																	</div>
-																	<input type="date" name="exitDate"
+																	<input type="date" name="exitDate" id="exitdate"
 																		class="form-control" />
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="duration">Time From</label>
+															</div>
+															<div class="col-md-4">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fas fa-clock"></i>
+																		</span>
+																	</div>
+																	<input type="time" name="enterTime" id="entertime"
+																		placeholder="Enter Time" class="form-control" />
+																</div>
+															</div>
+															<div class="col-md-1">
+																<label for="duration">To</label>
+															</div>
+															<div class="col-md-4">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fas fa-clock"></i>
+																		</span>
+																	</div>
+																	<input type="time" name="exitTime" id="exittime"
+																		placeholder="Exit Time" class="form-control" />
 																</div>
 															</div>
 														</div>
@@ -478,18 +523,23 @@
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-3">
-																<label for="Vehiclename">Vehical Type</label>
+																<label for="Vehiclename">Vehicle Type</label>
 															</div>
 															<div class="col-md-9">
+
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
 																		<span class="input-group-text">
 																			<i class="fas fa-car"></i>
 																		</span>
 																	</div>
-																	<input type="text" name="vehicleType"
-																		class="form-control"
-																		placeholder="vehicle Type" />
+																	<select type="text" name="vehicleType"
+																		id="vehicletype" class="form-control">
+																		<option value="">Select type of Vehicle</option>
+																		<option value="car">CAR</option>
+																		<option value="bike">BIKE</option>
+																		</option>
+																	</select>
 																</div>
 															</div>
 														</div>
@@ -497,7 +547,31 @@
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-3">
-																<label for="Vehiclenumber">model</label>
+																<label for="Vehiclenumber">Vehicle Name</label>
+															</div>
+															<div class="col-md-9">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fa fa-car"></i>
+																		</span>
+																	</div>
+																	<input type="text" name="vehicleName"
+																		id="vehiclename" class="form-control"
+																		placeholder="Vehicle Name" />
+																</div>
+															</div>
+
+														</div>
+													</div>
+
+												</div>
+
+												<div class="row mt-3">
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="model">Model</label>
 															</div>
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
@@ -507,14 +581,43 @@
 																		</span>
 																	</div>
 																	<input type="text" name="model" class="form-control"
-																		placeholder="model" />
+																		id="modal" placeholder="Model" />
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="col-md-6">
+														<div class="row">
+															<div class="col-md-3">
+																<label for="color">Number of Vehicle</label>
+															</div>
+															<div class="col-md-5">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fa fa-sort-numeric-asc"></i>
+																		</span>
+																	</div>
+																	<input type="number" name="numberofVehicle"
+																		id="numberofvehicle" class="form-control"
+																		placeholder="eg:2" />
+																</div>
+															</div>
+															<div class="col-md-4">
+																<div class="form-group input-group mb-0">
+																	<div class="input-group-prepend">
+																		<span class="input-group-text">
+																			<i class="fa fa-copy"></i>
+																		</span>
+																	</div>
+																	<input type="text" name="color" class="form-control"
+																		id="color" placeholder="color" />
 																</div>
 															</div>
 														</div>
 													</div>
 												</div>
-
-												<div class="row mt-3">
+												<div class="row mt-2">
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-3">
@@ -527,8 +630,8 @@
 																			<i class="fas fa-id-card"></i>
 																		</span>
 																	</div>
-																	<input type="text" name="LicencePlateNumber"
-																		class="form-control"
+																	<input type="text" name="plateNumber"
+																		id="platnumber" class="form-control"
 																		placeholder=" Plate Number" />
 																</div>
 															</div>
@@ -547,8 +650,8 @@
 																			<i class="fa fa-pencil"></i>
 																		</span>
 																	</div>
-																	<input type="text" name="color"
-																		placeholder="Color of vehilce"
+																	<input type="text" name="licenceNumber"
+																		id="licencenumber" placeholder="Licence Number"
 																		class="form-control" />
 																</div>
 															</div>
@@ -585,11 +688,12 @@
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fa fa-wrench"></i>
+																				<i class="fa fa-map"></i>
 																			</span>
 																		</div>
 																		<input type="text" placeholder="State"
-																			name="state" class="form-control">
+																			id="state" name="state"
+																			class="form-control">
 																	</div>
 																</div>
 															</div>
@@ -597,23 +701,44 @@
 														<div class="col-md-6">
 															<div class="row">
 																<div class="col-md-3">
-																	<label for="duration">Street</label>
+																	<label for="duration">District</label>
 																</div>
 																<div class="col-md-9">
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fas fa-pencil"></i>
+																				<i class="fas fa-area-chart"></i>
 																			</span>
 																		</div>
-																		<input type="text" name="street"
-																			class="form-control" placeholder="Street" />
+																		<input type="text" name="district" id="district"
+																			class="form-control"
+																			placeholder="District" />
 																	</div>
 																</div>
 															</div>
 														</div>
+
 													</div>
 													<div class="row mt-3">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="service">Municipality</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-building"></i>
+																			</span>
+																		</div>
+																		<input type="text" placeholder="Municipality"
+																			id="municipality" name="municipality"
+																			class="form-control">
+																	</div>
+																</div>
+															</div>
+														</div>
 														<div class="col-md-6">
 															<div class="row">
 																<div class="col-md-3">
@@ -623,11 +748,31 @@
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fa fa-wrench"></i>
+																				<i class="fa fa-city"></i>
 																			</span>
 																		</div>
-																		<input type="text" placeholder="city"
+																		<input type="text" placeholder="city" id="city"
 																			name="city" class="form-control">
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-3">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Street</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-road"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="street" id="street"
+																			class="form-control" placeholder="Street" />
 																	</div>
 																</div>
 															</div>
@@ -641,10 +786,10 @@
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fas fa-pencil"></i>
+																				<i class="fas fa-map-marker"></i>
 																			</span>
 																		</div>
-																		<input type="text" name="spot"
+																		<input type="text" name="spot" id="spot"
 																			class="form-control" placeholder="Spot" />
 																	</div>
 																</div>
@@ -658,7 +803,6 @@
 
 										<div class="card">
 											<div id="headingFour">
-
 											</div>
 											<div id="collapseFour" class="collapse" aria-labelledby="headingThree"
 												data-bs-parent="#accordionExample">
@@ -668,7 +812,7 @@
 															<h3 class="mb-0"><b><u>Payment</u></b></h3>
 														</div>
 													</div>
-													<div class="row">														
+													<div class="row">
 														<div class="col-md-6">
 															<div class="row">
 																<div class="col-md-3">
@@ -678,10 +822,10 @@
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fas fa-calendar"></i>
+																				<i class="fas fa-clock"></i>
 																			</span>
 																		</div>
-																		<input type="text" name="duration"
+																		<input type="text" name="duration" id="duration"
 																			class="form-control"
 																			placeholder="Duration" />
 																	</div>
@@ -697,11 +841,11 @@
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fa fa-wrench"></i>
+																				<i class="fa fa-sort-amount-asc"></i>
 																			</span>
 																		</div>
 																		<input type="text" class="form-control"
-																			name="cost" placeholder="Cost">
+																			id="cost" name="cost" placeholder="Cost">
 																	</div>
 																</div>
 															</div>
@@ -711,17 +855,18 @@
 														<div class="col-md-6">
 															<div class="row">
 																<div class="col-md-3">
-																	<label for="service">discount</label>
+																	<label for="service">Amount</label>
 																</div>
 																<div class="col-md-9">
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fa fa-wrench"></i>
+																				<i class="fa fa-sort-amount-asc"></i>
 																			</span>
 																		</div>
 																		<input type="text" class="form-control"
-																			name="discount" placeholder="discount" id="discount">
+																			name="amount" placeholder="amount"
+																			id="amount">
 																	</div>
 																</div>
 															</div>
@@ -739,64 +884,58 @@
 																			</span>
 																		</div>
 																		<input type="date" name="paymentDate"
-																			class="form-control"
+																			id="paymentdate" class="form-control"
 																			placeholder="Duration" />
 																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-										
+
 													<div class="row mt-4">
-														<div class="contianer">
-															<button type="submit" class="btn btn-primary">Submit</button>
+														<div class="col-md-12 text-center">
+															<hr>
+															<button type="submit" onclick="onSubmitPayment()"
+																class="btn btn-primary">Submit</button>
 														</div>
 													</div>
+
 												</div>
 											</div>
 										</div>
 									</div>
 
-									<div class="steps">
+									<div class="steps mt-2">
 										<div class="step-item">
-											<button id="step-1-button" class="step-button text-center"
-												style="color: #0f2027;" type="button">
-												1
-											</button>
-											<div class="step-title" style="display: inline;">
+											<button id="step-1-button" class="btn btn-outline-primary text-center"
+												style="color: #0f2027;" type="button" onclick="onService()">
 												Service
-											</div>
+											</button>
 										</div>
 
 										<div class="step-item">
-											<button id="step-2-button" class="step-button text-center"
-												style="color: #0f2027; display: inline;" type="button">
-												2
-											</button>
-											<div class="step-title" style="display: inline;">
+											<button id="step-2-button" class="btn btn-outline-primary text-center"
+												style="color: #0f2027; display: inline;" type="button"
+												onclick="onVehicle()">
 												Vehicle
-											</div>
+											</button>
+
 										</div>
 
 										<div class="step-item">
-											<button id="step-3-button" class="step-button" style="color: #0f2027;"
-												type="button">
-												3
-											</button>
-											<div class="step-title" style="display: inline;">
+											<button id="step-3-button" class="btn btn-outline-primary text-center"
+												style="color: #0f2027;" onclick="onLocation()" type="button">
 												Location
-											</div>
+											</button>
+
 										</div>
 										<div class="step-item">
-											<button id="step-4-button" class="step-button text-center"
-												style="color: #0f2027;" type="button">
-												4
-											</button>
-											<div class="step-title" style="display: inline;">
+											<button id="step-4-button" class="btn btn-outline-primary text-center"
+												style="color: #0f2027;" type="button" onclick="onPayment()">
 												Payment
-											</div>
+											</button>
 										</div>
-								
+
 
 									</div>
 								</div>
@@ -810,7 +949,6 @@
 		</div>
 
 		<!-- Profile -->
-
 		<div class="container mt-4" id="profile">
 			<div class="row">
 				<div class="col-md-6">
@@ -844,26 +982,26 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-6">
-											<h6>FullName : <b><span style="color: black;"
-														th:text="${user.fname}"></span> <span style="color: black;"
-														th:text="${user.lname}"></span></b>
+											<h6>FullName : <b><span style="color: black;" th:text="${user.fname}"
+														th:if="${user != null}"></span> <span style="color: black;"
+														th:text="${user.lname}" th:if="${user != null}"></span></b>
 											</h6>
-											<h6>Email : <b><span style="color: black;"
-														th:text="${user.email}"></span></b></h6>
-											<h6>Mobile : <b><span style="color: black;"
-														th:text="${user.mobile}"></span></b>
+											<h6>Email : <b><span style="color: black;" th:text="${user.email}"
+														th:if="${user != null}"></span></b></h6>
+											<h6>Mobile : <b><span style="color: black;" th:text="${user.mobile}"
+														th:if="${user != null}"></span></b>
 											</h6>
 
 										</div>
 										<div class="col-md-6">
-											<h6>Agreement : <b><span style="color: black;"
-														th:text="${user.agreement}"></span></b>
+											<h6>Agreement : <b><span style="color: black;" th:text="${user.agreement}"
+														th:if="${user != null}"></span></b>
 											</h6>
-											<h6>Date of Birth : <b><span style="color: black;"
-														th:text="${user.dob}"></span></b>
+											<h6>Date of Birth : <b><span style="color: black;" th:text="${user.dob}"
+														th:if="${user != null}"></span></b>
 											</h6>
-											<h6>UserRole : <b><span style="color: black;"
-														th:text="${user.userrolename}"></span></b>
+											<h6>UserRole : <b><span style="color: black;" th:text="${user.userrolename}"
+														th:if="${user != null}"></span></b>
 											</h6>
 										</div>
 									</div>
@@ -873,75 +1011,164 @@
 					</div>
 				</div>
 			</div>
+		</div>
 
+		
+		<!-- Stepper JavaScript -->
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const stepButtons = document.querySelectorAll('.step-button');
+				const progress = document.querySelector('#progress');
 
-			<!-- Stepper JavaScript -->
-			<script>
-				document.addEventListener("DOMContentLoaded", function () {
-					const stepButtons = document.querySelectorAll('.step-button');
-					const progress = document.querySelector('#progress');
+				Array.from(stepButtons).forEach((button, index) => {
+					button.addEventListener('click', () => {
+						progress.setAttribute('value', index * 100 / (stepButtons.length - 1));
 
-					Array.from(stepButtons).forEach((button, index) => {
-						button.addEventListener('click', () => {
-							progress.setAttribute('value', index * 100 / (stepButtons.length - 1));
-
-							stepButtons.forEach((item, secindex) => {
-								if (index > secindex) {
-									item.classList.add('done');
-								}
-								if (index < secindex) {
-									item.classList.remove('done');
-								}
-							});
+						stepButtons.forEach((item, secindex) => {
+							if (index > secindex) {
+								item.classList.add('done');
+							}
+							if (index < secindex) {
+								item.classList.remove('done');
+							}
 						});
 					});
 				});
+			});
 
 
-				document.addEventListener("DOMContentLoaded", function () {
-					const progressBar = document.getElementById("progress-bar");
-					const step1Button1 = document.getElementById("step-1-button");
-					const step2Button2 = document.getElementById("step-2-button");
-					const step3Button3 = document.getElementById("step-3-button");
-					const step4Button4 = document.getElementById("step-4-button");
-			
+			document.addEventListener("DOMContentLoaded", function () {
+				const progressBar = document.getElementById("progress-bar");
+				const step1Button1 = document.getElementById("step-1-button");
+				const step2Button2 = document.getElementById("step-2-button");
+				const step3Button3 = document.getElementById("step-3-button");
+				const step4Button4 = document.getElementById("step-4-button");
 
 
-					const step1Content1 = document.getElementById("collapseOne");
-					const step2Content2 = document.getElementById("collapseTwo");
-					const step3Content3 = document.getElementById("collapseThree");
-					const step4Content4 = document.getElementById("collapseFour");
-				
+
+				const step1Content1 = document.getElementById("collapseOne");
+				const step2Content2 = document.getElementById("collapseTwo");
+				const step3Content3 = document.getElementById("collapseThree");
+				const step4Content4 = document.getElementById("collapseFour");
 
 
-					const stepButtons = [step1Button1, step2Button2, step3Button3, step4Button4];
-					const stepContents = [step1Content1, step2Content2, step3Content3, step4Content4];
 
-					stepButtons.forEach((button, index) => {
-						button.addEventListener("click", function (event) {
-							progressBar.style.width = `${(index + 1) * 25}%`;
+				const stepButtons = [step1Button1, step2Button2, step3Button3, step4Button4];
+				const stepContents = [step1Content1, step2Content2, step3Content3, step4Content4];
 
-							stepContents.forEach((content) => {
-								content.classList.remove("show");
-							});
+				stepButtons.forEach((button, index) => {
+					button.addEventListener("click", function (event) {
+						progressBar.style.width = `${(index + 1) * 25}%`;
 
-							stepContents[index].classList.add("show");
-
+						stepContents.forEach((content) => {
+							content.classList.remove("show");
 						});
-					});
 
+						stepContents[index].classList.add("show");
+
+					});
 				});
-				
-				function onSubmitService(){
-					var dis = document.getElementById('discount').value;
-					if(dis == ""){
-						alert("Discount is Empty ?");
-						return 
-					}
-					
+
+			});
+
+
+			function onVehicle() {
+				var service = document.getElementById("servicetype").value;
+				var enterdate = document.getElementById("enterdate").value;
+				var exitdate = document.getElementById("exitdate").value;
+				var from = document.getElementById("entertime").value;
+				var to = document.getElementById("exittime").value;
+
+
+				if (service == "") {
+					alert("Service type isEmpty ?");
+
 				}
 
-			</script>
+
+			}
+
+			function onPayment() {
+				confirm("Payment Processing .........");
+
+				var service = document.getElementById("servicetype").value;
+				var enterdate = document.getElementById("enterdate").value;
+				var exitdate = document.getElementById("exitdate").value;
+				var fromTime = document.getElementById("entertime").value;
+				var toTime = document.getElementById("exittime").value;
+
+				var vehicletype = document.getElementById("vehicletype").value;
+
+				var duration = document.getElementById("duration");
+				var cosst = document.getElementById("cost");
+				var amount = document.getElementById("amount");
+				var paymentdate = document.getElementById("paymentdate");
+
+				var fromTimeDate = new Date("1970-01-01T" + fromTime);
+				var toTimeDate = new Date("1970-01-01T" + toTime);
+
+				const durationInMilliseconds = toTimeDate - fromTimeDate;
+				const hours = Math.floor(durationInMilliseconds / 3600000);
+				const durationBIKE = Math.abs(hours);
+
+				const bikeparkprice = 15;
+				const carparkprice = 50;
+
+				const enterDateTime = new Date(enterdate);
+				const exitDateTime = new Date(exitdate);
+
+				const currentDate = enterDateTime.getDate();
+				const endingDate = exitDateTime.getDate();
+
+				const DurationInHours = endingDate - currentDate;
+				const durationCAR = DurationInHours * 60;
+
+				const payablecarHours = Math.abs(durationCAR);
+
+				if (vehicletype == "bike") {
+
+					duration.value = durationBIKE + " HOURS";
+					cost.value = bikeparkprice;
+					amount.value = bikeparkprice * durationBIKE;
+
+
+				} else {
+
+					duration.value = payablecarHours + " HOURS";
+					cost.value = carparkprice;
+					amount.value = carparkprice * payablecarHours;
+
+
+				}
+
+			}
+
+
+
+
+
+			function onSubmitPayment() {
+				var duration = document.getElementById("duration").value;
+				var cost = document.getElementById("cost");
+				var paymentdate = document.getElementById("paymentDate");
+				var amount = document.getElementById("amount");
+				if (duration == "") {
+					alert("Enter duration ");
+				}
+			}
+
+
+
+			var duration = 2000; // 2 seconds
+			var messageElement = document.getElementById('messageHIDE');
+			messageElement.style.display = 'block';
+
+			setTimeout(function () {
+				messageElement.style.display = 'none';
+			}, duration);
+
+
+		</script>
 
 
 	</section>

@@ -1,10 +1,10 @@
 package com.pbt.Model;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
@@ -24,33 +24,25 @@ public class Services {
 	private Long serviceID;
 	private String serviceType;
 	
-	
-	@JsonFormat(pattern = "yyyy-MM-dd")
 	private LocalDate enterDate;
+    private LocalDate exitDate;
 	
-	@JsonFormat(pattern = "yyyy-MM-dd")
-	private LocalDate exitDate;
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_userid")
-    private User user;
+	private LocalTime enterTime;
+	private LocalTime exitTime;
+	
+	@ManyToOne
+	@JoinColumn(name = "user_userid")
+	private User user;
+
 	
 	@OneToMany(mappedBy = "service", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<Payment> hasPayment = new LinkedList<Payment>();
 	
 	public Services() {}
+	
 
-	public Services(Long serviceID, String serviceType,  LocalDate enterDate, LocalDate exitDate,
-			User user, List<Payment> hasPayment) {
-		super();
-		this.serviceID = serviceID;
-		this.serviceType = serviceType;
-		this.enterDate = enterDate;
-		this.exitDate = exitDate;
-		this.user = user;
-		this.hasPayment = hasPayment;
-	}
 
 	public Long getServiceID() {
 		return serviceID;
@@ -84,6 +76,32 @@ public class Services {
 	public void setExitDate(LocalDate exitDate) {
 		this.exitDate = exitDate;
 	}
+
+   
+
+	public LocalTime getEnterTime() {
+		return enterTime;
+	}
+
+
+
+	public void setEnterTime(LocalTime enterTime) {
+		this.enterTime = enterTime;
+	}
+
+
+
+	public LocalTime getExitTime() {
+		return exitTime;
+	}
+
+
+
+	public void setExitTime(LocalTime exitTime) {
+		this.exitTime = exitTime;
+	}
+
+
 
 	public User getUser() {
 		return user;

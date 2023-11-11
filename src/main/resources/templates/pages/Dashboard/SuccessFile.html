@@ -19,7 +19,186 @@
 </head>
 
 <body>
-	<h1>This  is Successfull </h1>
+	<!-- services list   -->
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-md-6">
+				<h3 class="mb-0">Parking list</h3>
+			</div>
+			<div class="col-md-6 text-right">
+				<h3 class="mb-0"><a href="/pbt/systemdashboard">Dashboard</a> </h3>
+			</div>
+		</div>
+		<hr>
+		<div class="row">
+			<div class="col-md-12">
+				<ul class="nav nav-tabs" role="tablist">
+					<li class="nav-item">
+						<a class="nav-link active" data-toggle="tab" href="#service" role="tab">
+							Service
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#vehicle" role="tab">
+							Vehicle
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#parking" role="tab">Parking Location</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" data-toggle="tab" href="#payment" role="tab">Payment</a>
+					</li>
+				</ul>
+				<div class="tab-content mt-4">
+					<!-- service -->
+					<div class="tab-pane active" id="service" role="tabpanel">
+						<div class="card">
+							<div class="card-body">
+								<table style="width: 100%;" border="1">
+									<thead>
+										<tr>
+											<th style="text-align: center;">S.N</th>
+											<th>Service Type</th>
+											<th>Enter Date</th>
+											<th>Exit Date</th>
+											<th>From Time</th>
+											<th>To Time</th>
+											<th style="width: 6%;">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="service : ${serviceslist}">
+											<td style="text-align: center;" th:text="${service.serviceID}"></td>
+											<td th:text="${service.serviceType}" th:if="${service !=null}"></td>
+											<td th:text="${service.enterDate}" th:if="${service !=null}"></td>
+											<td th:text="${service.exitDate}" th:if="${service !=null}"></td>
+											<td th:text="${service.enterTime}" th:if="${service !=null}"></td>
+											<td th:text="${service.exitTime}" th:if="${service !=null}"></td>
+											<td style="text-align: center;">
+												<a><i class="fa fa-edit"></i></a>
+												<a><i class="fa fa-trash"></i></a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- vehicle -->
+					<div class="tab-pane " id="vehicle" role="tabpanel">
+						<div class="card">
+							<div class="card-body">
+								<table style="width: 100%;" border="1">
+									<thead>
+										<tr>
+											<th style="text-align: center;">S.N</th>
+											<th>Vehicle Type</th>
+											<th>Vehicle Name</th>
+											<th>Model</th>
+											<th>Numb of Vehicle</th>
+											<th>Color</th>
+											<th>Plate Number</th>
+											<th>Licence Number</th>
+											<th style="width: 6%; text-align: center;">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="vehicle : ${vehiclelist}">
+											<td style="text-align: center;" th:text="${vehicle.vehicleID}"></td>
+											<td th:text="${vehicle.vehicleType}"></td>
+											<td th:text="${vehicle.vehicleName}"></td>
+											<td th:text="${vehicle.model}"></td>
+											<td th:text="${vehicle.numberofVehicle}"></td>
+											<td th:text="${vehicle.color}"></td>
+											<td th:text="${vehicle.plateNumber}"></td>
+											<td th:text="${vehicle.licenceNumber}"></td>
+											<td style="text-align: center;">
+												<a><i class="fa fa-edit"></i></a>
+												<a><i class="fa fa-trash"></i></a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<!-- parking -->
+					<div class="tab-pane " id="parking" role="tabpanel">
+						<div class="card">
+							<div class="card-body">
+								<table style="width: 100%;" border="1">
+									<thead>
+										<tr>
+											<th style="text-align: center;">S.N</th>
+											<th>State</th>
+											<th>District</th>
+											<th>Municipality</th>
+											<th>City</th>
+											<th>Street</th>
+											<th>Spot</th>
+											<th style="width: 6%; text-align: center;">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="location : ${locationlist}">
+											<td style="text-align: center;" th:text="${location.parkingID}"></td>
+											<td th:text="${location.state}"></td>
+											<td th:text="${location.district}"></td>
+											<td th:text="${location.municipality}"></td>
+											<td th:text="${location.city}"></td>
+											<td th:text="${location.street}"></td>
+											<td th:text="${location.spot}"></td>
+											<td style="text-align: center;">
+												<a><i class="fa fa-edit"></i></a>
+												<a><i class="fa fa-trash"></i></a>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					<!-- payment-->
+					<div class="tab-pane " id="payment" role="tabpanel">
+						<div class="card">
+							<div class="card-body">
+								<table style="width: 100%;" border="1">
+									<thead>
+										<tr>
+											<th style="text-align: center;">S.N</th>
+											<th>Duration</th>
+											<th>Cost</th>
+											<th>Amount</th>
+											<th>Payment Date</th>
+											<th style="width: 6%; text-align: center;">Action</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="payment: ${paymentlist}">
+											<td style="text-align: center;" th:text="${payment.paymentID}"></td>
+											<td th:text="${payment.duration}"></td>			
+											<td th:text="${payment.cost}"></td>		
+											<td th:text="${payment.amount}"></td>	
+											<td th:text="${payment.paymentDate}"></td>	
+											<td style="text-align: center;">
+												<a><i class="fa fa-edit"></i></a>
+												<a><i class="fa fa-trash"></i></a>
+											</td>							
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
 </body>
 
 </html>

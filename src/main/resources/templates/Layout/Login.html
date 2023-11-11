@@ -47,7 +47,7 @@
 						<h3 class="mb-0 text-center">Login here !!</h3>
 					</div>
 					<div class="card-body">
-						<form novalidate  th:action="@{/pbt/login_username_password}" method="post" id="Formvalidation">
+						<form novalidate th:action="@{/pbt/login_username_password}" method="post" id="Formvalidation">
 							<label>Email <span class="asterik">*</span> </label><br>
 							<div class="form-group input-group mb-0">
 								<div class="input-group-prepend">
@@ -61,7 +61,7 @@
 							</div>
 							<span id="emailError" class="error"></span>
 
-                            <label for="password" class="mt-2">Password<span class="asterik">*</span> </label><br>
+							<label for="password" class="mt-2">Password<span class="asterik">*</span> </label><br>
 							<div class="form-group input-group mb-0">
 								<div class="input-group-prepend">
 									<span class="input-group-text">
@@ -93,7 +93,7 @@
 									<span>Don't have an account? <a href="/pbt/signup">Signup</a></span>
 								</div>
 								<div class="col-md-5 text-right">
-									<a href="/Forget_Password">Forgot
+									<a th:href="@{/pbt/forgott_password}">Forgot
 										Password?</a>
 								</div>
 							</div>
@@ -103,61 +103,61 @@
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<script th:inline="javascript">
-		// form validation 
 
-/*
-		const form = document.getElementById('Formvalidation');
+		<script th:inline="javascript">
+			// form validation 
 
-		form.addEventListener('submit', function (event) {
-			event.preventDefault();
-
-			const email = document.getElementById('email').value;
-			const pass = document.getElementById('password').value;
-
-			const emailError = document.getElementById('emailError');
-			if (!email) {
-				emailError.textContent = 'Please Enter Email ';
-				emailError.style.display = 'block';
-				return;
-			} else {
-				emailError.style.display = 'none';
-			}
+			/*
+					const form = document.getElementById('Formvalidation');
 			
-			const emailMatch = /^\S+@\S+\.\S+$/;
-			if(!emailMatch.test(email)){
-				emailError.textContent = 'Please Enter Only Valid Email ?? ';
-				emailError.style.display = 'block';
-				return;
-			}else{
-				emailError.style.display = 'none';
-			}
-
-			const passError = document.getElementById('passwordError');
-			if (!pass) {
-				passError.textContent = 'please Enter Password ';
-				passError.style.display = 'block';
-				return;
-			} else {
-				passError.style.display = 'none';
-			}
+					form.addEventListener('submit', function (event) {
+						event.preventDefault();
 			
+						const email = document.getElementById('email').value;
+						const pass = document.getElementById('password').value;
 			
-		});
-		
-		*/
-       
-        //Message hide by js
-		var duration = 2000; // 2 seconds
-		var messageElement = document.getElementById('messageHIDE');
-		messageElement.style.display = 'block';
+						const emailError = document.getElementById('emailError');
+						if (!email) {
+							emailError.textContent = 'Please Enter Email ';
+							emailError.style.display = 'block';
+							return;
+						} else {
+							emailError.style.display = 'none';
+						}
+						
+						const emailMatch = /^\S+@\S+\.\S+$/;
+						if(!emailMatch.test(email)){
+							emailError.textContent = 'Please Enter Only Valid Email ?? ';
+							emailError.style.display = 'block';
+							return;
+						}else{
+							emailError.style.display = 'none';
+						}
+			
+						const passError = document.getElementById('passwordError');
+						if (!pass) {
+							passError.textContent = 'please Enter Password ';
+							passError.style.display = 'block';
+							return;
+						} else {
+							passError.style.display = 'none';
+						}
+						
+						
+					});
+					
+					*/
 
-		setTimeout(function () {
-			messageElement.style.display = 'none';
-		}, duration);
-	</script>
+			//Message hide by js
+			var duration = 2000; // 2 seconds
+			var messageElement = document.getElementById('messageHIDE');
+			messageElement.style.display = 'block';
+
+			setTimeout(function () {
+				messageElement.style.display = 'none';
+			}, duration);
+		</script>
 
 </body>
 

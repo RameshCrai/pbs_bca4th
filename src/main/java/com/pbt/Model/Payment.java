@@ -23,8 +23,8 @@ public class Payment {
 	private Long paymentID;
 	private String cost;
 	private String duration;
-	private String discount;
 	private LocalDate paymentDate;
+	private String amount;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Services service;
@@ -39,17 +39,6 @@ public class Payment {
 		super();
 	}
 
-	public Payment(Long paymentID, String cost, String duration, String discount, LocalDate paymentDate,
-			List<ParkingLocation> paidPayment, Services service) {
-		super();
-		this.paymentID = paymentID;
-		this.cost = cost;
-		this.duration = duration;
-		this.discount = discount;
-		this.paymentDate = paymentDate;
-		this.paidPayment = paidPayment;
-		this.service = service;
-	}
 
 	public Long getPaymentID() {
 		return paymentID;
@@ -75,12 +64,11 @@ public class Payment {
 		this.duration = duration;
 	}
 
-	public String getDiscount() {
-		return discount;
+	public String getAmount() {
+		return amount;
 	}
-
-	public void setDiscount(String discount) {
-		this.discount = discount;
+	public void setAmount(String amount) {
+		this.amount =  amount;
 	}
 
 	public LocalDate getPaymentDate() {

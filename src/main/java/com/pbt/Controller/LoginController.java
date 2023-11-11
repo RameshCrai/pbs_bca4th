@@ -21,6 +21,8 @@ public class LoginController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	
 
 	@GetMapping("/login")
 	public String userSignup(Model model) {
