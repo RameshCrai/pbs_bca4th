@@ -48,6 +48,9 @@ public class ServicesController {
 
 	@Autowired
 	private UserRepository userRepo;
+	
+	@Autowired
+	private EmailsenderService emailSend;
 
 	@GetMapping("/paytopark_service")
 	public String getPayToPark(Model model1) {
@@ -116,6 +119,9 @@ public class ServicesController {
 
 					this.paymentRepo.save(payment);
 					this.parkinglocationRepo.save(plocation);
+					
+					
+					this.emailSend.sendEmail(email, "PBTS service ", "pbts service have been verified "+service.getServiceType());
 
 					session.setAttribute("mes",
 							new MessageMaster("Parking Booking Ticketing System Applied Succesfully", "alert-success"));

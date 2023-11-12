@@ -29,6 +29,9 @@ public class SignupInfoController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private EmailsenderService Emailsend;
 
 	@GetMapping("/signup")
 	public String SingupInformation(Model model) {
@@ -78,6 +81,9 @@ public class SignupInfoController {
 				user.setUserrolename("ADMIN");
 
 				this.userRepository.save(user);
+				
+//				Email send to user 
+				this.Emailsend.sendEmail(user.getEmail(), "PBTS Singup successfuly ", "PBTS parking booking ticketing system is a park book system ");
 
 				session.setAttribute("mesg", new MessageMaster("Signup Successfully ", "alert-success"));
 
