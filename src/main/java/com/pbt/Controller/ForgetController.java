@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.pbt.Dao.UserRepository;
+import com.pbt.Entities.User;
 import com.pbt.ExceptionHandler.MessageMaster;
-import com.pbt.Model.User;
 
 import jakarta.servlet.http.HttpSession;
 

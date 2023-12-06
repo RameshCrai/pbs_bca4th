@@ -30,17 +30,7 @@
 			display: none;
 		}
 
-		#paytoparkd {
-			display: none;
-		}
 
-		#subscriptiond {
-			display: none;
-		}
-
-		#officiald {
-			display: none;
-		}
 
 		.card-header {
 			background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
@@ -125,6 +115,19 @@
 		#messageHIDE {
 			display: none;
 		}
+
+		#paytoparkd {
+			display: none;
+			color: #0f2027;
+		}
+
+		#subscriptiond {
+			display: none;
+		}
+
+		#officiald {
+			display: none;
+		}
 	</style>
 
 	<script th:src="@{/js/script.js}"></script>
@@ -154,7 +157,15 @@
 		<a href="Javascript:void(0)" class="closeBtn" onclick="closeNav()">&times;</a>
 
 		<a href="#" style="text-align: center;">
-			<figcaption>PBT</figcaption>
+			<div th:each="fileName : ${imgProfile}" class="container-fluid text-center">
+				<img th:src="@{'/profile/' + ${fileName}}" alt="Profile Image"
+					style="max-width: 100px; max-height: 100px; border-radius: 50%;" />
+			</div>
+			<figcaption>
+				<h6>Account : <b><span style="color: white;" th:text="${user.fname}" th:if="${user != null}"></span>
+						<span style="color: white" th:text="${user.lname}" th:if="${user != null}"></span></b>
+				</h6>
+			</figcaption>
 		</a>
 
 		<a href="#" class="active" onclick="showDashboard()">
@@ -163,14 +174,17 @@
 		<a href="#" onclick="showProfile()">
 			<i class="fa fa-user"></i>Profile
 		</a>
-		<a href="#" onclick="showService()">
+		<a href="#" onclick="showService1()">
 			<i class="fa fa-wrench"></i>Services
+		</a>
+		<a href="/pbt/userlist">
+			<i class="fa fa-user"></i>User List
 		</a>
 		<a href="/pbt/fetch_services_details" target="_parent">
 			<i class="fa fa-line-chart"></i>Analytics
 		</a>
-		<a href="#">
-			<i class="fa fa-cog"></i>Settings
+		<a href="/pbt/listofstate">
+			<i class="fa fa-city"></i>Nepal State
 		</a>
 
 
@@ -192,10 +206,23 @@
 				class="alert mb-2" role="alert">
 				<p th:text="${session.mes.message}"></p>
 			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<h3 class="mb-0">Dashboard</h3>
-					<hr>
+			<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
+				Parking Service is overloaded. Please try again later.
+			</div>
+
+			<div class="row" th:if="${totalVehicle < 20}">
+				<div class="col-md-12 text-center mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h4>Total Parking Capacity : <span
+									style="font-size: xx-large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
+							</h4>
+							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b> &nbsp;
+							<b>BIKE: <span th:text="${bike}" th:if="${bike !=null}"></span></b>&nbsp;
+							<b style="color: red;">Available : <span th:text="${available}"
+									th:if="${available !=null}"></span> only</b>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div class="row">
@@ -232,7 +259,7 @@
 											<article>ALL About This Package</article>
 											<ol class="p-3">
 												<li>It's a current time package</li>
-												<li>It has Valid Date and time (IN-TIME & OUT-TIME) </li>
+												<li>It has Valid Date and time (IN-TIME && OUT-TIME) </li>
 												<li>Vehicles parking cost will be determined in ENTER-TIME and EXIT-TIME
 												</li>
 												<li>Parking will be opened 24 hours </li>
@@ -253,7 +280,7 @@
 												<p>It's a official package which provides more reliable services</p>
 												<br><br><br>
 												<button class="btn  btn-outline-primary"
-													onclick="showService()">PayToPark</button>
+													onclick="showService1()">PayToPark</button>
 											</div>
 										</div>
 									</div>
@@ -299,7 +326,7 @@
 													subscription based.</p>
 												<br><br><br>
 												<button class="btn  btn-outline-primary"
-													onclick="showService()">Subscription</button>
+													onclick="showService2()">Subscription</button>
 											</div>
 										</div>
 									</div>
@@ -344,7 +371,7 @@
 												<p>It's a official package which provides more reliable services</p>
 												<br><br><br>
 												<button class="btn  btn-outline-primary"
-													onclick="showService()">Official</button>
+													onclick="showService3()">Official</button>
 											</div>
 										</div>
 									</div>
@@ -366,334 +393,90 @@
 		</div>
 
 		<!-- Services -->
+
 		<div class="container mt-4 mb" id="services">
-			<div class="row">
-				<div class="col-md-6">
-					<h3 class="mb-0" id="paytoparkd">PayToPark Service</h3>
-					<h3 class="mb-0" id="subscriptiond">Subscription Service</h3>
-					<h3 class="mb-0" id="officiald">Official Service</h3>
-				</div>
-				<div class="col-md-6 text-right">
-					<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
-				</div>
+			<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
+				Parking Service is overloaded. Please try again later.
 			</div>
-			<hr>
-			<div class="row">
-				<div class="col-md-12">
+
+			<div th:if="${totalVehicle < 20}">
+				<div class="container-fluid text-center mb-2">
 					<div class="card">
 						<div class="card-body">
-							<div class="progress">
-								<div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
-									role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-									style="width: 2%"></div>
-							</div>
+							<h4>Total Parking Capacity : <span
+									style="font-size: xx-large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
+							</h4>
+							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b> &nbsp;
+							<b>BIKE: <span th:text="${bike}" th:if="${bike !=null}"></span></b>&nbsp;
+							<b style="color: red;">Available : <span th:text="${available}"
+									th:if="${available !=null}"></span> only</b>
+						</div>
+					</div>
+				</div>
 
-							<form th:action="@{/pbt/save_services}" method="post">
-								<div class="accordion mt-2" id="accordionExample">
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="mb-0" id="paytoparkd">PayToPark Service</h3>
+						<h3 class="mb-0" id="subscriptiond">Subscription Service</h3>
+						<h3 class="mb-0" id="officiald">Official Service</h3>
+					</div>
+					<div class="col-md-6 text-right">
+						<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="progress">
+									<div id="progress-bar"
+										class="progress-bar progress-bar-striped progress-bar-animated"
+										role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+										style="width: 20%"></div>
+								</div>
 
-
-
-									<div class="card">
-										<div id="headingOne">
-										</div>
-
-										<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-											data-bs-parent="#accordionExample">
-											<div class="card-body">
-												<div class="row">
-													<div "col-md-12">
-														<h3 class="mb-0"><b><u>Services</u></b></h3>
-													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="service">Srvice Type</label>
-															</div>
-															<div class="col-md-9">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-wrench"></i>
-																		</span>
-																	</div>
-																	<select type="text" name="serviceType"
-																		id="servicetype" class="form-control">
-																		<option value="">Select type of services
-																		</option>
-																		<option value="paytopark">PayToPark</option>
-																		<option value="official">Official</option>
-																		<option value="subscription">Subscription
-																		</option>
-																	</select>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="service">Enter Date</label>
-															</div>
-															<div class="col-md-9">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-calendar"></i>
-																		</span>
-																	</div>
-																	<input type="date" name="enterDate" id="enterdate"
-																		class="form-control" />
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row mt-3">
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="duration">Exit Date</label>
-															</div>
-															<div class="col-md-9">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-calendar"></i>
-																		</span>
-																	</div>
-																	<input type="date" name="exitDate" id="exitdate"
-																		class="form-control" />
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="duration">Time From</label>
-															</div>
-															<div class="col-md-4">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-clock"></i>
-																		</span>
-																	</div>
-																	<input type="time" name="enterTime" id="entertime"
-																		placeholder="Enter Time" class="form-control" />
-																</div>
-															</div>
-															<div class="col-md-1">
-																<label for="duration">To</label>
-															</div>
-															<div class="col-md-4">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-clock"></i>
-																		</span>
-																	</div>
-																	<input type="time" name="exitTime" id="exittime"
-																		placeholder="Exit Time" class="form-control" />
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-
-									<div class="card">
-										<div id="headingTwo">
-
-										</div>
-										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-											data-bs-parent="#accordionExample">
-											<div class="card-body">
-												<div class="row">
-													<div "col-md-12">
-														<h3 class="mb-0"><b><u>Vehicle</u></b></h3>
-													</div>
-												</div>
-												<div class="row">
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="Vehiclename">Vehicle Type</label>
-															</div>
-															<div class="col-md-9">
-
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-car"></i>
-																		</span>
-																	</div>
-																	<select type="text" name="vehicleType"
-																		id="vehicletype" class="form-control">
-																		<option value="">Select type of Vehicle</option>
-																		<option value="car">CAR</option>
-																		<option value="bike">BIKE</option>
-																		</option>
-																	</select>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="Vehiclenumber">Vehicle Name</label>
-															</div>
-															<div class="col-md-9">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-car"></i>
-																		</span>
-																	</div>
-																	<input type="text" name="vehicleName"
-																		id="vehiclename" class="form-control"
-																		placeholder="Vehicle Name" />
-																</div>
-															</div>
-
-														</div>
-													</div>
-
-												</div>
-
-												<div class="row mt-3">
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="model">Model</label>
-															</div>
-															<div class="col-md-9">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-copy"></i>
-																		</span>
-																	</div>
-																	<input type="text" name="model" class="form-control"
-																		id="modal" placeholder="Model" />
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="color">Number of Vehicle</label>
-															</div>
-															<div class="col-md-5">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-sort-numeric-asc"></i>
-																		</span>
-																	</div>
-																	<input type="number" name="numberofVehicle"
-																		id="numberofvehicle" class="form-control"
-																		placeholder="eg:2" />
-																</div>
-															</div>
-															<div class="col-md-4">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-copy"></i>
-																		</span>
-																	</div>
-																	<input type="text" name="color" class="form-control"
-																		id="color" placeholder="color" />
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div class="row mt-2">
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="Vehiclename">Plate Number</label>
-															</div>
-															<div class="col-md-9">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-id-card"></i>
-																		</span>
-																	</div>
-																	<input type="text" name="plateNumber"
-																		id="platnumber" class="form-control"
-																		placeholder=" Plate Number" />
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6">
-														<div class="row">
-															<div class="col-md-3">
-																<label for="color">License Number
-																</label>
-															</div>
-															<div class="col-md-9">
-																<div class="form-group input-group mb-0">
-																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-pencil"></i>
-																		</span>
-																	</div>
-																	<input type="text" name="licenceNumber"
-																		id="licencenumber" placeholder="Licence Number"
-																		class="form-control" />
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div>
-												</div>
-											</div>
-										</div>
-
+								<form th:action="@{/pbt/save_services}" method="post">
+									<div class="accordion mt-2" id="accordionExample">
 
 
 
 										<div class="card">
-											<div id="headingThree">
-
+											<div id="headingOne">
 											</div>
-											<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+
+											<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
 												data-bs-parent="#accordionExample">
 												<div class="card-body">
 													<div class="row">
 														<div "col-md-12">
-															<h3 class="mb-0"><b><u>Parking Location</u></b></h3>
+															<h3 class="mb-0"><b><u>Services</u></b></h3>
 														</div>
 													</div>
+
 													<div class="row">
 														<div class="col-md-6">
 															<div class="row">
 																<div class="col-md-3">
-																	<label for="service">State</label>
+																	<label for="service">Srvice Type</label>
 																</div>
 																<div class="col-md-9">
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fa fa-map"></i>
+																				<i class="fa fa-wrench"></i>
 																			</span>
 																		</div>
-																		<input type="text" placeholder="State"
-																			id="state" name="state"
-																			class="form-control">
+																		<select type="text" name="serviceType"
+																			id="servicetype" class="form-control">
+																			<option value="" hidden>Select type of
+																				services
+																			</option>
+																			<option value="paytopark">PayToPark</option>
+																			<option value="official">Official</option>
+																			<option value="subscription">Subscription
+																			</option>
+																		</select>
 																	</div>
 																</div>
 															</div>
@@ -701,58 +484,17 @@
 														<div class="col-md-6">
 															<div class="row">
 																<div class="col-md-3">
-																	<label for="duration">District</label>
+																	<label for="service">Enter Date</label>
 																</div>
 																<div class="col-md-9">
 																	<div class="form-group input-group mb-0">
 																		<div class="input-group-prepend">
 																			<span class="input-group-text">
-																				<i class="fas fa-area-chart"></i>
+																				<i class="fa fa-calendar"></i>
 																			</span>
 																		</div>
-																		<input type="text" name="district" id="district"
-																			class="form-control"
-																			placeholder="District" />
-																	</div>
-																</div>
-															</div>
-														</div>
-
-													</div>
-													<div class="row mt-3">
-														<div class="col-md-6">
-															<div class="row">
-																<div class="col-md-3">
-																	<label for="service">Municipality</label>
-																</div>
-																<div class="col-md-9">
-																	<div class="form-group input-group mb-0">
-																		<div class="input-group-prepend">
-																			<span class="input-group-text">
-																				<i class="fa fa-building"></i>
-																			</span>
-																		</div>
-																		<input type="text" placeholder="Municipality"
-																			id="municipality" name="municipality"
-																			class="form-control">
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="row">
-																<div class="col-md-3">
-																	<label for="service">City</label>
-																</div>
-																<div class="col-md-9">
-																	<div class="form-group input-group mb-0">
-																		<div class="input-group-prepend">
-																			<span class="input-group-text">
-																				<i class="fa fa-city"></i>
-																			</span>
-																		</div>
-																		<input type="text" placeholder="city" id="city"
-																			name="city" class="form-control">
+																		<input type="date" name="enterDate"
+																			id="enterdate" class="form-control" />
 																	</div>
 																</div>
 															</div>
@@ -762,119 +504,7 @@
 														<div class="col-md-6">
 															<div class="row">
 																<div class="col-md-3">
-																	<label for="duration">Street</label>
-																</div>
-																<div class="col-md-9">
-																	<div class="form-group input-group mb-0">
-																		<div class="input-group-prepend">
-																			<span class="input-group-text">
-																				<i class="fas fa-road"></i>
-																			</span>
-																		</div>
-																		<input type="text" name="street" id="street"
-																			class="form-control" placeholder="Street" />
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="row">
-																<div class="col-md-3">
-																	<label for="duration">Spot</label>
-																</div>
-																<div class="col-md-9">
-																	<div class="form-group input-group mb-0">
-																		<div class="input-group-prepend">
-																			<span class="input-group-text">
-																				<i class="fas fa-map-marker"></i>
-																			</span>
-																		</div>
-																		<input type="text" name="spot" id="spot"
-																			class="form-control" placeholder="Spot" />
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-
-										<div class="card">
-											<div id="headingFour">
-											</div>
-											<div id="collapseFour" class="collapse" aria-labelledby="headingThree"
-												data-bs-parent="#accordionExample">
-												<div class="card-body">
-													<div class="row">
-														<div "col-md-12">
-															<h3 class="mb-0"><b><u>Payment</u></b></h3>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-6">
-															<div class="row">
-																<div class="col-md-3">
-																	<label for="duration">Duration</label>
-																</div>
-																<div class="col-md-9">
-																	<div class="form-group input-group mb-0">
-																		<div class="input-group-prepend">
-																			<span class="input-group-text">
-																				<i class="fas fa-clock"></i>
-																			</span>
-																		</div>
-																		<input type="text" name="duration" id="duration"
-																			class="form-control"
-																			placeholder="Duration" />
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="row">
-																<div class="col-md-3">
-																	<label for="service">Cost</label>
-																</div>
-																<div class="col-md-9">
-																	<div class="form-group input-group mb-0">
-																		<div class="input-group-prepend">
-																			<span class="input-group-text">
-																				<i class="fa fa-sort-amount-asc"></i>
-																			</span>
-																		</div>
-																		<input type="text" class="form-control"
-																			id="cost" name="cost" placeholder="Cost">
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div class="row mt-3">
-														<div class="col-md-6">
-															<div class="row">
-																<div class="col-md-3">
-																	<label for="service">Amount</label>
-																</div>
-																<div class="col-md-9">
-																	<div class="form-group input-group mb-0">
-																		<div class="input-group-prepend">
-																			<span class="input-group-text">
-																				<i class="fa fa-sort-amount-asc"></i>
-																			</span>
-																		</div>
-																		<input type="text" class="form-control"
-																			name="amount" placeholder="amount"
-																			id="amount">
-																	</div>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-6">
-															<div class="row">
-																<div class="col-md-3">
-																	<label for="duration">Payment Date</label>
+																	<label for="duration">Exit Date</label>
 																</div>
 																<div class="col-md-9">
 																	<div class="form-group input-group mb-0">
@@ -883,68 +513,513 @@
 																				<i class="fas fa-calendar"></i>
 																			</span>
 																		</div>
-																		<input type="date" name="paymentDate"
-																			id="paymentdate" class="form-control"
-																			placeholder="Duration" />
+																		<input type="date" name="exitDate" id="exitdate"
+																			class="form-control" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Time From</label>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-clock"></i>
+																			</span>
+																		</div>
+																		<input type="time" name="enterTime"
+																			id="entertime" placeholder="Enter Time"
+																			class="form-control" />
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<label for="duration">To</label>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-clock"></i>
+																			</span>
+																		</div>
+																		<input type="time" name="exitTime" id="exittime"
+																			placeholder="Exit Time"
+																			class="form-control" />
 																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-
-													<div class="row mt-4">
-														<div class="col-md-12 text-center">
-															<hr>
-															<button type="submit" onclick="onSubmitPayment()"
-																class="btn btn-primary">Submit</button>
-														</div>
-													</div>
-
 												</div>
 											</div>
 										</div>
+
+										<div class="card">
+											<div id="headingTwo">
+
+											</div>
+											<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+												data-bs-parent="#accordionExample">
+												<div class="card-body">
+													<div class="row">
+														<div "col-md-12">
+															<h3 class="mb-0"><b><u>Vehicle</u></b></h3>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="Vehiclename">Vehicle Type</label>
+																</div>
+																<div class="col-md-9">
+
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-car"></i>
+																			</span>
+																		</div>
+																		<select type="text" name="vehicleType"
+																			id="vehicletype" class="form-control">
+																			<option value="">Select type of Vehicle
+																			</option>
+																			<option value="car">CAR</option>
+																			<option value="bike">BIKE</option>
+																			</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="Vehiclenumber">Vehicle Name</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-car"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="vehicleName"
+																			id="vehiclename" class="form-control"
+																			placeholder="Vehicle Name" />
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="row mt-3">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="model">Model</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-copy"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="model"
+																			class="form-control" id="modal"
+																			placeholder="Model" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="color">Number of Vehicle</label>
+																</div>
+																<div class="col-md-5">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-sort-numeric-asc"></i>
+																			</span>
+																		</div>
+																		<input type="number" name="numberofVehicle"
+																			id="numberofvehicle" class="form-control"
+																			placeholder="eg:2" />
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-copy"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="color"
+																			class="form-control" id="color"
+																			placeholder="color" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-2">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="Vehiclename">Plate Number</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-id-card"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="plateNumber"
+																			id="platnumber" class="form-control"
+																			placeholder=" Plate Number" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="color">License Number
+																	</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-pencil"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="licenceNumber"
+																			id="licencenumber"
+																			placeholder="Licence Number"
+																			class="form-control" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div>
+													</div>
+												</div>
+											</div>
+
+
+
+
+											<div class="card">
+												<div id="headingThree">
+
+												</div>
+												<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+													data-bs-parent="#accordionExample">
+													<div class="card-body">
+														<div class="row">
+															<div "col-md-12">
+																<h3 class="mb-0"><b><u>Parking Location</u></b></h3>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">State</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fa fa-map"></i>
+																				</span>
+																			</div>
+																			<select id="state" name="state"
+																				class="form-control">
+																				<option value="" hidden>Select State
+																				</option>
+																				<option value="Koshi">Koshi</option>
+																				<option value="Madesh">Madesh</option>
+																				<option value="Bagmati">Bagmati</option>
+																				<option value="Gandaki">Gandki</option>
+																				<option value="Lumbini Pradesh">Lumbini
+																					Pradesh</option>
+																				<option value="Karnali Pradesh">Karnali
+																					Pradesh</option>
+																				<option value="Sudurpashchim">
+																					Sudurpashchim
+																				</option>
+																			</select>
+
+
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">District</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-area-chart"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="district"
+																				id="district" class="form-control"
+																				placeholder="District" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+														<div class="row mt-3">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">Municipality</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fa fa-building"></i>
+																				</span>
+																			</div>
+																			<input type="text"
+																				placeholder="Municipality"
+																				id="municipality" name="municipality"
+																				class="form-control">
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">City</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fa fa-city"></i>
+																				</span>
+																			</div>
+																			<input type="text" placeholder="city"
+																				id="city" name="city"
+																				class="form-control">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row mt-3">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Street</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-road"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="street" id="street"
+																				class="form-control"
+																				placeholder="Street" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Spot</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-map-marker"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="spot" id="spot"
+																				class="form-control"
+																				placeholder="Spot" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="card">
+												<div id="headingFour">
+												</div>
+												<div id="collapseFour" class="collapse" aria-labelledby="headingThree"
+													data-bs-parent="#accordionExample">
+													<div class="card-body">
+														<div class="row">
+															<div "col-md-12">
+																<h3 class="mb-0"><b><u>Payment</u></b></h3>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Duration</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-clock"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="duration"
+																				id="duration" class="form-control"
+																				placeholder="Duration" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">Cost</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i
+																						class="fa fa-sort-amount-asc"></i>
+																				</span>
+																			</div>
+																			<input type="text" class="form-control"
+																				id="cost" name="cost"
+																				placeholder="Cost">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row mt-3">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">Amount</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i
+																						class="fa fa-sort-amount-asc"></i>
+																				</span>
+																			</div>
+																			<input type="text" class="form-control"
+																				name="amount" placeholder="amount"
+																				id="amount">
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Payment Date</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-calendar"></i>
+																				</span>
+																			</div>
+																			<input type="date" name="paymentDate"
+																				id="paymentdate" class="form-control"
+																				placeholder="Duration" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="row mt-4">
+															<div class="col-md-12 text-center">
+																<hr>
+																<button type="submit" onclick="onSubmitPayment()"
+																	class="btn btn-primary">Submit</button>
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="steps mt-2">
+											<div class="step-item">
+												<button id="step-1-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027;" type="button" onclick="onService()">
+													1 Service
+												</button>
+											</div>
+
+											<div class="step-item">
+												<button id="step-2-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027; display: inline;" type="button"
+													onclick="onVehicle()">
+													2 Vehicle
+												</button>
+											</div>
+
+											<div class="step-item">
+												<button id="step-3-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027;" onclick="onLocation()" type="button">
+													3 Location
+												</button>
+
+											</div>
+											<div class="step-item">
+												<button id="step-4-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027;" type="button" onclick="onPayment()">
+													4 Payment
+												</button>
+											</div>
+
+
+										</div>
 									</div>
 
-									<div class="steps mt-2">
-										<div class="step-item">
-											<button id="step-1-button" class="btn btn-outline-primary text-center"
-												style="color: #0f2027;" type="button" onclick="onService()">
-												Service
-											</button>
-										</div>
-
-										<div class="step-item">
-											<button id="step-2-button" class="btn btn-outline-primary text-center"
-												style="color: #0f2027; display: inline;" type="button"
-												onclick="onVehicle()">
-												Vehicle
-											</button>
-
-										</div>
-
-										<div class="step-item">
-											<button id="step-3-button" class="btn btn-outline-primary text-center"
-												style="color: #0f2027;" onclick="onLocation()" type="button">
-												Location
-											</button>
-
-										</div>
-										<div class="step-item">
-											<button id="step-4-button" class="btn btn-outline-primary text-center"
-												style="color: #0f2027;" type="button" onclick="onPayment()">
-												Payment
-											</button>
-										</div>
-
-
-									</div>
-								</div>
-
-							</form>
+								</form>
+							</div>
 						</div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 
@@ -973,7 +1048,13 @@
 						<div class="col-md-3">
 							<div class="card">
 								<div class="card-body">
-									<img src="/img/a1.jpeg" style="border-radius: 80%;width: 100%; height: 100%;">
+
+									<div th:each="fileName : ${imgProfile}" class="container-fluid text-center">
+										<img th:src="@{'/profile/' + ${fileName}}" alt="Profile Image"
+											style="max-width: 100px; max-height: 100px; border-radius: 50%;" />
+									</div>
+
+
 								</div>
 							</div>
 						</div>
@@ -1013,7 +1094,7 @@
 			</div>
 		</div>
 
-		
+
 		<!-- Stepper JavaScript -->
 		<script>
 			document.addEventListener("DOMContentLoaded", function () {
@@ -1078,11 +1159,16 @@
 				var exitdate = document.getElementById("exitdate").value;
 				var from = document.getElementById("entertime").value;
 				var to = document.getElementById("exittime").value;
+				let isValid = false;
 
+				let btn1 = document.getElementById("step-2-button").value;
 
 				if (service == "") {
 					alert("Service type isEmpty ?");
-
+					btn1.value = false;
+					return isValid;
+				} else {
+					return true;
 				}
 
 
@@ -1098,6 +1184,8 @@
 				var toTime = document.getElementById("exittime").value;
 
 				var vehicletype = document.getElementById("vehicletype").value;
+				var vehiclenumber = document.getElementById("numberofvehicle").value;
+				console.log("vehicle num = ", vehiclenumber);
 
 				var duration = document.getElementById("duration");
 				var cosst = document.getElementById("cost");
@@ -1129,14 +1217,14 @@
 
 					duration.value = durationBIKE + " HOURS";
 					cost.value = bikeparkprice;
-					amount.value = bikeparkprice * durationBIKE;
+					amount.value = bikeparkprice * durationBIKE * vehiclenumber;
 
 
 				} else {
 
 					duration.value = payablecarHours + " HOURS";
 					cost.value = carparkprice;
-					amount.value = carparkprice * payablecarHours;
+					amount.value = carparkprice * payablecarHours * vehiclenumber;
 
 
 				}

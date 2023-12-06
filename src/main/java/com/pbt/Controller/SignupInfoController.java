@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 
@@ -17,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.pbt.Dao.UserRepository;
+import com.pbt.Entities.User;
 import com.pbt.ExceptionHandler.MessageMaster;
-import com.pbt.Model.User;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,7 +30,7 @@ public class SignupInfoController {
 
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private EmailsenderService Emailsend;
 
@@ -81,29 +82,29 @@ public class SignupInfoController {
 				user.setUserrolename("ADMIN");
 
 				this.userRepository.save(user);
-				
-//				Email send to user 
-				this.Emailsend.sendEmail(user.getEmail(), "PBTS Singup successfuly ", "PBTS parking booking ticketing system is a park book system ");
 
+//				Email send to user 
 				session.setAttribute("mesg", new MessageMaster("Signup Successfully ", "alert-success"));
+				this.Emailsend.sendEmail(user.getEmail(), "PBTS Singup successfuly ",
+						"PBTS parking booking ticketing system is a park book system ");
+
+				return "redirect:/pbt/signup";
 
 			} else {
 				session.setAttribute("mesg",
 						new MessageMaster("Email Is Already over there please User other Email ??? ", "alert-danger"));
+				return "Layout/Signup";
 			}
 
-			return "Layout/Signup";
-
-		} catch (Exception e) {
-			System.out.println("Terms and condition isEmpty ??");
-			e.printStackTrace();
-
+		} catch (DuplicateKeyException e) {
 			session.setAttribute("mesg",
-					new MessageMaster("Something went wrong The terms and Conditions " + agreement, "alert-danger"));
-
+					new MessageMaster("Email is already in use. Please use another email.", "alert-danger"));
 			return "Layout/Signup";
-
+		} catch (Exception e) {
+			session.setAttribute("mesg", new MessageMaster("Something went wrong: " + e.getMessage(), "alert-danger"));
+			return "Layout/Signup";
 		}
+
 	}
 
 }

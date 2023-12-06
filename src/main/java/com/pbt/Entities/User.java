@@ -1,4 +1,4 @@
-package com.pbt.Model;
+package com.pbt.Entities;
 
 import java.time.LocalDate;
 import java.util.LinkedList;

@@ -1,5 +1,6 @@
 package com.pbt.Controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,12 +21,12 @@ import com.pbt.Dao.PaymentRepository;
 import com.pbt.Dao.ServiceofpbtRepository;
 import com.pbt.Dao.UserRepository;
 import com.pbt.Dao.VehicleRepository;
+import com.pbt.Entities.ParkingLocation;
+import com.pbt.Entities.Payment;
+import com.pbt.Entities.Services;
+import com.pbt.Entities.User;
+import com.pbt.Entities.Vehicle;
 import com.pbt.ExceptionHandler.MessageMaster;
-import com.pbt.Model.ParkingLocation;
-import com.pbt.Model.Payment;
-import com.pbt.Model.Services;
-import com.pbt.Model.User;
-import com.pbt.Model.Vehicle;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
@@ -48,7 +50,7 @@ public class ServicesController {
 
 	@Autowired
 	private UserRepository userRepo;
-	
+
 	@Autowired
 	private EmailsenderService emailSend;
 
@@ -77,7 +79,70 @@ public class ServicesController {
 	}
 
 	@GetMapping("/systemdashboard")
-	public String getSystemDashboardPage() {
+	public String getSystemDashboardPage(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+
+			return "Layout/Login";
+		}
+
+		int totalVehicle = 0;
+		int car = 0;
+		int bike = 0;
+		int absoAvailable = 0;
+
+		User userinfo = this.userRepo.findByEmail(user.getEmail());
+		if (userinfo != null) {
+			model.addAttribute("user", userinfo);
+			List<Vehicle> vehicledata = this.vehicleRepo.findByUser(userinfo);
+			for (Vehicle vt : vehicledata) {
+				totalVehicle++;
+
+				String vehicleType = vt.getVehicleType();
+				if ("bike".equalsIgnoreCase(vehicleType)) {
+					bike++;
+				} else {
+					car++;
+				}
+			}
+			int available = 20 - totalVehicle;
+			if (available != -1) {
+				absoAvailable = Math.abs(available);
+				model.addAttribute("available", absoAvailable);
+			} else {
+				absoAvailable = 0;
+				model.addAttribute("available", absoAvailable);
+			}
+
+			model.addAttribute("car", car);
+			model.addAttribute("bike", bike);
+			model.addAttribute("totalVehicle", totalVehicle);
+
+		}
+
+		File profile = new File("src/main/resources/static/profile/");
+		String pname = userinfo.getProfile();
+
+		if (profile.exists() && profile.isDirectory()) {
+			String parentPath = profile.getParent();
+
+			String[] fileNames = profile.list();
+
+			if (fileNames != null && fileNames.length > 0) {
+				for (String fileName : fileNames) {
+					if (fileName.equalsIgnoreCase(pname)) {
+						System.out.println("File name: " + fileName);
+						model.addAttribute("imgProfile", fileName);
+					} else {
+						System.out.println("profile name Not match ?");
+					}
+				}
+			} else {
+				System.out.println("No files found in the directory.");
+			}
+		} else {
+			System.out.println("Directory does not exist or is not a directory.");
+		}
 
 		return "pages/Dashboard/SystemDashboard";
 	}
@@ -86,7 +151,8 @@ public class ServicesController {
 	@PostMapping("/save_services")
 	@Transactional
 	public String saveServices(@Validated @ModelAttribute Services service, @ModelAttribute Vehicle vehicle,
-			@ModelAttribute ParkingLocation plocation, @ModelAttribute Payment payment, HttpSession session) {
+			@ModelAttribute ParkingLocation plocation, @ModelAttribute Payment payment, HttpSession session,
+			Model model) {
 
 		try {
 			User user = (User) session.getAttribute("user");
@@ -119,9 +185,9 @@ public class ServicesController {
 
 					this.paymentRepo.save(payment);
 					this.parkinglocationRepo.save(plocation);
-					
-					
-					this.emailSend.sendEmail(email, "PBTS service ", "pbts service have been verified "+service.getServiceType());
+
+					this.emailSend.sendEmail(email, "PBTS service ",
+							"pbts service have been verified " + service.getServiceType());
 
 					session.setAttribute("mes",
 							new MessageMaster("Parking Booking Ticketing System Applied Succesfully", "alert-success"));
@@ -146,37 +212,91 @@ public class ServicesController {
 	public String fetchServices(HttpSession session, Model model) throws Exception {
 		User user = (User) session.getAttribute("user");
 		if (user == null) {
-			
+
 			return "Layout/Login";
 		} else {
 			User userinfo = this.userRepo.findByEmail(user.getEmail());
-			
-			List<Services> services = this.serviceRepo.findByUser(userinfo);			
+
+			List<Services> services = this.serviceRepo.findByUser(userinfo);
 			List<Vehicle> vehicles = this.vehicleRepo.findByUser(userinfo);
 
 			List<ParkingLocation> locations = new ArrayList<>();
 
 			for (Vehicle vehicle : vehicles) {
-			    locations.addAll(this.parkinglocationRepo.findByVehicle(vehicle));
+				locations.addAll(this.parkinglocationRepo.findByVehicle(vehicle));
 			}
-			
+
 			List<Payment> payments = new LinkedList<>();
-			for(Services service : services) {
-				payments.addAll(this.paymentRepo.findByService(service));				
+			for (Services service : services) {
+				payments.addAll(this.paymentRepo.findByService(service));
 			}
 
-
-			model.addAttribute("serviceslist",services);
-			model.addAttribute("vehiclelist",vehicles);
-			model.addAttribute("locationlist",locations);
-			model.addAttribute("paymentlist",payments);
-			
-			
-			
-			
+			model.addAttribute("serviceslist", services);
+			model.addAttribute("vehiclelist", vehicles);
+			model.addAttribute("locationlist", locations);
+			model.addAttribute("paymentlist", payments);
 
 			return "pages/Dashboard/SuccessFile";
 		}
+	}
+
+//	user list
+	@GetMapping("/userlist")
+	public String getUsers(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+
+			return "Layout/Login";
+		}
+
+		List<User> userinfo = this.userRepo.findAll();
+		if (userinfo != null) {
+			model.addAttribute("userlist", userinfo);
+			System.out.println("user list ");
+
+		} else {
+			System.out.println("User is not availabel ?");
+		}
+
+		return "pages/Dashboard/Userlist";
+	}
+
+//	get Payment history 
+	@GetMapping("/payments/{uid}")
+	public String paymentHistory(@PathVariable("uid") Long uid, HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+
+			return "Layout/Login";
+		}
+		User userinfo = this.userRepo.findByUserid(uid);
+		if (userinfo != null) {
+			List<Services> serviceinfo = this.serviceRepo.findByUser(userinfo);
+
+			int amount = 0;
+			int times = 0;
+			serviceinfo.forEach(se -> {
+				List<Payment> listofPayment = this.paymentRepo.findByService(se);
+
+//				amount = this.paymentRepo.findByAmount();
+//				times++;
+
+				model.addAttribute("paymentlist", listofPayment);
+			});
+
+			List<Payment> listofPayment = new ArrayList<>();
+			for (Services serve : serviceinfo) {
+
+				listofPayment.addAll(this.paymentRepo.findByService(serve));
+			}
+
+			model.addAttribute("paymentlist", listofPayment);
+
+		} else {
+			System.out.println("payment isInvalid ??");
+		}
+
+		return "pages/Dashboard/PaymentsHistory";
 	}
 
 }

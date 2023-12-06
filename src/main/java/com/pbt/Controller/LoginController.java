@@ -1,5 +1,8 @@
 package com.pbt.Controller;
 
+import java.io.File;
+import java.util.List;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.pbt.Dao.UserRepository;
+import com.pbt.Dao.VehicleRepository;
+import com.pbt.Entities.User;
+import com.pbt.Entities.Vehicle;
 import com.pbt.ExceptionHandler.MessageMaster;
-import com.pbt.Model.User;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,8 +26,9 @@ public class LoginController {
 
 	@Autowired
 	private UserRepository userRepo;
-	
-	
+
+	@Autowired
+	private VehicleRepository vehicleRepo;
 
 	@GetMapping("/login")
 	public String userSignup(Model model) {
@@ -51,8 +57,68 @@ public class LoginController {
 			} else {
 				if ("ADMIN".equals(userRole)) {
 					session.setAttribute("user", user);
+
+					int totalVehicle = 0;
+					int car = 0;
+					int bike = 0;
+					int absoAvailable = 0;
+
+					User userinfo = this.userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
+					if (userinfo != null) {
+						List<Vehicle> vehicledata = this.vehicleRepo.findByUser(userinfo);
+						for (Vehicle vt : vehicledata) {
+							totalVehicle++;
+
+							String vehicleType = vt.getVehicleType();
+							if ("bike".equalsIgnoreCase(vehicleType)) {
+								bike++;
+							} else {
+								car++;
+							}
+						}
+						int available = 20 - totalVehicle;
+						if (available != -1) {
+							absoAvailable = Math.abs(available);
+							model.addAttribute("available", absoAvailable);
+						} else {
+							absoAvailable = 0;
+							model.addAttribute("available", absoAvailable);
+						}
+
+						model.addAttribute("car", car);
+						model.addAttribute("bike", bike);
+
+						model.addAttribute("totalVehicle", totalVehicle);
+
+					}
+
 					model.addAttribute("title", "System Dashboard ");
 					model.addAttribute("user", userNameAndPassword);
+
+					File profile = new File("src/main/resources/static/profile/");
+					String pname = userNameAndPassword.getProfile();
+
+					if (profile.exists() && profile.isDirectory()) {
+						String parentPath = profile.getParent();
+
+						String[] fileNames = profile.list();
+
+						if (fileNames != null && fileNames.length > 0) {
+							for (String fileName : fileNames) {
+								if (fileName.equalsIgnoreCase(pname)) {
+									System.out.println("File name: " + fileName);
+									model.addAttribute("imgProfile", fileName);
+								} else {
+									System.out.println("profile name Not match ?");
+								}
+							}
+						} else {
+							System.out.println("No files found in the directory.");
+						}
+					} else {
+						System.out.println("Directory does not exist or is not a directory.");
+					}
+
 					session.setAttribute("log", new MessageMaster("Login Successfully ??", "alert-success"));
 					return "/pages/Dashboard/SystemDashboard";
 				} else if ("NORMAL".equals(userRole)) {

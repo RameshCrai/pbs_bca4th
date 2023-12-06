@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+	<title th:text="${title}"></title>
+
+	<div th:include="ShareLink.html"></div>
+
+
+	<script th:src="@{/js/script.js}"></script>
+
+
+
+</head>
+
+<body>
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-md-5">
+				<h3 class="mb-0">List of District of <strong th:text="${s.state}" th:if="${s != null}"></strong> </h3>
+			</div>
+			<div class="col-md-4">
+				<h3><a href="/pbt/listofstate" style="color: brown;">Select province</a></h3>
+			</div>
+			<div class="col-md-3 text-right">
+				<h4 class="mb-0"><a href="/pbt/systemdashboard">Dashboard</a> </h4>
+			</div>
+		</div>
+		<div class="card mt-2">
+			<div class="card-body">
+				<table style="width: 100%;">
+					<thead>
+						<tr>
+							<th>S.N</th>
+							<th>Add Municipality of <b style="color: red;" th:text="${s.state}" th:if="${s != null}"></b> From  Bellow District &nbsp; <a
+									th:href="@{'/pbt/addDistrict/' + ${s.stateID}}"><i class="fa fa-plus"></i>Add District</a>
+							</th>
+							<th style="width: 6%;">Action</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="list: ${provincedistrict}">
+							<td th:text="${list.districtID}"></td>
+
+							<td>
+								<a th:text="${list.districtName}"
+									th:href="@{'/pbt/municipality/'+ ${list.districtID}}"></a>
+
+							</td>
+							<td>
+								<a><i class="fa fa-edit"></i></a>
+								<a th:href="@{'/pbt/addDistrict/' + ${s.stateID}}"><i class="fa fa-plus"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+	</div>
+
+
+</body>
+
+</html>

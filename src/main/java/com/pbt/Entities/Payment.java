@@ -1,4 +1,4 @@
-package com.pbt.Model;
+package com.pbt.Entities;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -33,11 +33,6 @@ public class Payment {
 	@JsonIgnore
 	private List<ParkingLocation> paidPayment = new LinkedList<ParkingLocation>();
 	
-
-
-	public Payment() {
-		super();
-	}
 
 
 	public Long getPaymentID() {

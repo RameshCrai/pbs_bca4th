@@ -7,6 +7,10 @@
 
 	<title th:text="${title}"></title>
 
+
+
+	
+
 	<style>
 		body {
 			background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
@@ -45,8 +49,8 @@
 						<h3 class="mb-0 text-center">Signup here !</h3>
 					</div>
 					<div class="card-body">
-						<form novalidate id="formvalid" th:action="@{/pbt/signup_user}" method="post"
-							enctype="multipart/form-data">
+						<form id="formvalid" th:action="@{/pbt/signup_user}" method="post" enctype="multipart/form-data"
+							>
 
 							<div class="row ">
 								<div class="col-md-6">
@@ -228,7 +232,9 @@
 	</div>
 	<div th:include="ShareLink.html"></div>
 
+
 	<script th:inline="javascript">
+
 
 		var duration = 2000; // 2 seconds
 		var messageElement = document.getElementById('messageHIDE');

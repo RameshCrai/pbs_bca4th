@@ -1,4 +1,4 @@
-package com.pbt.Model;
+package com.pbt.Entities;
 
 
 import jakarta.persistence.Entity;

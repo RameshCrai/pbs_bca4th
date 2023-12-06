@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+	<title th:text="${title}"></title>
+
+	<div th:include="ShareLink.html"></div>
+
+
+	<script th:src="@{/js/script.js}"></script>
+
+
+</head>
+
+<body>
+	<!-- services list   -->
+	<div class="container mt-4">
+		<div class="row">
+			<div class="col-md-6">
+				<h3 class="mb-0">Payment Receipts</h3>
+			</div>
+			<div class="col-md-6 text-right">
+				<h3 class="mb-0"><a href="/pbt/systemdashboard">Dashboard</a> </h3>
+			</div>
+		</div>
+		<div class="card mt-2">
+			<div class="card-body">
+				<table style="width: 100%;">
+					<thead>
+						<tr>
+							<td style="text-align: center;">S.N</td>
+							<td>Cost</td>
+							<td>Duration</td>
+							<td>Amount</td>
+							<td>Payment Date</td>
+							<td style="width: 6%;">Action</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="pay : ${paymentlist}">
+							<td style="text-align: center;" th:text="${pay.paymentID}"></td>
+							<td th:text="${pay.cost}"></td>
+							<td th:text="${pay.duration}"></td>
+							<td th:text="${pay.amount}"></td>
+							<td th:text="${pay.paymentDate }"></td>
+							<td>
+								<a><i class="fa fa-trash"></i></a>
+								<a th:href="@{'/pbt/downloads/'+ ${pay.duration}}"><i class="fa fa-download"></i></a>
+								<a onclick="window.print()"><i class="fa fa-print"></i></a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

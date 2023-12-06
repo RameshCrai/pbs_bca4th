@@ -50,11 +50,37 @@ function cancelProfile() {
 	document.getElementById('dashboard').style.display = 'block';
 }
 
-function showService() {
+function showService1() {
 	document.getElementById('services').style.display = 'block';
+	document.getElementById('paytoparkd').style.display = 'block';
+	document.getElementById('subscriptiond').style.display = 'none';
+	document.getElementById('officiald').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'none';
 	document.getElementById('profile').style.display = 'none';
 	document.getElementById('servicelist').style.display = 'none';
+
+
+
+}
+function showService2() {
+	document.getElementById('services').style.display = 'block';
+	document.getElementById('subscriptiond').style.display = 'block';
+	document.getElementById('paytoparkd').style.display = 'none';
+	document.getElementById('officiald').style.display = 'none';
+	document.getElementById('dashboard').style.display = 'none';
+	document.getElementById('profile').style.display = 'none';
+	document.getElementById('servicelist').style.display = 'none';
+
+}
+function showService3() {
+	document.getElementById('services').style.display = 'block';
+	document.getElementById('officiald').style.display = 'block';
+	document.getElementById('subscriptiond').style.display = 'none';
+	document.getElementById('paytoparkd').style.display = 'none';
+	document.getElementById('dashboard').style.display = 'none';
+	document.getElementById('profile').style.display = 'none';
+	document.getElementById('servicelist').style.display = 'none';
+
 }
 
 

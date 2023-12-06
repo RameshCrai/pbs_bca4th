@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+	<title th:text="${title}"></title>
+
+	<div th:include="ShareLink.html"></div>
+
+
+	<script th:src="@{/js/script.js}"></script>
+
+
+	<style>
+		#messageHIDE {
+			display: none;
+		}
+	</style>
+
+
+
+</head>
+
+<body>
+	<!-- services list   -->
+	<div class="container mt-4">
+		<div id="messageHIDE" th:if="${session.mes}" th:classappend="${session.mes.typeofMessage}" class="alert mb-2"
+			role="alert">
+			<p th:text="${session.mes.message}"></p>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<h5 class="mb-0">Add Municipality  of  <strong th:text="${dt.districtName}" th:if="${dt != null}"></strong></h3>
+			</div>
+			<div class="col-md-2">
+				<h5><a href="/pbt/district">Select District</a></h5>
+			</div>
+			<div class="col-md-3">
+				<h5><a href="/pbt/municipalitylist">Municipality List</a></h5>
+			</div>
+			<div class="col-md-3 text-right">
+				<h5 class="mb-0"><a href="/pbt/systemdashboard">Dashboard</a> </h4>
+			</div>
+		</div>
+		<hr>
+		<div class="card">
+			<div class="card-body">
+				<form action="/pbt/saveMunicipality" method="post">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-3">
+									<label for="State">Municipality Name</label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group mb-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<i class="fa fa-flag"></i>
+											</span>
+										</div>
+										<input type="text" name="nameofMunicipality" id="municipalityName"
+											class="form-control">
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div class="container-fluid text-center mt-4">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<script>
+
+		var duration = 2000; // 2 seconds
+		var messageElement = document.getElementById('messageHIDE');
+		messageElement.style.display = 'block';
+
+		setTimeout(function () {
+			messageElement.style.display = 'none';
+		}, duration);
+
+
+	</script>
+</body>
+
+</html>
