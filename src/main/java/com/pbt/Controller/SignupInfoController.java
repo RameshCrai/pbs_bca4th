@@ -79,7 +79,7 @@ public class SignupInfoController {
 				String Encryptpass = DigestUtils.md5Hex(password);
 				user.setPassword(Encryptpass);
 
-				user.setUserrolename("ADMIN");
+				user.setUserrolename("NORMAL");
 
 				this.userRepository.save(user);
 
@@ -93,16 +93,16 @@ public class SignupInfoController {
 			} else {
 				session.setAttribute("mesg",
 						new MessageMaster("Email Is Already over there please User other Email ??? ", "alert-danger"));
-				return "Layout/Signup";
+				return "redirect:/pbt/signup";
 			}
 
 		} catch (DuplicateKeyException e) {
 			session.setAttribute("mesg",
 					new MessageMaster("Email is already in use. Please use another email.", "alert-danger"));
-			return "Layout/Signup";
+			return "redirect:/pbt/signup";
 		} catch (Exception e) {
 			session.setAttribute("mesg", new MessageMaster("Something went wrong: " + e.getMessage(), "alert-danger"));
-			return "Layout/Signup";
+			return "redirect:/pbt/signup";
 		}
 
 	}

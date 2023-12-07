@@ -9,16 +9,1458 @@
 	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 	<title th:text="${title}"></title>
 
-	<div th:include="ShareLink.html"></div>
+	<div th:include="ShareLinkforNormal.html"></div>
 
+
+
+	<script th:src="@{/js/normalJS.js}"></script>
+
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Lobster', cursive;
+			font-family: 'Ysabeau Office', sans-serif;
+
+		}
+
+		#profile {
+			display: none;
+		}
+
+		#services {
+			display: none;
+		}
+
+		#normalservice {
+			display: none;
+		}
+
+
+		.card-header {
+			background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+			color: white;
+		}
+
+		.se {
+			background-image: linear-gradient(to bottom, #0f2027, #2c5364);
+			color: white;
+		}
+
+		.se:hover {
+			background-image: linear-gradient(to top, #0f2027, #2c5364);
+			cursor: pointer;
+			color: white;
+		}
+
+
+		.steps {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			margin-bottom: 2rem;
+			position: relative;
+		}
+
+		.step-button {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: none;
+			background-color: var(--prm-gray);
+			transition: .4s;
+		}
+
+		.step-button[aria-expanded="true"] {
+			width: 60px;
+			height: 60px;
+			background-color: var(--prm-color);
+			color: #fff;
+		}
+
+		.done {
+			background-color: var(--prm-color);
+			color: #fff;
+		}
+
+		.step-item {
+			z-index: 10;
+			text-align: center;
+		}
+
+		#progress {
+			-webkit-appearance: none;
+			position: absolute;
+			width: 95%;
+			z-index: 5;
+			height: 10px;
+			margin-left: 18px;
+			margin-bottom: 18px;
+		}
+
+		/* to customize progress bar */
+		#progress::-webkit-progress-value {
+			background-color: var(--prm-color);
+			transition: .5s ease;
+		}
+
+		#progress::-webkit-progress-bar {
+			background-color: var(--prm-gray);
+
+		}
+
+		.mb {
+			margin-bottom: 110px;
+		}
+
+		.input-group-text {
+			width: 40px;
+		}
+
+		#messageHIDE {
+			display: none;
+		}
+
+		#paytoparkd {
+			display: none;
+			color: #0f2027;
+		}
+
+		#subscriptiond {
+			display: none;
+		}
+
+		#officiald {
+			display: none;
+		}
+	</style>
 
 	<script th:src="@{/js/script.js}"></script>
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"
+		defer></script>
+
+
+
 
 
 </head>
 
 <body>
-   <h1>This is Normal Dashboard </h1>
+	<header>
+		<div class="tophead">
+			<div class="brandlogo">
+				PBT-!
+			</div>
+			<div>
+				<span class="menulines" onclick="openNav()">&#9776;</span>
+			</div>
+		</div>
+	</header>
+
+	<div class="sidenav" id="mySidenav">
+		<a href="Javascript:void(0)" class="closeBtn" onclick="closeNav()">&times;</a>
+
+		<a href="#" style="text-align: center;">
+			<div th:each="fileName : ${imgProfile}" class="container-fluid text-center">
+				<img th:src="@{'/profile/' + ${fileName}}" alt="Profile Image"
+					style="max-width: 100px; max-height: 100px; border-radius: 50%;" />
+			</div>
+			<figcaption>
+				<h6>Account : <b><span style="color: white;" th:text="${user.userrolename}"
+							th:if="${user != null}"></span></b>
+					<br>
+					<b><span style="color: white;" th:text="${user.fname}" th:if="${user != null}"></span>
+						<span style="color: white" th:text="${user.lname}" th:if="${user != null}"></span></b>
+				</h6>
+			</figcaption>
+		</a>
+
+		<a href="#" class="active" onclick="showDashboard()">
+			<i class="fa fa-tachometer"></i>Dashboard
+		</a>
+		<a href="#" onclick="showProfile()">
+			<i class="fa fa-user"></i>Profile
+		</a>
+		<a href="#" onclick="showService1()">
+			<i class="fa fa-wrench"></i>Services
+		</a>
+
+		<a href="#" onclick="showServiceAnalysis()">
+			<i class="fa fa-line-chart"></i>Analytics
+		</a>
+
+
+		<a href="/pbt/logout">
+			<i class="fa fa-sign-out"></i>Logout
+		</a>
+	</div>
+
+	<section class="mainpart">
+
+		<!-- Dashboard -->
+		<div class="container mt-4" id="dashboard">
+			<div id="messageHIDE" th:if="${session.mes}" th:classappend="${session.mes.typeofMessage}"
+				class="alert mb-2" role="alert">
+				<p th:text="${session.mes.message}"></p>
+			</div>
+			<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
+				Parking Service is overloaded. Please try again later.
+			</div>
+
+			<div class="row" th:if="${totalVehicle < 20}">
+				<div class="col-md-6 text-center mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h4>Total Parking Capacity : <span
+									style="font-size: xx-large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
+							</h4>
+							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b> &nbsp;
+							<b>BIKE: <span th:text="${bike}" th:if="${bike !=null}"></span></b>&nbsp;
+							<b style="color: red;">Available : <span th:text="${available}"
+									th:if="${available !=null}"></span> only</b>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h1>Time </h1>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<ul class="nav nav-tabs" role="tablist">
+						<li class="nav-item">
+							<a class="nav-link active" data-toggle="tab" href="#paytopark" role="tab">
+								PayToPark
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#subscription" role="tab">
+								Subscription
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" data-toggle="tab" href="#official" role="tab">Official</a>
+						</li>
+					</ul>
+					<hr>
+					<div class="tab-content mt-4 mb-4">
+						<!-- Paytopark-->
+						<div class="tab-pane active" id="paytopark" role="tabpanel">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<h3 class="mb-0">PaytoPark service prerequisites are listed below</h3>
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-7">
+											<article>ALL About This Package</article>
+											<ol class="p-3">
+												<li>It's a current time package</li>
+												<li>It has Valid Date and time (IN-TIME && OUT-TIME) </li>
+												<li>Vehicles parking cost will be determined in ENTER-TIME and EXIT-TIME
+												</li>
+												<li>Parking will be opened 24 hours </li>
+											</ol>
+											<hr>
+											<article>Prerequisites of PBT</article>
+											<ol class="p-3">
+												<li>Vehicle should park after Verified payment</li>
+												<li>Payment should be online method like(Esewa, Khalti so on.)</li>
+												<li>can't be refund after payment</li>
+												<li>Vehicles keys should leave in the parking reception</li>
+												<li>Can't Accept Illegle vehicles</li>
+											</ol>
+										</div>
+										<div class="col-md-5">
+											<div class="container-fluid text-center">
+												<article>Parking Booking Ticketing</article>
+												<p>It's a official package which provides more reliable services</p>
+												<br><br><br>
+												<button class="btn  btn-outline-primary"
+													onclick="showService1()">PayToPark</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Subcription -->
+						<div class="tab-pane " id="subscription" role="tabpanel">
+							<div class="card">
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<h3 class="mb-0">Subscription service prequisites are listed below</h3>
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-7">
+											<article>ALL About This Package</article>
+											<ol class="p-3">
+												<li>It's a Subscription package</li>
+												<li>It has Valid Date and time </li>
+												<li>Vehicles parking cost will be determined as a subscription based
+												</li>
+												<li>Parking will be opened 24 hours </li>
+											</ol>
+											<hr>
+											<article>Prerequisites of PBT</article>
+											<ol class="p-3">
+												<li>Vehicles should be veirified as a subscription service and take a
+													token</li>
+												<li>Payment should be full for a subscrition</li>
+												<li>Could't accept any installment for payment</li>
+												<li>Vehicles keys should leave in the parking reception</li>
+												<li>Can't Accept Illegle vehicles</li>
+											</ol>
+										</div>
+										<div class="col-md-5">
+											<div class="container-fluid text-center">
+												<article>Parking Booking Ticketing</article>
+												<p>It's a Subscription package where you can take services as a
+													subscription based.</p>
+												<br><br><br>
+												<button class="btn  btn-outline-primary"
+													onclick="showService2()">Subscription</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Official-->
+						<div class="tab-pane " id="official" role="tabpanel">
+							<div class="card">
+
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-12">
+											<h3>Official service prequisites are listed below !</h3>
+											<hr>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-7">
+											<article>About This Package</article>
+											<ol class="p-3">
+												<li>It's a Official package</li>
+												<li>It has Valid Date and time </li>
+												<li>Vehicles parking cost will be determined number of MIN and MAX</li>
+												<li>Parking will be opened 24 hours </li>
+											</ol>
+											<hr>
+											<article>Prerequisites of PBT</article>
+											<ol class="p-3">
+												<li>Vehicles should be identified from the Office stamp, if out of
+													people use need token</li>
+												<li>Payment should be in the time after complete month</li>
+												<li>Could't accept any installment for payment</li>
+												<li>Vehicles keys should leave in the parking reception</li>
+												<li>Can't Accept Illegle vehicles</li>
+											</ol>
+										</div>
+										<div class="col-md-5">
+											<div class="container-fluid text-center">
+												<article>Parking Booking Ticketing</article>
+												<p>It's a official package which provides more reliable services</p>
+												<br><br><br>
+												<button class="btn  btn-outline-primary"
+													onclick="showService3()">Official</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Services -->
+
+		<div class="container mt-4 mb" id="services">
+			<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
+				Parking Service is overloaded. Please try again later.
+			</div>
+
+			<div th:if="${totalVehicle < 20}">
+				<div class="container-fluid text-center mb-2">
+					<div class="card">
+						<div class="card-body">
+							<h4>Total Parking Capacity : <span
+									style="font-size: xx-large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
+							</h4>
+							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b> &nbsp;
+							<b>BIKE: <span th:text="${bike}" th:if="${bike !=null}"></span></b>&nbsp;
+							<b style="color: red;">Available : <span th:text="${available}"
+									th:if="${available !=null}"></span> only</b>
+						</div>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-md-6">
+						<h3 class="mb-0" id="paytoparkd">PayToPark Service</h3>
+						<h3 class="mb-0" id="subscriptiond">Subscription Service</h3>
+						<h3 class="mb-0" id="officiald">Official Service</h3>
+					</div>
+					<div class="col-md-6 text-right">
+						<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
+					</div>
+				</div>
+				<hr>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="progress">
+									<div id="progress-bar"
+										class="progress-bar progress-bar-striped progress-bar-animated"
+										role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
+										style="width: 20%"></div>
+								</div>
+
+								<form th:action="@{/pbt/normal_save_services}" method="post">
+									<div class="accordion mt-2" id="accordionExample">
+
+
+
+										<div class="card">
+											<div id="headingOne">
+											</div>
+
+											<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+												data-bs-parent="#accordionExample">
+												<div class="card-body">
+													<div class="row">
+														<div "col-md-12">
+															<h3 class="mb-0"><b><u>Services</u></b></h3>
+														</div>
+													</div>
+
+													<div class="row">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="service">Srvice Type</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-wrench"></i>
+																			</span>
+																		</div>
+																		<select type="text" name="serviceType"
+																			id="servicetype" class="form-control">
+																			<option value="" hidden>Select type of
+																				services
+																			</option>
+																			<option value="paytopark">PayToPark</option>
+																			<option value="official">Official</option>
+																			<option value="subscription">Subscription
+																			</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="service">Enter Date</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-calendar"></i>
+																			</span>
+																		</div>
+																		<input type="date" name="enterDate"
+																			id="enterdate" class="form-control" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-3">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Exit Date</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-calendar"></i>
+																			</span>
+																		</div>
+																		<input type="date" name="exitDate" id="exitdate"
+																			class="form-control" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="duration">Time From</label>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-clock"></i>
+																			</span>
+																		</div>
+																		<input type="time" name="enterTime"
+																			id="entertime" placeholder="Enter Time"
+																			class="form-control" />
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<label for="duration">To</label>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-clock"></i>
+																			</span>
+																		</div>
+																		<input type="time" name="exitTime" id="exittime"
+																			placeholder="Exit Time"
+																			class="form-control" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="card">
+											<div id="headingTwo">
+
+											</div>
+											<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+												data-bs-parent="#accordionExample">
+												<div class="card-body">
+													<div class="row">
+														<div "col-md-12">
+															<h3 class="mb-0"><b><u>Vehicle</u></b></h3>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="Vehiclename">Vehicle Type</label>
+																</div>
+																<div class="col-md-9">
+
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-car"></i>
+																			</span>
+																		</div>
+																		<select type="text" name="vehicleType"
+																			id="vehicletype" class="form-control">
+																			<option value="">Select type of Vehicle
+																			</option>
+																			<option value="car">CAR</option>
+																			<option value="bike">BIKE</option>
+																			</option>
+																		</select>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="Vehiclenumber">Vehicle Name</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-car"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="vehicleName"
+																			id="vehiclename" class="form-control"
+																			placeholder="Vehicle Name" />
+																	</div>
+																</div>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="row mt-3">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="model">Model</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-copy"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="model"
+																			class="form-control" id="modal"
+																			placeholder="Model" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="color">Number of Vehicle</label>
+																</div>
+																<div class="col-md-5">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-sort-numeric-asc"></i>
+																			</span>
+																		</div>
+																		<input type="number" name="numberofVehicle"
+																			id="numberofvehicle" class="form-control"
+																			placeholder="eg:2" />
+																	</div>
+																</div>
+																<div class="col-md-4">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-copy"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="color"
+																			class="form-control" id="color"
+																			placeholder="color" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-2">
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="Vehiclename">Plate Number</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fas fa-id-card"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="plateNumber"
+																			id="platnumber" class="form-control"
+																			placeholder=" Plate Number" />
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-6">
+															<div class="row">
+																<div class="col-md-3">
+																	<label for="color">License Number
+																	</label>
+																</div>
+																<div class="col-md-9">
+																	<div class="form-group input-group mb-0">
+																		<div class="input-group-prepend">
+																			<span class="input-group-text">
+																				<i class="fa fa-pencil"></i>
+																			</span>
+																		</div>
+																		<input type="text" name="licenceNumber"
+																			id="licencenumber"
+																			placeholder="Licence Number"
+																			class="form-control" />
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div>
+													</div>
+												</div>
+											</div>
+
+
+
+
+											<div class="card">
+												<div id="headingThree">
+
+												</div>
+												<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+													data-bs-parent="#accordionExample">
+													<div class="card-body">
+														<div class="row">
+															<div "col-md-12">
+																<h3 class="mb-0"><b><u>Parking Location</u></b></h3>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">State</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fa fa-map"></i>
+																				</span>
+																			</div>
+																			<select id="state" name="state"
+																				class="form-control">
+																				<option value="" hidden>Select State
+																				</option>
+																				<option value="Koshi">Koshi</option>
+																				<option value="Madesh">Madesh</option>
+																				<option value="Bagmati">Bagmati</option>
+																				<option value="Gandaki">Gandki</option>
+																				<option value="Lumbini Pradesh">Lumbini
+																					Pradesh</option>
+																				<option value="Karnali Pradesh">Karnali
+																					Pradesh</option>
+																				<option value="Sudurpashchim">
+																					Sudurpashchim
+																				</option>
+																			</select>
+
+
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">District</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-area-chart"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="district"
+																				id="district" class="form-control"
+																				placeholder="District" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+														<div class="row mt-3">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">Municipality</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fa fa-building"></i>
+																				</span>
+																			</div>
+																			<input type="text"
+																				placeholder="Municipality"
+																				id="municipality" name="municipality"
+																				class="form-control">
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">City</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fa fa-city"></i>
+																				</span>
+																			</div>
+																			<input type="text" placeholder="city"
+																				id="city" name="city"
+																				class="form-control">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row mt-3">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Street</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-road"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="street" id="street"
+																				class="form-control"
+																				placeholder="Street" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Spot</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-map-marker"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="spot" id="spot"
+																				class="form-control"
+																				placeholder="Spot" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="card">
+												<div id="headingFour">
+												</div>
+												<div id="collapseFour" class="collapse" aria-labelledby="headingThree"
+													data-bs-parent="#accordionExample">
+													<div class="card-body">
+														<div class="row">
+															<div "col-md-12">
+																<h3 class="mb-0"><b><u>Payment</u></b></h3>
+															</div>
+														</div>
+														<div class="row">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Duration</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-clock"></i>
+																				</span>
+																			</div>
+																			<input type="text" name="duration"
+																				id="duration" class="form-control"
+																				placeholder="Duration" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">Cost</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i
+																						class="fa fa-sort-amount-asc"></i>
+																				</span>
+																			</div>
+																			<input type="text" class="form-control"
+																				id="cost" name="cost"
+																				placeholder="Cost">
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+														<div class="row mt-3">
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="service">Amount</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i
+																						class="fa fa-sort-amount-asc"></i>
+																				</span>
+																			</div>
+																			<input type="text" class="form-control"
+																				name="amount" placeholder="amount"
+																				id="amount">
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-6">
+																<div class="row">
+																	<div class="col-md-3">
+																		<label for="duration">Payment Date</label>
+																	</div>
+																	<div class="col-md-9">
+																		<div class="form-group input-group mb-0">
+																			<div class="input-group-prepend">
+																				<span class="input-group-text">
+																					<i class="fas fa-calendar"></i>
+																				</span>
+																			</div>
+																			<input type="date" name="paymentDate"
+																				id="paymentdate" class="form-control"
+																				placeholder="Duration" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+
+														<div class="row mt-4">
+															<div class="col-md-12 text-center">
+																<hr>
+																<button type="submit" onclick="onSubmitPayment()"
+																	class="btn btn-primary">Submit</button>
+															</div>
+														</div>
+
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="steps mt-2">
+											<div class="step-item">
+												<button id="step-1-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027;" type="button" onclick="onService()">
+													1 Service
+												</button>
+											</div>
+
+											<div class="step-item">
+												<button id="step-2-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027; display: inline;" type="button"
+													onclick="onVehicle()">
+													2 Vehicle
+												</button>
+											</div>
+
+											<div class="step-item">
+												<button id="step-3-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027;" onclick="onLocation()" type="button">
+													3 Location
+												</button>
+
+											</div>
+											<div class="step-item">
+												<button id="step-4-button" class="btn btn-outline-primary text-center"
+													style="color: #0f2027;" type="button" onclick="onPayment()">
+													4 Payment
+												</button>
+											</div>
+
+
+										</div>
+									</div>
+
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+		<!-- Profile -->
+		<div class="container mt-4" id="profile">
+			<div class="row">
+				<div class="col-md-6">
+					<h3 class="mb-0">Profile</h3>
+				</div>
+				<div class="col-md-6 text-right">
+					<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
+				</div>
+			</div>
+			<hr>
+			<div class="card">
+				<div class="row">
+					<div class="col-md-11">
+						<h3 class="mb-0">User Information !</h3>
+					</div>
+					<div class="col-md-1 text-right">
+						<h3 class="mb-0" onclick="cancelProfile()">&times;</h3>
+					</div>
+				</div>
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="card">
+								<div class="card-body">
+
+									<div th:each="fileName : ${imgProfile}" class="container-fluid text-center">
+										<img th:src="@{'/profile/' + ${fileName}}" alt="Profile Image"
+											style="max-width: 100px; max-height: 100px; border-radius: 50%;" />
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+						<div class="col-md-9">
+							<div class="card">
+								<div class="card-body">
+									<div class="row">
+										<div class="col-md-6">
+											<h6>FullName : <b><span style="color: black;" th:text="${user.fname}"
+														th:if="${user != null}"></span> <span style="color: black;"
+														th:text="${user.lname}" th:if="${user != null}"></span></b>
+											</h6>
+											<h6>Email : <b><span style="color: black;" th:text="${user.email}"
+														th:if="${user != null}"></span></b></h6>
+											<h6>Mobile : <b><span style="color: black;" th:text="${user.mobile}"
+														th:if="${user != null}"></span></b>
+											</h6>
+
+										</div>
+										<div class="col-md-6">
+											<h6>Agreement : <b><span style="color: black;" th:text="${user.agreement}"
+														th:if="${user != null}"></span></b>
+											</h6>
+											<h6>Date of Birth : <b><span style="color: black;" th:text="${user.dob}"
+														th:if="${user != null}"></span></b>
+											</h6>
+											<h6>UserRole : <b><span style="color: black;" th:text="${user.userrolename}"
+														th:if="${user != null}"></span></b>
+											</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Services -->
+		<div class="container mt-4" id="normalservice">
+			<div class="row">
+				<div class="col-md-6">
+					<h3 class="mb-0">Services List</h3>
+				</div>
+				<div class="col-md-6 text-right">
+					<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
+				</div>
+			</div>
+			<hr>
+			<div class="card">
+				<div class="card-body">
+					<div class="row">
+						<div class="col-md-12">
+							<ul class="nav nav-tabs" role="tablist">
+								<li class="nav-item">
+									<a class="nav-link active" data-toggle="tab" href="#service" role="tab">
+										Service
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#vehicle" role="tab">
+										Vehicle
+									</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#parking" role="tab">Parking
+										Location</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" data-toggle="tab" href="#payment" role="tab">Payment</a>
+								</li>
+							</ul>
+							<div class="tab-content mt-4">
+								<!-- service -->
+								<div class="tab-pane active" id="service" role="tabpanel">
+									<div class="card">
+										<div class="card-body">
+											<table style="width: 100%;">
+												<thead>
+													<tr>
+														<th style="text-align: center;">S.N</th>
+														<th>Service Type</th>
+														<th>Enter Date</th>
+														<th>Exit Date</th>
+														<th>From Time</th>
+														<th>To Time</th>
+														<th style="width: 6%;">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="service : ${serviceslist}">
+														<td style="text-align: center;" th:text="${service.serviceID}">
+														</td>
+														<td th:text="${service.serviceType}" th:if="${service !=null}">
+														</td>
+														<td th:text="${service.enterDate}" th:if="${service !=null}">
+														</td>
+														<td th:text="${service.exitDate}" th:if="${service !=null}">
+														</td>
+														<td th:text="${service.enterTime}" th:if="${service !=null}">
+														</td>
+														<td th:text="${service.exitTime}" th:if="${service !=null}">
+														</td>
+														<td style="text-align: center;">
+															<a><i class="fa fa-edit"></i></a>
+															<a><i class="fa fa-trash"></i></a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- vehicle -->
+								<div class="tab-pane " id="vehicle" role="tabpanel">
+									<div class="card">
+										<div class="card-body">
+											<table style="width: 100%;">
+												<thead>
+													<tr>
+														<th style="text-align: center;">S.N</th>
+														<th>Vehicle Type</th>
+														<th>Vehicle Name</th>
+														<th>Model</th>
+														<th>Numb of Vehicle</th>
+														<th>Color</th>
+														<th>Plate Number</th>
+														<th>Licence Number</th>
+														<th style="width: 6%; text-align: center;">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="vehicle : ${vehiclelist}">
+														<td style="text-align: center;" th:text="${vehicle.vehicleID}">
+														</td>
+														<td th:text="${vehicle.vehicleType}"></td>
+														<td th:text="${vehicle.vehicleName}"></td>
+														<td th:text="${vehicle.model}"></td>
+														<td th:text="${vehicle.numberofVehicle}"></td>
+														<td th:text="${vehicle.color}"></td>
+														<td th:text="${vehicle.plateNumber}"></td>
+														<td th:text="${vehicle.licenceNumber}"></td>
+														<td style="text-align: center;">
+															<a><i class="fa fa-edit"></i></a>
+															<a><i class="fa fa-trash"></i></a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+								<!-- parking -->
+								<div class="tab-pane " id="parking" role="tabpanel">
+									<div class="card">
+										<div class="card-body">
+											<table style="width: 100%;">
+												<thead>
+													<tr>
+														<th style="text-align: center;">S.N</th>
+														<th>State</th>
+														<th>District</th>
+														<th>Municipality</th>
+														<th>City</th>
+														<th>Street</th>
+														<th>Spot</th>
+														<th style="width: 6%; text-align: center;">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="location : ${locationlist}">
+														<td style="text-align: center;" th:text="${location.parkingID}">
+														</td>
+														<td th:text="${location.state}"></td>
+														<td th:text="${location.district}"></td>
+														<td th:text="${location.municipality}"></td>
+														<td th:text="${location.city}"></td>
+														<td th:text="${location.street}"></td>
+														<td th:text="${location.spot}"></td>
+														<td style="text-align: center;">
+															<a><i class="fa fa-edit"></i></a>
+															<a><i class="fa fa-trash"></i></a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+								<!-- payment-->
+								<div class="tab-pane " id="payment" role="tabpanel">
+									<div class="card">
+										<div class="card-body">
+											<table style="width: 100%;">
+												<thead>
+													<tr>
+														<th style="text-align: center;">S.N</th>
+														<th>Duration</th>
+														<th>Cost</th>
+														<th>Amount</th>
+														<th>Payment Date</th>
+														<th style="width: 6%; text-align: center;">Action</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="payment: ${paymentlist}">
+														<td style="text-align: center;" th:text="${payment.paymentID}">
+														</td>
+														<td th:text="${payment.duration}"></td>
+														<td th:text="${payment.cost}"></td>
+														<td th:text="${payment.amount}"></td>
+														<td th:text="${payment.paymentDate}"></td>
+														<td style="text-align: center;">
+															<a><i class="fa fa-edit"></i></a>
+															<a><i class="fa fa-trash"></i></a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- Stepper JavaScript -->
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+				const stepButtons = document.querySelectorAll('.step-button');
+				const progress = document.querySelector('#progress');
+
+				Array.from(stepButtons).forEach((button, index) => {
+					button.addEventListener('click', () => {
+						progress.setAttribute('value', index * 100 / (stepButtons.length - 1));
+
+						stepButtons.forEach((item, secindex) => {
+							if (index > secindex) {
+								item.classList.add('done');
+							}
+							if (index < secindex) {
+								item.classList.remove('done');
+							}
+						});
+					});
+				});
+			});
+
+
+			document.addEventListener("DOMContentLoaded", function () {
+				const progressBar = document.getElementById("progress-bar");
+				const step1Button1 = document.getElementById("step-1-button");
+				const step2Button2 = document.getElementById("step-2-button");
+				const step3Button3 = document.getElementById("step-3-button");
+				const step4Button4 = document.getElementById("step-4-button");
+
+
+
+				const step1Content1 = document.getElementById("collapseOne");
+				const step2Content2 = document.getElementById("collapseTwo");
+				const step3Content3 = document.getElementById("collapseThree");
+				const step4Content4 = document.getElementById("collapseFour");
+
+
+
+				const stepButtons = [step1Button1, step2Button2, step3Button3, step4Button4];
+				const stepContents = [step1Content1, step2Content2, step3Content3, step4Content4];
+
+				stepButtons.forEach((button, index) => {
+					button.addEventListener("click", function (event) {
+						progressBar.style.width = `${(index + 1) * 25}%`;
+
+						stepContents.forEach((content) => {
+							content.classList.remove("show");
+						});
+
+						stepContents[index].classList.add("show");
+
+					});
+				});
+
+			});
+
+
+			function onVehicle() {
+				var service = document.getElementById("servicetype").value;
+				var enterdate = document.getElementById("enterdate").value;
+				var exitdate = document.getElementById("exitdate").value;
+				var from = document.getElementById("entertime").value;
+				var to = document.getElementById("exittime").value;
+				let isValid = false;
+
+				let btn1 = document.getElementById("step-2-button").value;
+
+				if (service == "") {
+					alert("Service type isEmpty ?");
+					btn1.value = false;
+					return isValid;
+				} else {
+					return true;
+				}
+
+
+			}
+
+			function onPayment() {
+				confirm("Payment Processing .........");
+
+				var service = document.getElementById("servicetype").value;
+				var enterdate = document.getElementById("enterdate").value;
+				var exitdate = document.getElementById("exitdate").value;
+				var fromTime = document.getElementById("entertime").value;
+				var toTime = document.getElementById("exittime").value;
+
+				var vehicletype = document.getElementById("vehicletype").value;
+				var vehiclenumber = document.getElementById("numberofvehicle").value;
+				console.log("vehicle num = ", vehiclenumber);
+
+				var duration = document.getElementById("duration");
+				var cosst = document.getElementById("cost");
+				var amount = document.getElementById("amount");
+				var paymentdate = document.getElementById("paymentdate");
+
+				var fromTimeDate = new Date("1970-01-01T" + fromTime);
+				var toTimeDate = new Date("1970-01-01T" + toTime);
+
+				const durationInMilliseconds = toTimeDate - fromTimeDate;
+				const hours = Math.floor(durationInMilliseconds / 3600000);
+				const durationBIKE = Math.abs(hours);
+
+				const bikeparkprice = 15;
+				const carparkprice = 50;
+
+				const enterDateTime = new Date(enterdate);
+				const exitDateTime = new Date(exitdate);
+
+				const currentDate = enterDateTime.getDate();
+				const endingDate = exitDateTime.getDate();
+
+				const DurationInHours = endingDate - currentDate;
+				const durationCAR = DurationInHours * 60;
+
+				const payablecarHours = Math.abs(durationCAR);
+
+				if (vehicletype == "bike") {
+
+					duration.value = durationBIKE + " HOURS";
+					cost.value = bikeparkprice;
+					amount.value = bikeparkprice * durationBIKE * vehiclenumber;
+
+
+				} else {
+
+					duration.value = payablecarHours + " HOURS";
+					cost.value = carparkprice;
+					amount.value = carparkprice * payablecarHours * vehiclenumber;
+
+
+				}
+
+			}
+
+
+
+
+			function onSubmitPayment() {
+				var duration = document.getElementById("duration").value;
+				var cost = document.getElementById("cost");
+				var paymentdate = document.getElementById("paymentDate");
+				var amount = document.getElementById("amount");
+				if (duration == "") {
+					alert("Enter duration ");
+				}
+				
+				
+				
+				
+			}
+
+
+
+			var duration = 2000; // 2 seconds
+			var messageElement = document.getElementById('messageHIDE');
+			messageElement.style.display = 'block';
+
+			setTimeout(function () {
+				messageElement.style.display = 'none';
+			}, duration);
+
+
+		</script>
+	</section>
+
+
+
+
+
 </body>
 
 </html>

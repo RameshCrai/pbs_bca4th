@@ -162,7 +162,10 @@
 					style="max-width: 100px; max-height: 100px; border-radius: 50%;" />
 			</div>
 			<figcaption>
-				<h6>Account : <b><span style="color: white;" th:text="${user.fname}" th:if="${user != null}"></span>
+				<h6>Account : <b><span style="color: white;" th:text="${user.userrolename}"
+							th:if="${user != null}"></span></b>
+					<br>
+					<b><span style="color: white;" th:text="${user.fname}" th:if="${user != null}"></span>
 						<span style="color: white" th:text="${user.lname}" th:if="${user != null}"></span></b>
 				</h6>
 			</figcaption>

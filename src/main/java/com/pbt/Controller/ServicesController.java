@@ -54,6 +54,7 @@ public class ServicesController {
 	@Autowired
 	private EmailsenderService emailSend;
 
+//	paytopark  page
 	@GetMapping("/paytopark_service")
 	public String getPayToPark(Model model1) {
 
@@ -62,6 +63,7 @@ public class ServicesController {
 		return "pages/Services/Paytopark";
 	}
 
+//	official page
 	@GetMapping("/Official_service")
 	public String getOfficial(Model model2) {
 
@@ -70,6 +72,7 @@ public class ServicesController {
 		return "pages/Services/Official";
 	}
 
+//subscription page
 	@GetMapping("/Subscription_Service")
 	public String getSubscription(Model model3) {
 
@@ -78,6 +81,7 @@ public class ServicesController {
 		return "pages/Services/Subscription";
 	}
 
+//	Admin Dashboard page
 	@GetMapping("/systemdashboard")
 	public String getSystemDashboardPage(HttpSession session, Model model) {
 		User user = (User) session.getAttribute("user");
@@ -124,18 +128,23 @@ public class ServicesController {
 		String pname = userinfo.getProfile();
 
 		if (profile.exists() && profile.isDirectory()) {
-			String parentPath = profile.getParent();
-
 			String[] fileNames = profile.list();
 
 			if (fileNames != null && fileNames.length > 0) {
+				boolean found = false;
+
 				for (String fileName : fileNames) {
 					if (fileName.equalsIgnoreCase(pname)) {
 						System.out.println("File name: " + fileName);
 						model.addAttribute("imgProfile", fileName);
-					} else {
-						System.out.println("profile name Not match ?");
+						found = true;
+						break;
 					}
+				}
+
+				if (!found) {
+					System.out.println("Profile name not found.");
+
 				}
 			} else {
 				System.out.println("No files found in the directory.");
@@ -145,6 +154,108 @@ public class ServicesController {
 		}
 
 		return "pages/Dashboard/SystemDashboard";
+	}
+
+//	Normal Dashboard page
+	@GetMapping("/normalDashboard")
+	public String getNormalDashboardPage(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+
+			return "Layout/Login";
+		}
+
+//		session Timeout		
+//		session.setAttribute("user", user);
+//		session.setMaxInactiveInterval(10);
+
+//		count vehicle
+		int totalVehicle = 0;
+		int car = 0;
+		int bike = 0;
+		int absoAvailable = 0;
+
+		User userinfo = this.userRepo.findByEmail(user.getEmail());
+		if (userinfo != null) {
+			model.addAttribute("user", userinfo);
+			List<Vehicle> vehicledata = this.vehicleRepo.findByUser(userinfo);
+			for (Vehicle vt : vehicledata) {
+				totalVehicle++;
+
+				String vehicleType = vt.getVehicleType();
+				if ("bike".equalsIgnoreCase(vehicleType)) {
+					bike++;
+				} else {
+					car++;
+				}
+			}
+			int available = 20 - totalVehicle;
+			if (available != -1) {
+				absoAvailable = Math.abs(available);
+				model.addAttribute("available", absoAvailable);
+			} else {
+				absoAvailable = 0;
+				model.addAttribute("available", absoAvailable);
+			}
+
+			model.addAttribute("car", car);
+			model.addAttribute("bike", bike);
+			model.addAttribute("totalVehicle", totalVehicle);
+
+		}
+
+//		profile fetch 
+		File profile = new File("src/main/resources/static/profile/");
+		String pname = userinfo.getProfile();
+
+		if (profile.exists() && profile.isDirectory()) {
+			String[] fileNames = profile.list();
+
+			if (fileNames != null && fileNames.length > 0) {
+				boolean found = false;
+
+				for (String fileName : fileNames) {
+					if (fileName.equalsIgnoreCase(pname)) {
+						System.out.println("File name: " + fileName);
+						model.addAttribute("imgProfile", fileName);
+						found = true;
+						break;
+					}
+				}
+
+				if (!found) {
+					System.out.println("Profile name not found.");
+
+				}
+			} else {
+				System.out.println("No files found in the directory.");
+			}
+		} else {
+			System.out.println("Directory does not exist or is not a directory.");
+		}
+
+//		fetch services list 
+
+		List<Services> services = this.serviceRepo.findByUser(userinfo);
+		List<Vehicle> vehicles = this.vehicleRepo.findByUser(userinfo);
+
+		List<ParkingLocation> locations = new ArrayList<>();
+
+		for (Vehicle vehicle : vehicles) {
+			locations.addAll(this.parkinglocationRepo.findByVehicle(vehicle));
+		}
+
+		List<Payment> payments = new LinkedList<>();
+		for (Services service : services) {
+			payments.addAll(this.paymentRepo.findByService(service));
+		}
+
+		model.addAttribute("serviceslist", services);
+		model.addAttribute("vehiclelist", vehicles);
+		model.addAttribute("locationlist", locations);
+		model.addAttribute("paymentlist", payments);
+
+		return "pages/Dashboard/NormalDashboard";
 	}
 
 //	save Services 
@@ -205,9 +316,71 @@ public class ServicesController {
 			System.out.println("An exception occurred");
 		}
 
-		return "pages/Dashboard/SuccessFile";
+		return "redirect:/pbt/systemdashboard";
 	}
 
+//	save Normal Services 
+	@PostMapping("/normal_save_services")
+	@Transactional
+	public String saveNormalServices(@Validated @ModelAttribute Services service, @ModelAttribute Vehicle vehicle,
+			@ModelAttribute ParkingLocation plocation, @ModelAttribute Payment payment, HttpSession session,
+			Model model) {
+
+		try {
+			User user = (User) session.getAttribute("user");
+
+			if (user != null) {
+				String email = (String) user.getEmail();
+				System.out.println("User email = " + email);
+
+				User userinfo = this.userRepo.findByEmail(email);
+				if (userinfo != null) {
+					System.out.println("user details " + userinfo.getFname());
+
+					userinfo.getChoseService().add(service);
+					service.setUser(userinfo);
+
+					userinfo.getHasVehicle().add(vehicle);
+					vehicle.setUser(userinfo);
+
+					service.getHasPayment().add(payment);
+					payment.setService(service);
+
+					payment.getPaidPayment().add(plocation);
+					plocation.setPayment(payment);
+
+					vehicle.getParkAtParkingLocation().add(plocation);
+					plocation.setVehicle(vehicle);
+
+					this.serviceRepo.save(service);
+					this.vehicleRepo.save(vehicle);
+
+					this.paymentRepo.save(payment);
+					this.parkinglocationRepo.save(plocation);
+
+					this.emailSend.sendEmail(email, "PBTS service ",
+							"pbts service have been verified " + service.getServiceType());
+
+					session.setAttribute("mes",
+							new MessageMaster("Parking Booking Ticketing System Applied Succesfully", "alert-success"));
+
+					return "redirect:/pbt/normalDashboard";
+				}
+			} else {
+				session.setAttribute("mes",
+						new MessageMaster("Parking Booking Ticketing System ERROR", "alert-danger"));
+				System.out.println("user isEmpty ");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("An exception occurred");
+		}
+
+		return "redirect:/pbt/normalDashboard";
+	}
+
+//	get services details 
 	@GetMapping("fetch_services_details")
 	public String fetchServices(HttpSession session, Model model) throws Exception {
 		User user = (User) session.getAttribute("user");

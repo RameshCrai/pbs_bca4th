@@ -1,16 +1,3 @@
-var i = 0;
-var txt = 'Parking Booking System  Is An Online Parking Space Booking or Ticketing System for Vehicles !';
-var speed = 100;
-
-function AutomaticText() {
-	if (i < txt.length) {
-		document.getElementById("autoTxt").innerHTML += txt.charAt(i);
-		i++;
-		setTimeout(AutomaticText, speed);
-
-	}
-
-}
 
 function openNav() {
 	document.getElementById('mySidenav').style.width = "200px";
@@ -31,7 +18,9 @@ function Showmenu() {
 
 }
 function showDashboard() {
+	document.getElementById('normalservice').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'block';
+
 	document.getElementById('services').style.display = 'none';
 	document.getElementById('profile').style.display = 'none';
 	document.getElementById('servicelist').style.display = 'none';
@@ -39,7 +28,9 @@ function showDashboard() {
 }
 
 function showProfile() {
+	document.getElementById('normalservice').style.display = 'none';
 	document.getElementById('profile').style.display = 'block';
+
 	document.getElementById('services').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'none';
 	document.getElementById('servicelist').style.display = 'none';
@@ -53,8 +44,10 @@ function cancelProfile() {
 }
 
 function showService1() {
+	document.getElementById('normalservice').style.display = 'none';
 	document.getElementById('services').style.display = 'block';
 	document.getElementById('paytoparkd').style.display = 'block';
+
 	document.getElementById('subscriptiond').style.display = 'none';
 	document.getElementById('officiald').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'none';
@@ -65,7 +58,9 @@ function showService1() {
 
 
 }
+
 function showService2() {
+	document.getElementById('normalservice').style.display = 'none';
 	document.getElementById('services').style.display = 'block';
 	document.getElementById('subscriptiond').style.display = 'block';
 	document.getElementById('paytoparkd').style.display = 'none';
@@ -76,7 +71,10 @@ function showService2() {
 
 
 }
+
+
 function showService3() {
+	document.getElementById('normalservice').style.display = 'none';
 	document.getElementById('services').style.display = 'block';
 	document.getElementById('officiald').style.display = 'block';
 	document.getElementById('subscriptiond').style.display = 'none';
@@ -88,4 +86,11 @@ function showService3() {
 }
 
 
+function showServiceAnalysis() {
+	document.getElementById('normalservice').style.display = 'block';
+	document.getElementById('profile').style.display = 'none';
+	document.getElementById('services').style.display = 'none';
+	document.getElementById('dashboard').style.display = 'none';
+	document.getElementById('servicelist').style.display = 'none';
 
+}

@@ -1,6 +1,8 @@
 package com.pbt.Controller;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -12,8 +14,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.pbt.Dao.ParkinglocationRepository;
+import com.pbt.Dao.PaymentRepository;
+import com.pbt.Dao.ServiceofpbtRepository;
 import com.pbt.Dao.UserRepository;
 import com.pbt.Dao.VehicleRepository;
+import com.pbt.Entities.ParkingLocation;
+import com.pbt.Entities.Payment;
+import com.pbt.Entities.Services;
 import com.pbt.Entities.User;
 import com.pbt.Entities.Vehicle;
 import com.pbt.ExceptionHandler.MessageMaster;
@@ -28,8 +36,18 @@ public class LoginController {
 	private UserRepository userRepo;
 
 	@Autowired
+	private ParkinglocationRepository parkinglocationRepo;
+
+	@Autowired
+	private PaymentRepository paymentRepo;
+
+	@Autowired
+	private ServiceofpbtRepository serviceRepo;
+
+	@Autowired
 	private VehicleRepository vehicleRepo;
 
+//	login page
 	@GetMapping("/login")
 	public String userSignup(Model model) {
 		model.addAttribute("title", "Login Component");
@@ -37,6 +55,189 @@ public class LoginController {
 		return "Layout/Login";
 	}
 
+//	Admin dashboard
+	@GetMapping("/system_dashboard")
+	public String getAdminDashboardSystem(HttpSession session, Model model) {
+		User usersession = (User) session.getAttribute("user");
+
+		User userinfo = this.userRepo.findByEmail(usersession.getEmail());
+
+		if (userinfo == null) {
+			System.out.println("User isEmpty ??");
+		} else {
+
+			model.addAttribute("user", userinfo);
+
+			int totalVehicle = 0;
+			int car = 0;
+			int bike = 0;
+			int absoAvailable = 0;
+
+			if (userinfo != null) {
+				List<Vehicle> vehicledata = this.vehicleRepo.findByUser(userinfo);
+				for (Vehicle vt : vehicledata) {
+					totalVehicle++;
+
+					String vehicleType = vt.getVehicleType();
+					if ("bike".equalsIgnoreCase(vehicleType)) {
+						bike++;
+					} else {
+						car++;
+					}
+				}
+				int available = 20 - totalVehicle;
+				if (available != -1) {
+					absoAvailable = Math.abs(available);
+					model.addAttribute("available", absoAvailable);
+				} else {
+					absoAvailable = 0;
+					model.addAttribute("available", absoAvailable);
+				}
+
+				model.addAttribute("car", car);
+				model.addAttribute("bike", bike);
+
+				model.addAttribute("totalVehicle", totalVehicle);
+
+			}
+
+			File profile = new File("src/main/resources/static/profile/");
+			String pname = userinfo.getProfile();
+
+			if (profile.exists() && profile.isDirectory()) {
+				String[] fileNames = profile.list();
+
+				if (fileNames != null && fileNames.length > 0) {
+					boolean found = false;
+
+					for (String fileName : fileNames) {
+						if (fileName.equalsIgnoreCase(pname)) {
+							System.out.println("File name: " + fileName);
+							model.addAttribute("imgProfile", fileName);
+							found = true;
+							break;
+						}
+					}
+
+					if (!found) {
+						System.out.println("Profile name not found.");
+
+					}
+				} else {
+					System.out.println("No files found in the directory.");
+				}
+			} else {
+				System.out.println("Directory does not exist or is not a directory.");
+			}
+		}
+
+		return "/pages/Dashboard/SystemDashboard";
+	}
+
+//	normal dashboard
+	@GetMapping("/normal_dashboard")
+	public String getNormalDashboardSystem(HttpSession session, Model model) {
+		User usersession = (User) session.getAttribute("user");
+
+		User userinfo = this.userRepo.findByEmail(usersession.getEmail());
+
+		if (userinfo == null) {
+			System.out.println("User isEmpty ??");
+		} else {
+			model.addAttribute("user", userinfo);
+
+//			space count
+			int totalVehicle = 0;
+			int car = 0;
+			int bike = 0;
+			int absoAvailable = 0;
+
+			if (userinfo != null) {
+				List<Vehicle> vehicledata = this.vehicleRepo.findByUser(userinfo);
+				for (Vehicle vt : vehicledata) {
+					totalVehicle++;
+
+					String vehicleType = vt.getVehicleType();
+					if ("bike".equalsIgnoreCase(vehicleType)) {
+						bike++;
+					} else {
+						car++;
+					}
+				}
+				int available = 20 - totalVehicle;
+				if (available != -1) {
+					absoAvailable = Math.abs(available);
+					model.addAttribute("available", absoAvailable);
+				} else {
+					absoAvailable = 0;
+					model.addAttribute("available", absoAvailable);
+				}
+
+				model.addAttribute("car", car);
+				model.addAttribute("bike", bike);
+
+				model.addAttribute("totalVehicle", totalVehicle);
+
+			}
+
+//			Profile fetch 
+
+			File profile = new File("src/main/resources/static/profile/");
+			String pname = userinfo.getProfile();
+
+			if (profile.exists() && profile.isDirectory()) {
+				String[] fileNames = profile.list();
+
+				if (fileNames != null && fileNames.length > 0) {
+					boolean found = false;
+
+					for (String fileName : fileNames) {
+						if (fileName.equalsIgnoreCase(pname)) {
+							System.out.println("File name: " + fileName);
+							model.addAttribute("imgProfile", fileName);
+							found = true;
+							break;
+						}
+					}
+
+					if (!found) {
+						System.out.println("Profile name not found.");
+
+					}
+				} else {
+					System.out.println("No files found in the directory.");
+				}
+			} else {
+				System.out.println("Directory does not exist or is not a directory.");
+			}
+
+//			fetch services list 
+
+			List<Services> services = this.serviceRepo.findByUser(userinfo);
+			List<Vehicle> vehicles = this.vehicleRepo.findByUser(userinfo);
+
+			List<ParkingLocation> locations = new ArrayList<>();
+
+			for (Vehicle vehicle : vehicles) {
+				locations.addAll(this.parkinglocationRepo.findByVehicle(vehicle));
+			}
+
+			List<Payment> payments = new LinkedList<>();
+			for (Services service : services) {
+				payments.addAll(this.paymentRepo.findByService(service));
+			}
+
+			model.addAttribute("serviceslist", services);
+			model.addAttribute("vehiclelist", vehicles);
+			model.addAttribute("locationlist", locations);
+			model.addAttribute("paymentlist", payments);
+
+		}
+
+		return "/pages/Dashboard/NormalDashboard";
+	}
+
+//	login to normal and admin dashboard
 	@SuppressWarnings("unused")
 	@PostMapping("/login_username_password")
 	public String getLoginuserDemographic(@ModelAttribute User user, HttpSession session, Model model) {
@@ -55,78 +256,16 @@ public class LoginController {
 				session.setAttribute("log", new MessageMaster("Invalid User Role ??", "alert-danger"));
 				return "Layout/Login";
 			} else {
-				if ("ADMIN".equals(userRole)) {
-					session.setAttribute("user", user);
-
-					int totalVehicle = 0;
-					int car = 0;
-					int bike = 0;
-					int absoAvailable = 0;
-
-					User userinfo = this.userRepo.findByEmailAndPassword(user.getEmail(), user.getPassword());
-					if (userinfo != null) {
-						List<Vehicle> vehicledata = this.vehicleRepo.findByUser(userinfo);
-						for (Vehicle vt : vehicledata) {
-							totalVehicle++;
-
-							String vehicleType = vt.getVehicleType();
-							if ("bike".equalsIgnoreCase(vehicleType)) {
-								bike++;
-							} else {
-								car++;
-							}
-						}
-						int available = 20 - totalVehicle;
-						if (available != -1) {
-							absoAvailable = Math.abs(available);
-							model.addAttribute("available", absoAvailable);
-						} else {
-							absoAvailable = 0;
-							model.addAttribute("available", absoAvailable);
-						}
-
-						model.addAttribute("car", car);
-						model.addAttribute("bike", bike);
-
-						model.addAttribute("totalVehicle", totalVehicle);
-
-					}
-
-					model.addAttribute("title", "System Dashboard ");
-					model.addAttribute("user", userNameAndPassword);
-
-					File profile = new File("src/main/resources/static/profile/");
-					String pname = userNameAndPassword.getProfile();
-
-					if (profile.exists() && profile.isDirectory()) {
-						String parentPath = profile.getParent();
-
-						String[] fileNames = profile.list();
-
-						if (fileNames != null && fileNames.length > 0) {
-							for (String fileName : fileNames) {
-								if (fileName.equalsIgnoreCase(pname)) {
-									System.out.println("File name: " + fileName);
-									model.addAttribute("imgProfile", fileName);
-								} else {
-									System.out.println("profile name Not match ?");
-								}
-							}
-						} else {
-							System.out.println("No files found in the directory.");
-						}
-					} else {
-						System.out.println("Directory does not exist or is not a directory.");
-					}
+				if ("ADMIN".equalsIgnoreCase(userRole)) {
+					session.setAttribute("user", userNameAndPassword);
 
 					session.setAttribute("log", new MessageMaster("Login Successfully ??", "alert-success"));
-					return "/pages/Dashboard/SystemDashboard";
-				} else if ("NORMAL".equals(userRole)) {
-					session.setAttribute("user", user);
+					return "redirect:/pbt/system_dashboard";
+				} else if ("NORMAL".equalsIgnoreCase(userRole)) {
+					session.setAttribute("user", userNameAndPassword);
 					model.addAttribute("title", "Normal Dashboard ");
 
-					model.addAttribute("user", userNameAndPassword);
-					return "/pages/Dashboard/NormalDashboard";
+					return "redirect:/pbt/normal_dashboard";
 				} else {
 					session.setAttribute("log", new MessageMaster("Maintain Authentication ??", "alert-danger"));
 				}
@@ -136,12 +275,7 @@ public class LoginController {
 		return "Layout/Login";
 	}
 
-	@GetMapping("/normal_dashboard")
-	public String getNormalDashboardSystem() {
-
-		return "/pages/Dashboard/NormalDashboard";
-	}
-
+//	logout 
 	@GetMapping("/logout")
 	public String getLogout(HttpSession session) {
 
