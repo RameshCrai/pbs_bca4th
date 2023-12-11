@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -46,6 +47,9 @@ public class LoginController {
 
 	@Autowired
 	private VehicleRepository vehicleRepo;
+
+	@Autowired
+	private EmailsenderService emailSend;
 
 //	login page
 	@GetMapping("/login")
@@ -259,11 +263,14 @@ public class LoginController {
 				if ("ADMIN".equalsIgnoreCase(userRole)) {
 					session.setAttribute("user", userNameAndPassword);
 
-					session.setAttribute("log", new MessageMaster("Login Successfully ??", "alert-success"));
+//					session.setAttribute("log", new MessageMaster("Login Successfully ??", "alert-success"));
+//					this.emailSend.sendEmail("Login Successfully !", "PBTS Testing phase  for ADMIN USER!", "This is Parking Booking Ticketing System for online Booking ?");
 					return "redirect:/pbt/system_dashboard";
 				} else if ("NORMAL".equalsIgnoreCase(userRole)) {
 					session.setAttribute("user", userNameAndPassword);
 					model.addAttribute("title", "Normal Dashboard ");
+
+//					this.emailSend.sendEmail("Login Successfully !", "PBTS Testing phase  for NORMAL USER!", "This is Parking Booking Ticketing System for online Booking ?");
 
 					return "redirect:/pbt/normal_dashboard";
 				} else {
@@ -273,6 +280,85 @@ public class LoginController {
 		}
 
 		return "Layout/Login";
+	}
+
+//	user list
+	@GetMapping("/userlist")
+	public String getUsers(HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+
+			return "Layout/Login";
+		}
+
+		List<User> userinfo = this.userRepo.findAll();
+		if (userinfo != null) {
+			model.addAttribute("userlist", userinfo);
+			System.out.println("user list ");
+
+		} else {
+			System.out.println("User is not availabel ?");
+		}
+
+		return "pages/Dashboard/Userlist";
+	}
+
+//	delete handle
+	@GetMapping("/delete/{uid}")
+	public String deleteUser(@PathVariable("uid") Long uid, HttpSession session) {
+		this.userRepo.deleteById(uid);
+
+		session.setAttribute("del", new MessageMaster("User Delete Successfully ?", "alert-danger"));
+
+		return "redirect:/pbt/userlist";
+
+	}
+
+	long uidEdit = 0;
+
+//	EDIT user 
+	@GetMapping("/edituser/{uid}")
+	public String editUser(@PathVariable("uid") Long uid, HttpSession session, Model model) {
+		User user = (User) session.getAttribute("user");
+		if (user == null) {
+
+			return "Layout/Login";
+		}
+
+		User userinfo = this.userRepo.findByUserid(uid);
+		this.uidEdit = uid;
+		model.addAttribute("user", userinfo);
+
+		return "pages/Dashboard/UserEdit";
+	}
+
+//	save update data 
+	@PostMapping("/update_user")
+	public String updateUser(@ModelAttribute User user, HttpSession session) {
+
+		User userinfo = this.userRepo.findByUserid(this.uidEdit);
+		if (userinfo == null) {
+			session.setAttribute("del", new MessageMaster("User Update Failed ?", "alert-danger"));
+
+		} else {
+			user.setUserID(this.uidEdit);
+			user.setFname(userinfo.getFname());
+			user.setmName(userinfo.getmName());
+			user.setLname(userinfo.getLname());
+			user.setDob(userinfo.getDob());
+			user.setAgreement(true);
+			user.setEmail(userinfo.getEmail());
+			user.setPassword(userinfo.getPassword());
+			user.setMobile(userinfo.getMobile());
+			user.setUserrolename(userinfo.getUserrolename());			
+
+			this.userRepo.save(user);
+
+			session.setAttribute("del", new MessageMaster("User Update Successfully ?", "alert-success"));
+
+		}
+
+		return "redirect:/pbt/userlist";
 	}
 
 //	logout 

@@ -11,7 +11,8 @@
 
 	<div th:include="ShareLink.html"></div>
 
-
+	<!-- Add the following script to perform the redirection after a delay -->
+	<script th:utext="${redirectScript}"></script>
 	<style>
 		* {
 			margin: 0;
@@ -86,7 +87,7 @@
 		#progress {
 			-webkit-appearance: none;
 			position: absolute;
-			width: 95%;
+			width: 100%;
 			z-index: 5;
 			height: 10px;
 			margin-left: 18px;
@@ -127,6 +128,15 @@
 
 		#officiald {
 			display: none;
+		}
+		#Time{
+			display: none;
+		}
+
+		.error {
+			color: red;
+			display: none;
+			font-size: large;
 		}
 	</style>
 
@@ -209,17 +219,21 @@
 				class="alert mb-2" role="alert">
 				<p th:text="${session.mes.message}"></p>
 			</div>
-			<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
-				Parking Service is overloaded. Please try again later.
-			</div>
 
-			<div class="row" th:if="${totalVehicle < 20}">
-				<div class="col-md-12 text-center mb-2">
-					<div class="card">
-						<div class="card-body">
-							<h4>Total Parking Capacity : <span
-									style="font-size: xx-large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
-							</h4>
+
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1>Welcome ! Parking Booking Ticketing System <strong id="Time"></strong></h1>
+					<hr>
+					<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
+						Parking Service is overloaded. Please try again later.
+					</div>
+
+					<div class="row" th:if="${totalVehicle < 20}">
+						<div class="col-md-12">
+							<h5>Total Parking Capacity : <span
+									style="font-size: large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
+							</h5>
 							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b> &nbsp;
 							<b>BIKE: <span th:text="${bike}" th:if="${bike !=null}"></span></b>&nbsp;
 							<b style="color: red;">Available : <span th:text="${available}"
@@ -227,173 +241,47 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<ul class="nav nav-tabs" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" data-toggle="tab" href="#paytopark" role="tab">
-								PayToPark
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#subscription" role="tab">
-								Subscription
-							</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" data-toggle="tab" href="#official" role="tab">Official</a>
-						</li>
-					</ul>
-					<hr>
-					<div class="tab-content mt-4">
-						<!-- Paytopark-->
-						<div class="tab-pane active" id="paytopark" role="tabpanel">
-							<div class="card">
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-12">
-											<h3 class="mb-0">PaytoPark service prerequisites are listed below</h3>
-											<hr>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-7">
-											<article>ALL About This Package</article>
-											<ol class="p-3">
-												<li>It's a current time package</li>
-												<li>It has Valid Date and time (IN-TIME && OUT-TIME) </li>
-												<li>Vehicles parking cost will be determined in ENTER-TIME and EXIT-TIME
-												</li>
-												<li>Parking will be opened 24 hours </li>
-											</ol>
-											<hr>
-											<article>Prerequisites of PBT</article>
-											<ol class="p-3">
-												<li>Vehicle should park after Verified payment</li>
-												<li>Payment should be online method like(Esewa, Khalti so on.)</li>
-												<li>can't be refund after payment</li>
-												<li>Vehicles keys should leave in the parking reception</li>
-												<li>Can't Accept Illegle vehicles</li>
-											</ol>
-										</div>
-										<div class="col-md-5">
-											<div class="container-fluid text-center">
-												<article>Parking Booking Ticketing</article>
-												<p>It's a official package which provides more reliable services</p>
-												<br><br><br>
-												<button class="btn  btn-outline-primary"
-													onclick="showService1()">PayToPark</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+			</div><br>
+
+
+
+			<div class="row mt-4 mb-4">
+				<div class="col-md-4  text-center">
+					<div class="card" style="background-color: #ccdef0">
+						<div class="card-body">
+							<article onclick="showService1()">
+								PAYTOPARK
+							</article>
+							<p>Hourly Package !</p>
 						</div>
-						<!-- Subcription -->
-						<div class="tab-pane " id="subscription" role="tabpanel">
-							<div class="card">
-
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-12">
-											<h3 class="mb-0">Subscription service prequisites are listed below</h3>
-											<hr>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-7">
-											<article>ALL About This Package</article>
-											<ol class="p-3">
-												<li>It's a Subscription package</li>
-												<li>It has Valid Date and time </li>
-												<li>Vehicles parking cost will be determined as a subscription based
-												</li>
-												<li>Parking will be opened 24 hours </li>
-											</ol>
-											<hr>
-											<article>Prerequisites of PBT</article>
-											<ol class="p-3">
-												<li>Vehicles should be veirified as a subscription service and take a
-													token</li>
-												<li>Payment should be full for a subscrition</li>
-												<li>Could't accept any installment for payment</li>
-												<li>Vehicles keys should leave in the parking reception</li>
-												<li>Can't Accept Illegle vehicles</li>
-											</ol>
-										</div>
-										<div class="col-md-5">
-											<div class="container-fluid text-center">
-												<article>Parking Booking Ticketing</article>
-												<p>It's a Subscription package where you can take services as a
-													subscription based.</p>
-												<br><br><br>
-												<button class="btn  btn-outline-primary"
-													onclick="showService2()">Subscription</button>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+					</div>
+				</div>
+				<div class="col-md-4  text-center">
+					<div class="card" style="background-color: #a8b1ba">
+						<div class="card-body">
+							<article onclick="showService2()">
+								SUBSCRIPTION
+							</article>
+							<p>Monthly Package !</p>
 						</div>
-
-						<!-- Official-->
-						<div class="tab-pane " id="official" role="tabpanel">
-							<div class="card">
-
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-12">
-											<h3>Official service prequisites are listed below !</h3>
-											<hr>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-7">
-											<article>About This Package</article>
-											<ol class="p-3">
-												<li>It's a Official package</li>
-												<li>It has Valid Date and time </li>
-												<li>Vehicles parking cost will be determined number of MIN and MAX</li>
-												<li>Parking will be opened 24 hours </li>
-											</ol>
-											<hr>
-											<article>Prerequisites of PBT</article>
-											<ol class="p-3">
-												<li>Vehicles should be identified from the Office stamp, if out of
-													people use need token</li>
-												<li>Payment should be in the time after complete month</li>
-												<li>Could't accept any installment for payment</li>
-												<li>Vehicles keys should leave in the parking reception</li>
-												<li>Can't Accept Illegle vehicles</li>
-											</ol>
-										</div>
-										<div class="col-md-5">
-											<div class="container-fluid text-center">
-												<article>Parking Booking Ticketing</article>
-												<p>It's a official package which provides more reliable services</p>
-												<br><br><br>
-												<button class="btn  btn-outline-primary"
-													onclick="showService3()">Official</button>
-											</div>
-										</div>
-									</div>
-								</div>
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="card" style="background-color: #888fc2">
+						<div class="card-body">
+							<div class="container-fluid text-center">
+								<article onclick="showService3()">
+									OFFICIAL
+								</article>
+								<p>Official Package !</p>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
 
-		<!-- Settings-->
-		<div class="container mt-4" id="Setting">
-			<div class="row">
-				<div class="col-md-12">
-
-				</div>
-			</div>
-		</div>
 
 		<!-- Services -->
 
@@ -419,9 +307,9 @@
 
 				<div class="row">
 					<div class="col-md-6">
-						<h3 class="mb-0" id="paytoparkd">PayToPark Service</h3>
-						<h3 class="mb-0" id="subscriptiond">Subscription Service</h3>
-						<h3 class="mb-0" id="officiald">Official Service</h3>
+						<h3 class="mb-0" id="paytoparkd">PayToPark Package !</h3>
+						<h3 class="mb-0" id="subscriptiond">Subscription Package !</h3>
+						<h3 class="mb-0" id="officiald">Official Package !</h3>
 					</div>
 					<div class="col-md-6 text-right">
 						<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
@@ -517,8 +405,10 @@
 																			</span>
 																		</div>
 																		<input type="date" name="exitDate" id="exitdate"
+																			oninput="onValidService()"
 																			class="form-control" />
 																	</div>
+																	<span id="exitdateError" class="error"></span>
 																</div>
 															</div>
 														</div>
@@ -550,11 +440,23 @@
 																			</span>
 																		</div>
 																		<input type="time" name="exitTime" id="exittime"
+																			oninput="onExitTime()"
 																			placeholder="Exit Time"
 																			class="form-control" />
 																	</div>
+																	<span id="exittimeError" class="error"></span>
 																</div>
 															</div>
+														</div>
+													</div>
+													<div class="container-fluid text-center mt-3">
+
+														<div class="step-item">
+															<button id="step-2-button"
+																class="btn btn-outline-primary text-center"
+																style="color: #0f2027;" type="button">
+																Next
+															</button>
 														</div>
 													</div>
 												</div>
@@ -715,7 +617,17 @@
 															</div>
 														</div>
 													</div>
-													<div>
+													<div class="row mt-3">
+														<div class="col-md-12 text-center">
+															<div class="step-item">
+																<button id="step-3-button"
+																	class="btn btn-outline-primary text-center"
+																	style="color: #0f2027;" type="button"
+																	onclick="onService()">
+																	Next
+																</button>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -872,6 +784,18 @@
 																</div>
 															</div>
 														</div>
+														<div class="row mt-3">
+															<div class="col-md-12 text-center">
+																<div class="step-item">
+																	<button id="step-4-button"
+																		class="btn btn-outline-primary text-center"
+																		style="color: #0f2027;" type="button"
+																		onclick="onPaymentService()">
+																		Next
+																	</button>
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -964,8 +888,11 @@
 																			</div>
 																			<input type="date" name="paymentDate"
 																				id="paymentdate" class="form-control"
+																				oninput="onSubmitPaymentdate()"
 																				placeholder="Duration" />
 																		</div>
+																		<span id="paymentdateError"
+																			class="error"></span>
 																	</div>
 																</div>
 															</div>
@@ -973,8 +900,7 @@
 
 														<div class="row mt-4">
 															<div class="col-md-12 text-center">
-																<hr>
-																<button type="submit" onclick="onSubmitPayment()"
+																<button type="submit" onclick="onParkingTimeValid()"
 																	class="btn btn-primary">Submit</button>
 															</div>
 														</div>
@@ -988,34 +914,30 @@
 											<div class="step-item">
 												<button id="step-1-button" class="btn btn-outline-primary text-center"
 													style="color: #0f2027;" type="button" onclick="onService()">
-													1 Service
+													1
 												</button>
 											</div>
 
 											<div class="step-item">
 												<button id="step-2-button" class="btn btn-outline-primary text-center"
 													style="color: #0f2027; display: inline;" type="button"
-													onclick="onVehicle()">
-													2 Vehicle
+													onclick="onVehicle()">2
 												</button>
 											</div>
 
 											<div class="step-item">
 												<button id="step-3-button" class="btn btn-outline-primary text-center"
-													style="color: #0f2027;" onclick="onLocation()" type="button">
-													3 Location
+													style="color: #0f2027;" onclick="onLocation()" type="button">3
 												</button>
 
 											</div>
 											<div class="step-item">
 												<button id="step-4-button" class="btn btn-outline-primary text-center"
-													style="color: #0f2027;" type="button" onclick="onPayment()">
-													4 Payment
+													style="color: #0f2027;" type="button" onclick="onPayment()">4
 												</button>
 											</div>
-
-
 										</div>
+
 									</div>
 
 								</form>
@@ -1155,81 +1077,108 @@
 
 			});
 
+			function onValidService() {
+				document.getElementById('exitdateError').style.display = 'none';
 
-			function onVehicle() {
-				var service = document.getElementById("servicetype").value;
-				var enterdate = document.getElementById("enterdate").value;
-				var exitdate = document.getElementById("exitdate").value;
-				var from = document.getElementById("entertime").value;
-				var to = document.getElementById("exittime").value;
-				let isValid = false;
 
-				let btn1 = document.getElementById("step-2-button").value;
+				var exitD = document.getElementById('exitdate').value;
 
-				if (service == "") {
-					alert("Service type isEmpty ?");
-					btn1.value = false;
-					return isValid;
-				} else {
-					return true;
+				var currentDate = new Date();
+				var selectedDate = new Date(exitD);
+				selectedDate.setDate(selectedDate.getDate() + 1); // Add 1 day to make it the end of the selected day
+
+				if (selectedDate <= currentDate) {
+					document.getElementById('exitdateError').innerHTML = 'ExitDate must be after Date from Today !';
+					document.getElementById('exitdateError').style.display = 'block'
+					return false;
 				}
 
-
+				return true;
 			}
 
-			function onPayment() {
+			function onExitTime() {
+				document.getElementById('exittimeError').style.display = 'none';
+
+				let exitT = document.getElementById('exittime').value;
+
+				let currentTime = new Date();
+
+				let selectedTime = new Date();
+				let exitTimeArray = exitT.split(':');
+				selectedTime.setHours(exitTimeArray[0], exitTimeArray[1], 0, 0);
+
+				if (selectedTime <= currentTime) {
+					document.getElementById('exittimeError').innerHTML = 'Exit time must be after the current time!';
+					document.getElementById('exittimeError').style.display = 'block';
+					return false;
+				}
+
+				return true;
+			}
+
+
+			function onPaymentService() {
 				confirm("Payment Processing .........");
-
-				var service = document.getElementById("servicetype").value;
-				var enterdate = document.getElementById("enterdate").value;
-				var exitdate = document.getElementById("exitdate").value;
-				var fromTime = document.getElementById("entertime").value;
-				var toTime = document.getElementById("exittime").value;
-
-				var vehicletype = document.getElementById("vehicletype").value;
-				var vehiclenumber = document.getElementById("numberofvehicle").value;
-				console.log("vehicle num = ", vehiclenumber);
-
-				var duration = document.getElementById("duration");
-				var cosst = document.getElementById("cost");
-				var amount = document.getElementById("amount");
-				var paymentdate = document.getElementById("paymentdate");
-
-				var fromTimeDate = new Date("1970-01-01T" + fromTime);
-				var toTimeDate = new Date("1970-01-01T" + toTime);
-
-				const durationInMilliseconds = toTimeDate - fromTimeDate;
-				const hours = Math.floor(durationInMilliseconds / 3600000);
-				const durationBIKE = Math.abs(hours);
 
 				const bikeparkprice = 15;
 				const carparkprice = 50;
 
+				var vehicletype = document.getElementById("vehicletype").value;
+				var vehiclenumber = document.getElementById("numberofvehicle").value;
+
+
+
+				var fromTime = document.getElementById("entertime").value;
+				var toTime = document.getElementById("exittime").value;
+				var fromTimeDate = new Date("1970-01-01T" + fromTime);
+				var toTimeDate = new Date("1970-01-01T" + toTime);
+				const durationInMillisecondtime = toTimeDate - fromTimeDate;
+				const hours = Math.floor(durationInMillisecondtime / 3600000);
+				const durationfromTime = Math.abs(hours);
+
+
+				var enterdate = document.getElementById("enterdate").value;
+				var exitdate = document.getElementById("exitdate").value;
 				const enterDateTime = new Date(enterdate);
 				const exitDateTime = new Date(exitdate);
+				const durationInMilliseconddate = exitDateTime - enterDateTime;
+				const durationInHours = durationInMilliseconddate / (1000 * 60 * 60);
+				const durationfromDate = Math.abs(durationInHours);
 
-				const currentDate = enterDateTime.getDate();
-				const endingDate = exitDateTime.getDate();
+				var duration = document.getElementById("duration");
+				var cost = document.getElementById("cost");
+				var amountt = document.getElementById("amount");
 
-				const DurationInHours = endingDate - currentDate;
-				const durationCAR = DurationInHours * 60;
 
-				const payablecarHours = Math.abs(durationCAR);
 
 				if (vehicletype == "bike") {
+					if (durationfromDate >= durationfromTime) {
 
-					duration.value = durationBIKE + " HOURS";
-					cost.value = bikeparkprice;
-					amount.value = bikeparkprice * durationBIKE * vehiclenumber;
+						duration.value = durationfromDate + " HOURS";
+						cost.value = bikeparkprice;
+						amountt.value = bikeparkprice * durationfromDate * vehiclenumber;
 
 
+					} else {
+
+						duration.value = durationfromTime + " HOURS";
+						cost.value = bikeparkprice;
+						amountt.value = bikeparkprice * durationfromTime * vehiclenumber;
+
+					}
 				} else {
+					if (durationfromDate >= durationfromTime) {
 
-					duration.value = payablecarHours + " HOURS";
-					cost.value = carparkprice;
-					amount.value = carparkprice * payablecarHours * vehiclenumber;
+						duration.value = durationfromDate + " HOURS";
+						cost.value = carparkprice;
+						amountt.value = carparkprice * durationfromDate * vehiclenumber;
 
+					} else {
 
+						duration.value = durationfromTime + " HOURS";
+						cost.value = carparkprice;
+						amountt.value = carparkprice * durationfromTime * vehiclenumber;
+					}
 				}
 
 			}
@@ -1238,15 +1187,48 @@
 
 
 
-			function onSubmitPayment() {
-				var duration = document.getElementById("duration").value;
-				var cost = document.getElementById("cost");
-				var paymentdate = document.getElementById("paymentDate");
-				var amount = document.getElementById("amount");
-				if (duration == "") {
-					alert("Enter duration ");
+			function onSubmitPaymentdate() {
+				document.getElementById('paymentdateError').style.display = 'none';
+
+				var exitD = document.getElementById('paymentdate').value;
+
+				var currentDate = new Date();
+				var selectedDate = new Date(exitD);
+				selectedDate.setDate(selectedDate.getDate() + 1); // Add 1 day to make it the end of the selected day
+
+				if (selectedDate <= currentDate) {
+					document.getElementById('paymentdateError').innerHTML = 'ExitDate must be after Date from Today !';
+					document.getElementById('paymentdateError').style.display = 'block';
+					alert("Payment Date must be After Date or Today ?")
+					return false;
 				}
+
+				return true;
 			}
+
+
+			// Time to show 
+			function onParkingTimeValid() {
+				document.getElementById('Time').style.display = 'block';
+				var currentTime = getCurrentTime();
+				document.getElementById('Time').textContent = currentTime;
+			}
+
+			function getCurrentTime() {
+				var now = new Date();
+				var hours = now.getHours();
+				var minutes = now.getMinutes();
+				var seconds = now.getSeconds();
+
+				// Format the time as HH:MM:SS
+				var formattedTime = padZero(hours) + ':' + padZero(minutes) + ':' + padZero(seconds);
+				return formattedTime;
+			}
+			function padZero(number) {
+				return (number < 10 ? '0' : '') + number;
+			}
+			onParkingTimeValid();
+			setInterval(onParkingTimeValid, 1000);
 
 
 

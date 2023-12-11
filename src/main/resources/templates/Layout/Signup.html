@@ -9,7 +9,7 @@
 
 
 
-	
+
 
 	<style>
 		body {
@@ -50,7 +50,7 @@
 					</div>
 					<div class="card-body">
 						<form id="formvalid" th:action="@{/pbt/signup_user}" method="post" enctype="multipart/form-data"
-							>
+							onsubmit="return validateForm()">
 
 							<div class="row ">
 								<div class="col-md-6">
@@ -113,8 +113,8 @@
 													<span class="input-group-text"> <i class="fa fa-envelope"></i>
 													</span>
 												</div>
-												<input id="email" type="email" name="email" class="form-control"
-													placeholder="Email " />
+												<input id="email" oninput="onEmailValid()" type="email" name="email"
+													class="form-control" placeholder="Email" />
 											</div>
 											<span id="emailError" class="error"></span>
 										</div>
@@ -145,8 +145,9 @@
 													<span class="input-group-text"> <i class="fa fa-phone"></i>
 													</span>
 												</div>
-												<input id="mobile" type="text" name="mobile" class="form-control"
-													maxlength="10" placeholder="Mobile " />
+												<input id="mobile" oninput="onMobileValidate()" type="text"
+													name="mobile" class="form-control" maxlength="10"
+													placeholder="Mobile" />
 											</div>
 											<span id="mobileError" class="error"></span>
 										</div>
@@ -163,7 +164,8 @@
 													</span>
 												</div>
 												<input id="password" class="form-control" type="password"
-													name="password" maxlength="12" placeholder="Password " />
+													name="password" maxlength="12" placeholder="Password"
+													oninput="onPasswordValidate()" />
 											</div>
 											<span id="passwordError" class="error"></span>
 										</div>
@@ -182,9 +184,10 @@
 															class="fas fa-hourglass-start"></i>
 													</span>
 												</div>
-												<input type="date" id="dob" name="Dob" class="form-control"
-													placeholder="Data of Birth " />
+												<input type="date" oninput="onDateValid()" id="dob" name="Dob"
+													class="form-control" placeholder="Data of Birth" />
 											</div>
+											<span id="dobError" class="error"></span>
 										</div>
 									</div>
 									<div class="row mt-3">
@@ -202,6 +205,29 @@
 													id="agreement" />
 												<label class="form-check-label" for="Agrement">Terms and Conditions
 												</label>
+											</div>
+										</div>
+									</div>
+
+									<div class="row mt-3">
+										<div class="col-md-3">
+											<label>Role</label>
+										</div>
+										<div class="col-md-9">
+											<div class="form-group input-group mb-0">
+												<div class="input-group-prepend">
+													<span class="input-group-text">
+														<i class="fas fa-user"></i>
+													</span>
+												</div>
+												<select type="text" name="userrolename" class="form-control">
+													<option value="">Select type of
+														Vehicle</option>
+													<option value="ADMIN">ADMIN</option>
+													<option value="NORMAL">NORMAL
+													</option>
+
+												</select>
 											</div>
 										</div>
 									</div>
@@ -235,6 +261,130 @@
 
 	<script th:inline="javascript">
 
+		function validateForm() {
+			// Reset error messages
+			document.getElementById('fnameError').style.display = 'none';
+			document.getElementById('lnameError').style.display = 'none';
+
+
+			// Get form values
+			var fname = document.getElementById('fname').value.trim();
+			var lname = document.getElementById('lname').value.trim();
+
+
+			// Validation rules (you can customize these)
+			if (fname === '') {
+				document.getElementById('fnameError').innerHTML = 'FirstName is required.';
+				document.getElementById('fnameError').style.display = 'block';
+				return false;
+			}
+
+			if (lname === '') {
+				document.getElementById('lnameError').innerHTML = 'LastName is required.';
+				document.getElementById('lnameError').style.display = 'block';
+				return false;
+			}
+
+
+
+			return true;
+		}
+
+		//Email validation with regex
+		const emailInput = document.getElementById('email');
+		const emailError = document.getElementById('emailError');
+
+		function onEmailValid() {
+			const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i; // Regular expression for email validation
+			const isValid = emailRegex.test(emailInput.value);
+
+			if (isValid) {
+				emailError.textContent = ''; // Clear the error message
+			} else {
+				showError();
+			}
+		}
+
+		function showError() {
+			//emailError.textContent = 'Please enter a valid email address.';
+			document.getElementById('emailError').innerHTML = 'Please enter a valid email address.';
+			document.getElementById('emailError').style.display = 'block';
+			return false;
+		}
+
+
+		//Mobile Validation 
+		const mobileInput = document.getElementById('mobile');
+		const mobileError = document.getElementById('mobileError');
+
+		function onMobileValidate() {
+			const mobileRegex = /^[98][0-9]{9}$/; // Regular expression for Nepali mobile numbers
+			const isValid = mobileRegex.test(mobileInput.value);
+
+			if (isValid) {
+				mobileError.textContent = ''; // Clear the error message
+			} else {
+				showMobileError();
+			}
+		}
+
+		function showMobileError() {
+			//mobileError.textContent = 'Please enter a valid Nepali mobile number starting with 98 or 97.';
+			document.getElementById('mobileError').innerHTML = 'Please enter a valid Nepali mobile number starting with 98 or 97.';
+			document.getElementById('mobileError').style.display = 'block';
+			return false;
+
+		}
+
+
+		//Password Validation
+		const passwordInput = document.getElementById('password');
+		const passwordError = document.getElementById('passwordError');
+
+		function onPasswordValidate() {
+			const passwordRegex = /^(?=.*[A-Z])(?=.*[1-9]).{4,}$/;
+			const isValid = passwordRegex.test(passwordInput.value);
+
+			if (isValid) {
+				passwordError.textContent = ''; // Clear the error message
+			} else {
+				showPasswordError();
+			}
+		}
+
+		function showPasswordError() {
+			//passwordError.textContent = 'Password must contain at least one capital letter, one digit (1), and be at least 4 characters long.';
+			document.getElementById('passwordError').innerHTML = 'Password must contain at least one capital letter, one digit (1), and be at least 4 characters long.';
+			document.getElementById('passwordError').style.display = 'block';
+			return false;
+		}
+
+
+		//DOB valid
+		const dobError = document.getElementById('dobError');
+		function onDateValid() {
+			var currentDate = new Date();
+			var dob = document.getElementById('dob').value; // Move this line inside the function
+			var selectedDate = new Date(dob);
+			selectedDate.setDate(selectedDate.getDate() + 1); // Add 1 day to make it the end of the selected day
+
+			if (selectedDate >= currentDate) {
+				ErrorDOB(); // Fix this line
+			}else{
+				clearError();
+			}
+		}
+
+		function ErrorDOB() {
+			dobError.innerHTML = 'Date of Birth must be the previous day from Current date';
+			dobError.style.display = 'block';
+			return false;
+		}
+
+		function clearError() {
+			dobError.innerHTML = ''; // Clear the error message
+			dobError.style.display = 'none';
+		}
 
 		var duration = 2000; // 2 seconds
 		var messageElement = document.getElementById('messageHIDE');

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+	<title th:text="${title}"></title>
+
+	<div th:include="ShareLink.html"></div>
+
+
+	<script th:src="@{/js/script.js}"></script>
+
+
+	<style>
+		#messageHIDE {
+			display: none;
+		}
+	</style>
+
+
+
+</head>
+
+<body>
+	<!-- services list   -->
+	<div class="container mt-4">
+		<div id="messageHIDE" th:if="${session.del}" th:classappend="${session.del.typeofMessage}" class="alert mb-2"
+			role="alert">
+			<p th:text="${session.del.message}"></p>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<h3 class="mb-0">Edit User</h3>
+			</div>
+			<div class="col-md-6 text-right">
+				<h3 class="mb-0"><a href="/pbt/systemdashboard">Dashboard</a> </h3>
+			</div>
+		</div>
+
+		<div class="card mt-2">
+			<div class="card-body">
+				<form id="formvalid" th:action="@{/pbt/update_user}" method="post">
+
+					<div class="row ">
+						<div class="col-md-6">
+							<div class="row mb-2">
+								<div class="col-md-3">
+									<label for="firstName">FirstName<span class="asterik">*</span></label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group mb-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-user"></i></span>
+										</div>
+										<input id="fname" type="text" name="fname" th:value="${user.fname}"
+											class="form-control" placeholder="First Name" />
+									</div>
+									<span id="fnameError" class="error"></span>
+								</div>
+							</div>
+
+
+							<div class="row">
+								<div class="col-md-3">
+									<label for="LastName">MiddleName</label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-user"></i></span>
+										</div>
+										<input type="text" name="mName" th:value="${user.mName}" class="form-control"
+											placeholder="Middle Name" />
+									</div>
+								</div>
+							</div>
+
+
+							<div class="row mb-2">
+								<div class="col-md-3">
+									<label for="LastName">LastName<span class="asterik">*</span></label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group mb-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="fa fa-user"></i></span>
+										</div>
+										<input id="lname" type="text" name="lname" th:value="${user.lname}"
+											class="form-control" placeholder="last Name" />
+									</div>
+									<span id="lnameError" class="error"></span>
+								</div>
+							</div>
+
+							<div class="row mb-2">
+								<div class="col-md-3">
+									<label for="email">Email<span class="asterik">*</span></label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group nb-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i class="fa fa-envelope"></i>
+											</span>
+										</div>
+										<input id="email" type="email" name="email" th:value="${user.email}"
+											class="form-control" placeholder="Email " />
+									</div>
+									<span id="emailError" class="error"></span>
+								</div>
+							</div>
+
+							<div class="row mt-2">
+								<div class="col-md-3">
+									<label for="gender">Gender </label>
+								</div>
+								<div class="col-md-9">
+									<input type="radio" name="Gender" th:value="${user.Gender}" value="Male" /> Male
+									<input type="radio" th:value="${user.Gender}" name="Gender" value="Female"
+										class="ml-4" />
+									Female
+								</div>
+							</div>
+
+						</div>
+
+						<div class="col-md-6">
+
+							<div class="row mb-2">
+								<div class="col-md-3">
+									<label for="mobile">Mobile <span class="asterik">*</span></label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group mb-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i class="fa fa-phone"></i>
+											</span>
+										</div>
+										<input id="mobile" type="text" name="mobile" th:value="${user.mobile}"
+											class="form-control" maxlength="10" placeholder="Mobile " />
+									</div>
+									<span id="mobileError" class="error"></span>
+								</div>
+							</div>
+
+							<div class="row mb-2">
+								<div class="col-md-3">
+									<label for="password">Password<span class="asterik">*</span></label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group mb-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i class="fas fa-unlock"></i>
+											</span>
+										</div>
+										<input id="password" class="form-control" type="password"
+											th:value="${user.password}" name="password" maxlength="12"
+											placeholder="Password " />
+									</div>
+									<span id="passwordError" class="error"></span>
+								</div>
+							</div>
+
+
+
+							<div class="row">
+								<div class="col-md-3">
+									<label for="birth">DateofBirth</label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group">
+										<div class="input-group-prepend">
+											<span class="input-group-text"> <i class="fas fa-hourglass-start"></i>
+											</span>
+										</div>
+										<input type="date" id="dob" name="Dob" class="form-control"
+											th:value="${user.Dob}" placeholder="Data of Birth " />
+									</div>
+								</div>
+							</div>
+							<div class="row mt-3">
+								<div class="col-md-3">
+									<label>User Role</label>
+								</div>
+								<div class="col-md-9">
+									<div class="form-group input-group mb-0">
+										<div class="input-group-prepend">
+											<span class="input-group-text">
+												<i class="fas fa-user"></i>
+											</span>
+										</div>
+										<select type="text" name="userrolename" th:value="${user.userrolename}"
+											class="form-control">
+											<option th:value="${user.userrolename}" value="">Select type of Vehicle</option>
+											<option th:value="${user.userrolename}" value="ADMIN">ADMIN</option>
+											<option th:value="${user.userrolename}" value="NORMAL">NORMAL</option>
+
+										</select>
+									</div>
+
+								</div>
+							</div>
+							<div class="row mt-2">
+								<div class="col-md-12">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input" name="agreement"
+											th:value="${user.agreement}" id="agreement" />
+										<label class="form-check-label" for="Agrement">Terms and Conditions
+										</label>
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+					<hr>
+
+					<div class="container-fluid text-center">
+						<button type="submit" class="btn btn-primary btn-outline-secondary" style="color: black;">Update
+						</button>
+
+					</div>
+				</form>
+			</div>
+		</div>
+
+
+	</div>
+
+
+</body>
+
+</html>

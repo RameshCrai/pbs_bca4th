@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +21,7 @@ import com.pbt.Entities.User;
 import com.pbt.ExceptionHandler.MessageMaster;
 
 import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/pbt")
@@ -36,7 +36,7 @@ public class SignupInfoController {
 
 	@GetMapping("/signup")
 	public String SingupInformation(Model model) {
-
+		
 		model.addAttribute("title", "Signup Form !");
 		return "Layout/Signup";
 	}
@@ -46,7 +46,9 @@ public class SignupInfoController {
 			@RequestParam(value = "agreement", defaultValue = "false") boolean agreement,
 			@RequestParam("image") MultipartFile file, Model model, HttpSession session) {
 
+
 		try {
+
 			if (!file.isEmpty()) {
 
 				StringBuilder fileNames = new StringBuilder();
@@ -79,7 +81,7 @@ public class SignupInfoController {
 				String Encryptpass = DigestUtils.md5Hex(password);
 				user.setPassword(Encryptpass);
 
-				user.setUserrolename("NORMAL");
+//				user.setUserrolename("NORMAL");
 
 				this.userRepository.save(user);
 
@@ -107,4 +109,5 @@ public class SignupInfoController {
 
 	}
 
+	    
 }

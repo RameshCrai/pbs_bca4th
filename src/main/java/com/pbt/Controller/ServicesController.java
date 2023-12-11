@@ -81,6 +81,8 @@ public class ServicesController {
 		return "pages/Services/Subscription";
 	}
 
+	private boolean sessionTimecounter = false;
+
 //	Admin Dashboard page
 	@GetMapping("/systemdashboard")
 	public String getSystemDashboardPage(HttpSession session, Model model) {
@@ -90,6 +92,14 @@ public class ServicesController {
 			return "Layout/Login";
 		}
 
+//		session Encounter
+		if (this.sessionTimecounter) {
+			session.setMaxInactiveInterval(10);
+
+			model.addAttribute("redirectScript",
+					"setTimeout(function(){ window.location.href = '/pbt/login'; }, 10000);");
+
+		}
 		int totalVehicle = 0;
 		int car = 0;
 		int bike = 0;
@@ -164,10 +174,6 @@ public class ServicesController {
 
 			return "Layout/Login";
 		}
-
-//		session Timeout		
-//		session.setAttribute("user", user);
-//		session.setMaxInactiveInterval(10);
 
 //		count vehicle
 		int totalVehicle = 0;
@@ -303,6 +309,8 @@ public class ServicesController {
 					session.setAttribute("mes",
 							new MessageMaster("Parking Booking Ticketing System Applied Succesfully", "alert-success"));
 
+					this.sessionTimecounter = true;
+
 					return "redirect:/pbt/systemdashboard";
 				}
 			} else {
@@ -411,27 +419,6 @@ public class ServicesController {
 
 			return "pages/Dashboard/SuccessFile";
 		}
-	}
-
-//	user list
-	@GetMapping("/userlist")
-	public String getUsers(HttpSession session, Model model) {
-		User user = (User) session.getAttribute("user");
-		if (user == null) {
-
-			return "Layout/Login";
-		}
-
-		List<User> userinfo = this.userRepo.findAll();
-		if (userinfo != null) {
-			model.addAttribute("userlist", userinfo);
-			System.out.println("user list ");
-
-		} else {
-			System.out.println("User is not availabel ?");
-		}
-
-		return "pages/Dashboard/Userlist";
 	}
 
 //	get Payment history 

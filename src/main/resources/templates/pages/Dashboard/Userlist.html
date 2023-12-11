@@ -15,12 +15,23 @@
 	<script th:src="@{/js/script.js}"></script>
 
 
+	<style>
+		#messageHIDE {
+			display: none;
+		}
+	</style>
+
+
 
 </head>
 
 <body>
 	<!-- services list   -->
 	<div class="container mt-4">
+		<div id="messageHIDE" th:if="${session.del}" th:classappend="${session.del.typeofMessage}"
+				class="alert mb-2" role="alert">
+				<p th:text="${session.del.message}"></p>
+			</div>
 		<div class="row">
 			<div class="col-md-6">
 				<h3 class="mb-0">Customer list</h3>
@@ -32,6 +43,7 @@
 
 		<div class="card mt-2">
 			<div class="card-body">
+
 				<table style="width: 100%;">
 					<thead>
 						<tr>
@@ -40,6 +52,7 @@
 							<td>Email</td>
 							<td>Mobile</td>
 							<td>Gender</td>
+							<td>Role</td>
 							<td colspan="3" style="width: 8%; text-align: center;">Action</td>
 						</tr>
 					</thead>
@@ -50,8 +63,10 @@
 							<td th:text="${user.email}"></td>
 							<td th:text="${user.mobile}"></td>
 							<td th:text="${user.gender}"></td>
-							<td style="text-align: center;"><a><i class="fa fa-edit"></i></a></td>
-							<td style="text-align: center;"><a><i class="fa fa-trash"></i></a></td>
+							<td th:text="${user.userrolename}"></td>
+							<td style="text-align: center;"><a th:href="@{'/pbt/edituser/' + ${user.userID}}"><i class="fa fa-edit"></i></a></td>
+							<td style="text-align: center;"><a th:href="@{'/pbt/delete/' + ${user.userID}}"><i
+										class="fa fa-trash"></i></a></td>
 							<td style="text-align: center;"><a th:href="@{'/pbt/payments/' + ${user.userID}}"><i
 										class="fa fa-eye"></i></a></td>
 						</tr>
@@ -62,6 +77,19 @@
 
 
 	</div>
+	
+	<script>
+	
+		var duration = 2000; // 2 seconds
+			var messageElement = document.getElementById('messageHIDE');
+			messageElement.style.display = 'block';
+
+			setTimeout(function () {
+				messageElement.style.display = 'none';
+			}, duration);
+
+
+		</script>
 
 </body>
 
