@@ -34,9 +34,25 @@ public class Vehicle {
 	@OneToMany(mappedBy = "vehicle", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JsonIgnore
 	private List<ParkingLocation> parkAtParkingLocation = new LinkedList<ParkingLocation>();
+	
+	@OneToMany(mappedBy =  "vehicle", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<GoogleMap> setMap = new LinkedList<GoogleMap>();
 
 	public Vehicle() {
 		super();
+	}
+
+
+
+	public List<GoogleMap> getSetMap() {
+		return setMap;
+	}
+
+
+
+	public void setSetMap(List<GoogleMap> setMap) {
+		this.setMap = setMap;
 	}
 
 

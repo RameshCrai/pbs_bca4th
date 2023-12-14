@@ -33,7 +33,19 @@ public class Payment {
 	@JsonIgnore
 	private List<ParkingLocation> paidPayment = new LinkedList<ParkingLocation>();
 	
+	@OneToMany(mappedBy = "payment", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JsonIgnore
+	private List<GoogleMap> setmapforpark = new LinkedList<GoogleMap>();
+	
 
+
+	public List<GoogleMap> getSetmapforpark() {
+		return setmapforpark;
+	}
+
+	public void setSetmapforpark(List<GoogleMap> setmapforpark) {
+		this.setmapforpark = setmapforpark;
+	}
 
 	public Long getPaymentID() {
 		return paymentID;

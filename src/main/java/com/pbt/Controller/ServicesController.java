@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.pbt.Dao.GoogleMapRepository;
 import com.pbt.Dao.ParkinglocationRepository;
 import com.pbt.Dao.PaymentRepository;
 import com.pbt.Dao.ServiceofpbtRepository;
 import com.pbt.Dao.UserRepository;
 import com.pbt.Dao.VehicleRepository;
+import com.pbt.Entities.GoogleMap;
 import com.pbt.Entities.ParkingLocation;
 import com.pbt.Entities.Payment;
 import com.pbt.Entities.Services;
@@ -50,6 +52,9 @@ public class ServicesController {
 
 	@Autowired
 	private UserRepository userRepo;
+
+	@Autowired
+	private GoogleMapRepository GoogleRepo;
 
 	@Autowired
 	private EmailsenderService emailSend;
@@ -175,6 +180,15 @@ public class ServicesController {
 			return "Layout/Login";
 		}
 
+//		session Encounter
+		if (this.sessionTimecounter) {
+			session.setMaxInactiveInterval(10);
+
+			model.addAttribute("redirectScript",
+					"setTimeout(function(){ window.location.href = '/pbt/login'; }, 10000);");
+
+		}
+
 //		count vehicle
 		int totalVehicle = 0;
 		int car = 0;
@@ -268,8 +282,8 @@ public class ServicesController {
 	@PostMapping("/save_services")
 	@Transactional
 	public String saveServices(@Validated @ModelAttribute Services service, @ModelAttribute Vehicle vehicle,
-			@ModelAttribute ParkingLocation plocation, @ModelAttribute Payment payment, HttpSession session,
-			Model model) {
+			@ModelAttribute ParkingLocation plocation, @ModelAttribute Payment payment,
+			@ModelAttribute GoogleMap googleMap, HttpSession session, Model model) {
 
 		try {
 			User user = (User) session.getAttribute("user");
@@ -294,6 +308,12 @@ public class ServicesController {
 					payment.getPaidPayment().add(plocation);
 					plocation.setPayment(payment);
 
+					payment.getSetmapforpark().add(googleMap);
+					googleMap.setPayment(payment);
+
+					vehicle.getSetMap().add(googleMap);
+					googleMap.setVehicle(vehicle);
+
 					vehicle.getParkAtParkingLocation().add(plocation);
 					plocation.setVehicle(vehicle);
 
@@ -302,6 +322,8 @@ public class ServicesController {
 
 					this.paymentRepo.save(payment);
 					this.parkinglocationRepo.save(plocation);
+
+					this.GoogleRepo.save(googleMap);
 
 					this.emailSend.sendEmail(email, "PBTS service ",
 							"pbts service have been verified " + service.getServiceType());
@@ -331,8 +353,8 @@ public class ServicesController {
 	@PostMapping("/normal_save_services")
 	@Transactional
 	public String saveNormalServices(@Validated @ModelAttribute Services service, @ModelAttribute Vehicle vehicle,
-			@ModelAttribute ParkingLocation plocation, @ModelAttribute Payment payment, HttpSession session,
-			Model model) {
+			@ModelAttribute ParkingLocation plocation, @ModelAttribute Payment payment,
+			@ModelAttribute GoogleMap googleMap, HttpSession session, Model model) {
 
 		try {
 			User user = (User) session.getAttribute("user");
@@ -357,6 +379,12 @@ public class ServicesController {
 					payment.getPaidPayment().add(plocation);
 					plocation.setPayment(payment);
 
+					payment.getSetmapforpark().add(googleMap);
+					googleMap.setPayment(payment);
+
+					vehicle.getSetMap().add(googleMap);
+					googleMap.setVehicle(vehicle);
+
 					vehicle.getParkAtParkingLocation().add(plocation);
 					plocation.setVehicle(vehicle);
 
@@ -366,11 +394,15 @@ public class ServicesController {
 					this.paymentRepo.save(payment);
 					this.parkinglocationRepo.save(plocation);
 
+					this.GoogleRepo.save(googleMap);
+
 					this.emailSend.sendEmail(email, "PBTS service ",
 							"pbts service have been verified " + service.getServiceType());
 
 					session.setAttribute("mes",
 							new MessageMaster("Parking Booking Ticketing System Applied Succesfully", "alert-success"));
+
+					this.sessionTimecounter = true;
 
 					return "redirect:/pbt/normalDashboard";
 				}

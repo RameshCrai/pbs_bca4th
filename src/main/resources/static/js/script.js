@@ -12,13 +12,11 @@ function AutomaticText() {
 
 }
 
+var navWidth = "0px"; // Initial width
 function openNav() {
-	document.getElementById('mySidenav').style.width = "200px";
-}
-
-
-function closeNav() {
-	document.getElementById('mySidenav').style.width = "0px";
+	var sidenav = document.getElementById('mySidenav');
+	navWidth = (navWidth === "0px") ? "200px" : "0px";
+	sidenav.style.width = navWidth;
 }
 
 
@@ -30,20 +28,21 @@ function Showmenu() {
 	document.getElementById('pbt').style.display = 'none';
 
 }
+
+
 function showDashboard() {
 	document.getElementById('dashboard').style.display = 'block';
 	document.getElementById('services').style.display = 'none';
 	document.getElementById('profile').style.display = 'none';
-	document.getElementById('servicelist').style.display = 'none';
+	//document.getElementById('servicelist').style.display = 'none';
 
 }
 
-function showProfile() {
+function showProfileadmin() {
 	document.getElementById('profile').style.display = 'block';
 	document.getElementById('services').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'none';
-	document.getElementById('servicelist').style.display = 'none';
-
+	//document.getElementById('servicelist').style.display = 'none';
 
 }
 
@@ -59,7 +58,7 @@ function showService1() {
 	document.getElementById('officiald').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'none';
 	document.getElementById('profile').style.display = 'none';
-	document.getElementById('servicelist').style.display = 'none';
+	//document.getElementById('servicelist').style.display = 'none';
 
 
 
@@ -72,7 +71,7 @@ function showService2() {
 	document.getElementById('officiald').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'none';
 	document.getElementById('profile').style.display = 'none';
-	document.getElementById('servicelist').style.display = 'none';
+	//document.getElementById('servicelist').style.display = 'none';
 
 
 }
@@ -83,7 +82,7 @@ function showService3() {
 	document.getElementById('paytoparkd').style.display = 'none';
 	document.getElementById('dashboard').style.display = 'none';
 	document.getElementById('profile').style.display = 'none';
-	document.getElementById('servicelist').style.display = 'none';
+	//document.getElementById('servicelist').style.display = 'none';
 
 }
 

@@ -279,7 +279,7 @@ public class LoginController {
 			}
 		}
 
-		return "Layout/Login";
+		return "redirect:/pbt/login";
 	}
 
 //	user list

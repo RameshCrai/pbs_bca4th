@@ -119,7 +119,7 @@ span {
 }
 
 @media (max-width: 860px) {
-	.main{
+	.main {
 		height: 1550px;
 		overflow: hidden;
 		overflow: auto;
@@ -172,7 +172,7 @@ span {
 	margin-top: 80px;
 	position: absolute;
 	width: 100%;
-	z-index: 1;
+	z-index: 2;
 
 }
 
@@ -181,8 +181,8 @@ span {
 	width: 13%;
 	position: fixed;
 	overflow: hidden;
-	padding-top: 60px;
-	top: 0;
+	padding-top: 35px;
+	top: 50px;
 	left: 0;
 	z-index: 3;
 	background-image: linear-gradient(to top, #0f2027, #203a43, #2c5364);
@@ -199,7 +199,7 @@ span {
 }
 
 .sidenav a i {
-	padding-right:8px;
+	padding-right: 8px;
 }
 
 .sidenav a:hover {
@@ -208,7 +208,7 @@ span {
 
 .closeBtn {
 	position: absolute;
-	top: -4px;
+	top: 20px;
 	right: 10px;
 	font-size: 45px !important;
 }
@@ -217,4 +217,12 @@ span {
 	.brandlogo {
 		font-size: 1.8rem;
 	}
+
+	.sidenav {
+		height: 100%;
+		width: 0px;
+		z-index: 3;
+
+	}
+
 }
