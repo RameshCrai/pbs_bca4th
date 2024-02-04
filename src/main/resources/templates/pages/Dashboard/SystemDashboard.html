@@ -143,7 +143,6 @@
 			display: none;
 			font-size: large;
 		}
-
 	</style>
 
 
@@ -621,7 +620,8 @@
 														<div class="step-item">
 															<button id="step-3-button"
 																class="btn btn-outline-primary text-center"
-																style="color: #0f2027;" type="button">
+																style="color: #0f2027;" type="button"
+																onclick="onValidVehicle()">
 																Next
 															</button>
 														</div>
@@ -1146,6 +1146,36 @@
 				}
 				return true;
 
+			}
+
+
+
+			function onValidVehicle() {
+				let vname = document.getElementById("vehiclename").value.trim();
+				if (vname === '') {
+					alert("Vehicle is Empty ?");
+					return false;
+				}
+
+				let model = document.getElementById("modal").value.trim();
+				if (model === '') {
+					alert("Model is Empty ?");
+					return false;
+				}
+
+				let plate = document.getElementById("platnumber").value.trim();
+				if (plate === '') {
+					alert("Plate Number is Empty ?");
+					return false;
+				}
+
+				let license = document.getElementById("licensenumber").value.trim();
+				if (license === '') {
+					alert("License Number is Empty ?");
+					return false;
+				}
+
+			
 			}
 
 

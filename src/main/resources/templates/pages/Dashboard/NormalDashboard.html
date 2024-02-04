@@ -620,7 +620,7 @@
 																<button id="step-3-button"
 																	class="btn btn-outline-primary text-center"
 																	style="color: #0f2027;" type="button"
-																	onclick="onService()">
+																	onclick="onValidVehicle()">
 																	Next
 																</button>
 															</div>
@@ -1279,7 +1279,7 @@
 				selectedDate.setDate(selectedDate.getDate() + 1); // Add 1 day to make it the end of the selected day
 
 				if (selectedDate <= currentDate) {
-					document.getElementById('exitdateError').innerHTML = 'ExitDate must be after Date from Today !';
+					document.getElementById('exitdateError').innerHTML = 'Exit Date must be Next OR Current Date from Today !';
 					document.getElementById('exitdateError').style.display = 'block'
 					return false;
 				}
@@ -1294,11 +1294,40 @@
 				let enterT = document.getElementById('entertime').value;
 
 				if (enterT === exitT) {
-					document.getElementById('exittimeError').innerHTML = 'Enter Time and Exit Time Canot be Equals ?';
+					document.getElementById('exittimeError').innerHTML = 'Enter Time and Exit Time Can not be Equals ?';
 					document.getElementById('exittimeError').style.display = 'block';
 					return false;
 				}
 				return true;
+
+			}
+
+
+			function onValidVehicle() {
+				let vname = document.getElementById("vehiclename").value.trim();
+				if (vname === '') {
+					alert("Vehicle is Empty ?");
+					return false;
+				}
+
+				let model = document.getElementById("modal").value.trim();
+				if (model === '') {
+					alert("Model is Empty ?");
+					return false;
+				}
+
+				let plate = document.getElementById("platnumber").value.trim();
+				if (plate === '') {
+					alert("Plate Number is Empty ?");
+					return false;
+				}
+
+				let license = document.getElementById("licensenumber").value.trim();
+				if (license === '') {
+					alert("License Number is Empty ?");
+					return false;
+				}
+
 
 			}
 
