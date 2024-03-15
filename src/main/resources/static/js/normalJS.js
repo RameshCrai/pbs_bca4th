@@ -44,9 +44,9 @@ function showService1() {
 	document.getElementById('normalservice').style.display = 'none';
 	document.getElementById('services').style.display = 'block';
 	document.getElementById('paytoparkd').style.display = 'block';
+		document.getElementById('dashboard').style.display = 'none';
 	document.getElementById('subscriptiond').style.display = 'none';
 	document.getElementById('officiald').style.display = 'none';
-	document.getElementById('dashboard').style.display = 'none';
 	document.getElementById('profile').style.display = 'none';
 	document.getElementById('servicelist').style.display = 'none';
 

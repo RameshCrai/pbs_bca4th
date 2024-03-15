@@ -2,148 +2,152 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	<link rel="preconnect" href="https://fonts.googleapis.com">
-	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Lobster&display=swap"
+	rel="stylesheet">
 
 
-	<title>System Dashboard</title>
-
-
-
-
-	<!-- Include other scripts or stylesheets -->
-	<script th:src="@{/js/script.js}"></script>
-
-	<!-- Add the following script to perform the redirection after a delay -->
-	<script th:utext="${redirectScript}"></script>
+<title>System Dashboard</title>
 
 
 
 
-	<style>
-		* {
-			margin: 0;
-			padding: 0;
-			box-sizing: border-box;
-			font-family: 'Lobster', cursive;
-			font-family: 'Ysabeau Office', sans-serif;
+<!-- Include other scripts or stylesheets -->
+<script th:src="@{/js/script.js}"></script>
 
-		}
-
-		.card-header {
-			background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
-			color: white;
-		}
-
-		.se {
-			background-image: linear-gradient(to bottom, #0f2027, #2c5364);
-			color: white;
-		}
-
-		.se:hover {
-			background-image: linear-gradient(to top, #0f2027, #2c5364);
-			cursor: pointer;
-			color: white;
-		}
+<!-- Add the following script to perform the redirection after a delay -->
+<script th:utext="${redirectScript}"></script>
 
 
-		.steps {
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			margin-bottom: 2rem;
-			position: relative;
-		}
 
-		.step-button {
-			width: 50px;
-			height: 50px;
-			border-radius: 50%;
-			border: none;
-			background-color: var(--prm-gray);
-			transition: .4s;
-		}
 
-		.step-button[aria-expanded="true"] {
-			width: 60px;
-			height: 60px;
-			background-color: var(--prm-color);
-			color: #fff;
-		}
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Lobster', cursive;
+	font-family: 'Ysabeau Office', sans-serif;
+}
 
-		.done {
-			background-color: var(--prm-color);
-			color: #fff;
-		}
+.card-header {
+	background-image: linear-gradient(to bottom, #0f2027, #203a43, #2c5364);
+	color: white;
+}
 
-		.step-item {
-			z-index: 10;
-			text-align: center;
-		}
+.se {
+	background-image: linear-gradient(to bottom, #0f2027, #2c5364);
+	color: white;
+}
 
-		#progress {
-			-webkit-appearance: none;
-			position: absolute;
-			width: 100%;
-			z-index: 5;
-			height: 10px;
-			margin-left: 18px;
-			margin-bottom: 18px;
-		}
+.se:hover {
+	background-image: linear-gradient(to top, #0f2027, #2c5364);
+	cursor: pointer;
+	color: white;
+}
 
-		/* to customize progress bar */
-		#progress::-webkit-progress-value {
-			background-color: var(--prm-color);
-			transition: .5s ease;
-		}
+.steps {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 2rem;
+	position: relative;
+}
 
-		#progress::-webkit-progress-bar {
-			background-color: var(--prm-gray);
+.step-button {
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	border: none;
+	background-color: var(--prm-gray);
+	transition: .4s;
+}
 
-		}
+.step-button[aria-expanded="true"] {
+	width: 60px;
+	height: 60px;
+	background-color: var(--prm-color);
+	color: #fff;
+}
 
-		.mb {
-			margin-bottom: 110px;
-		}
+.done {
+	background-color: var(--prm-color);
+	color: #fff;
+}
 
-		.input-group-text {
-			width: 40px;
-		}
+.step-item {
+	z-index: 10;
+	text-align: center;
+}
 
-		#messageHIDE {
-			display: none;
-		}
+#progress {
+	-webkit-appearance: none;
+	position: absolute;
+	width: 100%;
+	z-index: 5;
+	height: 10px;
+	margin-left: 18px;
+	margin-bottom: 18px;
+}
 
-		#profile {
-			display: none;
-		}
+/* to customize progress bar */
+#progress::-webkit-progress-value {
+	background-color: var(--prm-color);
+	transition: .5s ease;
+}
 
-		#services {
-			display: none;
-		}
+#progress::-webkit-progress-bar {
+	background-color: var(--prm-gray);
+}
 
-		#paytoparkd {
-			display: none;
-			color: #0f2027;
-		}
+.mb {
+	margin-bottom: 110px;
+}
 
-		#subscriptiond {
-			display: none;
-		}
+.input-group-text {
+	width: 40px;
+}
 
-		#officiald {
-			display: none;
-		}
+#messageHIDE {
+	display: none;
+}
 
-		.error {
-			color: red;
-			display: none;
-			font-size: large;
-		}
-	</style>
+#dashboard {
+	display: block;
+}
+
+#profile {
+	display: none;
+}
+
+#services {
+	display: none;
+}
+
+#paytoparkd {
+	display: none;
+	color: #0f2027;
+}
+
+#subscriptiond {
+	display: none;
+}
+
+#officiald {
+	display: none;
+}
+
+.error {
+	color: red;
+	display: none;
+	font-size: large;
+}
+</style>
 
 
 
@@ -154,9 +158,7 @@
 <body>
 	<header>
 		<div class="tophead">
-			<div class="brandlogo">
-				PBTS-!
-			</div>
+			<div class="brandlogo">PBTS-!</div>
 			<div>
 				<span class="menulines" onclick="openNav()">&#9776;</span>
 			</div>
@@ -166,36 +168,29 @@
 	<div class="sidenav" id="mySidenav">
 
 		<a href="#" style="text-align: center;">
-			<div th:each="fileName : ${imgProfile}" class="container-fluid text-center">
+			<div th:each="fileName : ${imgProfile}"
+				class="container-fluid text-center">
 				<img th:src="@{'/profile/' + ${fileName}}" alt="Profile Image"
 					style="max-width: 100px; max-height: 100px; border-radius: 50%;" />
 			</div>
 			<figcaption>
-				<h6>Account : <b><span style="color: white;" th:text="${user.userrolename}"
-							th:if="${user != null}"></span></b>
-					<br>
-					<b><span style="color: white;" th:text="${user.fname}" th:if="${user != null}"></span>
-						<span style="color: white" th:text="${user.lname}" th:if="${user != null}"></span></b>
+				<h6>
+					Account : <b><span style="color: white;"
+						th:text="${user.userrolename}" th:if="${user != null}"></span></b> <br>
+					<b><span style="color: white;" th:text="${user.fname}"
+						th:if="${user != null}"></span> <span style="color: white"
+						th:text="${user.lname}" th:if="${user != null}"></span></b>
 				</h6>
 			</figcaption>
+		</a> <a href="#" onclick="showDashboard()"> <i
+			class="fa fa-tachometer"></i>Dashboard
+		</a> <a href="#" onclick="showProfileadmin()"> <i class="fa fa-user"></i>Profile
+		</a> <a href="#" onclick="showService1()"> <i class="fa fa-wrench"></i>Services
+		</a> <a href="/pbt/userlist"> <i class="fa fa-user"></i>User List
+		</a> <a href="/pbt/fetch_services_details" target="_parent"> <i
+			class="fa fa-line-chart"></i>Analytics
 		</a>
-
-		<a href="#" onclick="showDashboard()">
-			<i class="fa fa-tachometer"></i>Dashboard
-		</a>
-		<a href="#" onclick="showProfileadmin()">
-			<i class="fa fa-user"></i>Profile
-		</a>
-		<a href="#" onclick="showService1()">
-			<i class="fa fa-wrench"></i>Services
-		</a>
-		<a href="/pbt/userlist">
-			<i class="fa fa-user"></i>User List
-		</a>
-		<a href="/pbt/fetch_services_details" target="_parent">
-			<i class="fa fa-line-chart"></i>Analytics
-		</a>
-		<a href="/pbt/listofstate">
+		<!--	<a href="/pbt/listofstate">
 			<i class="fa fa-city"></i>Nepal State
 		</a>
 
@@ -203,10 +198,9 @@
 		<a href="#">
 			<i class="fa fa-bell"></i>Notification
 		</a>
+      -->
 
-
-		<a href="/pbt/logout">
-			<i class="fa fa-sign-out"></i>Logout
+		<a href="/pbt/logout"> <i class="fa fa-sign-out"></i>Logout
 		</a>
 	</div>
 
@@ -214,58 +208,68 @@
 
 		<!-- Dashboard -->
 		<div class="container mt-4" id="dashboard">
-			<div id="messageHIDE" th:if="${session.mes}" th:classappend="${session.mes.typeofMessage}"
-				class="alert mb-2" role="alert">
+			<div id="messageHIDE" th:if="${session.mes}"
+				th:classappend="${session.mes.typeofMessage}" class="alert mb-2"
+				role="alert">
 				<p th:text="${session.mes.message}"></p>
 			</div>
 
 
 			<div class="row">
 				<div class="col-md-12 text-center">
-					<h1>Welcome ! Parking Booking Ticketing System <strong id="Time"></strong></h1>
+					<h1>
+						Welcome ! Parking Booking Ticketing System <strong id="Time"></strong>
+					</h1>
 					<hr>
-					<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
-						Parking Service is overloaded. Please try again later.
-					</div>
+					<div th:if="${totalVehicle > 20}" class="alert alert-warning"
+						role="alert">Parking Service is overloaded. Please try again
+						later.</div>
 
 					<div class="row" th:if="${totalVehicle < 20}">
 						<div class="col-md-12">
-							<h5>Total Parking Capacity : <span
+							<h5>
+								Total Parking Capacity : <span
 									style="font-size: large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
 							</h5>
-							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b> &nbsp;
-							<b>BIKE: <span th:text="${bike}" th:if="${bike !=null}"></span></b>&nbsp;
-							<b style="color: red;">Available : <span th:text="${available}"
-									th:if="${available !=null}"></span> only</b>
+							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b>
+							&nbsp; <b>BIKE: <span th:text="${bike}"
+								th:if="${bike !=null}"></span></b>&nbsp; <b style="color: red;">Available
+								: <span th:text="${available}" th:if="${available !=null}"></span>
+								only
+							</b>
 						</div>
 					</div>
 				</div>
-			</div><br>
+			</div>
+			<br>
 
 
 
-			<div class="row mt-4 mb-4">
+			<div class="row mt-6 mb-4">
+				<div class="col-md-4"></div>
 				<div class="col-md-4  text-center">
 					<div class="card" style="background-color: #ccdef0">
 						<div class="card-body">
 							<article onclick="showService1()">
-								PAYTOPARK
+								Buy Ticket <br>
 							</article>
-							<p>Hourly Package !</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4  text-center">
+				<div class="col-md-4"></div>
+				<!--
+				<div class="col-md-6  text-center">
 					<div class="card" style="background-color: #a8b1ba">
 						<div class="card-body">
 							<article onclick="showService2()">
-								SUBSCRIPTION
+								SUBSCRIPTION <br>
+								Minimum 1 week
 							</article>
 							<p>Monthly Package !</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+			 	<div class="col-md-4">
 					<div class="card" style="background-color: #888fc2">
 						<div class="card-body">
 							<div class="container-fluid text-center">
@@ -276,30 +280,32 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div>  -->
 			</div>
-
 		</div>
 
 
 		<!-- Services -->
 
 		<div class="container mt-4 mb" id="services">
-			<div th:if="${totalVehicle > 20}" class="alert alert-warning" role="alert">
-				Parking Service is overloaded. Please try again later.
-			</div>
+			<div th:if="${totalVehicle > 20}" class="alert alert-warning"
+				role="alert">Parking Service is overloaded. Please try again
+				later.</div>
 
 			<div th:if="${totalVehicle < 20}">
 				<div class="container-fluid text-center mb-2">
 					<div class="card">
 						<div class="card-body">
-							<h4>Total Parking Capacity : <span
+							<h4>
+								Total Parking Capacity : <span
 									style="font-size: xx-large; color: honeydew; background-color: #0f2027; border-radius: 50%; padding: 5px;">20</span>
 							</h4>
-							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b> &nbsp;
-							<b>BIKE: <span th:text="${bike}" th:if="${bike !=null}"></span></b>&nbsp;
-							<b style="color: red;">Available : <span th:text="${available}"
-									th:if="${available !=null}"></span> only</b>
+							<b>CAR : <span th:text="${car}" th:if="${car !=null}"></span></b>
+							&nbsp; <b>BIKE: <span th:text="${bike}"
+								th:if="${bike !=null}"></span></b>&nbsp; <b style="color: red;">Available
+								: <span th:text="${available}" th:if="${available !=null}"></span>
+								only
+							</b>
 						</div>
 					</div>
 				</div>
@@ -308,8 +314,8 @@
 			<div class="row">
 				<div class="col-md-6">
 					<h3 class="mb-0" id="paytoparkd">PayToPark Package !</h3>
-					<h3 class="mb-0" id="subscriptiond">Subscription Package !</h3>
-					<h3 class="mb-0" id="officiald">Official Package !</h3>
+					<!--<h3 class="mb-0" id="subscriptiond">Subscription Package !</h3>
+					 <h3 class="mb-0" id="officiald">Official Package !</h3> -->
 				</div>
 				<div class="col-md-6 text-right">
 					<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
@@ -321,9 +327,10 @@
 					<div class="card">
 						<div class="card-body">
 							<div class="progress">
-								<div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
-									role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"
-									style="width: 20%"></div>
+								<div id="progress-bar"
+									class="progress-bar progress-bar-striped progress-bar-animated"
+									role="progressbar" aria-valuenow="0" aria-valuemin="0"
+									aria-valuemax="100" style="width: 20%"></div>
 							</div>
 
 							<form th:action="@{/pbt/save_services}" method="post">
@@ -332,15 +339,17 @@
 
 
 									<div class="card">
-										<div id="headingOne">
-										</div>
+										<div id="headingOne"></div>
 
-										<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+										<div id="collapseOne" class="collapse show"
+											aria-labelledby="headingOne"
 											data-bs-parent="#accordionExample">
 											<div class="card-body">
 												<div class="row">
-													<div "col-md-12">
-														<h3 class="mb-0"><b><u>Services</u></b></h3>
+													<div"col-md-12">
+														<h3 class="mb-0">
+															<b><u>Services</u></b>
+														</h3>
 													</div>
 												</div>
 
@@ -353,19 +362,18 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-wrench"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-wrench"></i>
 																		</span>
 																	</div>
-																	<select type="text" name="serviceType"
-																		id="servicetype" class="form-control">
+																	<select type="text" name="serviceType" id="servicetype"
+																		class="form-control">
 																		<option value="" hidden>Select type of
-																			services
-																		</option>
+																			service</option>
 																		<option value="paytopark">PayToPark</option>
-																		<option value="official">Official</option>
+																		<!-- <option value="official">Official</option>
 																		<option value="subscription">Subscription
-																		</option>
+																		</option> -->
 																	</select>
 																</div>
 															</div>
@@ -379,8 +387,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-calendar"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-calendar"></i>
 																		</span>
 																	</div>
 																	<input type="date" name="enterDate" id="enterdate"
@@ -399,13 +407,12 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-calendar"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-calendar"></i>
 																		</span>
 																	</div>
 																	<input type="date" name="exitDate" id="exitdate"
-																		oninput="onValidService()"
-																		class="form-control" />
+																		oninput="onValidService()" class="form-control" />
 																</div>
 																<span id="exitdateError" class="error"></span>
 															</div>
@@ -419,8 +426,8 @@
 															<div class="col-md-4">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-clock"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-clock"></i>
 																		</span>
 																	</div>
 																	<input type="time" name="enterTime" id="entertime"
@@ -433,8 +440,8 @@
 															<div class="col-md-4">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-clock"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-clock"></i>
 																		</span>
 																	</div>
 																	<input type="time" name="exitTime" id="exittime"
@@ -451,9 +458,7 @@
 													<div class="step-item">
 														<button id="step-2-button"
 															class="btn btn-outline-primary text-center"
-															style="color: #0f2027;" type="button">
-															Next
-														</button>
+															style="color: #0f2027;" type="button">Next</button>
 													</div>
 												</div>
 											</div>
@@ -461,15 +466,16 @@
 									</div>
 
 									<div class="card">
-										<div id="headingTwo">
-
-										</div>
-										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+										<div id="headingTwo"></div>
+										<div id="collapseTwo" class="collapse"
+											aria-labelledby="headingTwo"
 											data-bs-parent="#accordionExample">
 											<div class="card-body">
 												<div class="row">
-													<div "col-md-12">
-														<h3 class="mb-0"><b><u>Vehicle</u></b></h3>
+													<div"col-md-12">
+														<h3 class="mb-0">
+															<b><u>Vehicle</u></b>
+														</h3>
 													</div>
 												</div>
 												<div class="row">
@@ -482,14 +488,13 @@
 
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-car"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-car"></i>
 																		</span>
 																	</div>
-																	<select type="text" name="vehicleType"
-																		id="vehicletype" class="form-control">
-																		<option value="">Select type of Vehicle
-																		</option>
+																	<select type="text" name="vehicleType" id="vehicletype"
+																		class="form-control">
+																		<option value="">Select type of Vehicle</option>
 																		<option value="car">CAR</option>
 																		<option value="bike">BIKE</option>
 																		</option>
@@ -506,13 +511,12 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-car"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-car"></i>
 																		</span>
 																	</div>
-																	<input type="text" name="vehicleName"
-																		id="vehiclename" class="form-control"
-																		placeholder="Vehicle Name" />
+																	<input type="text" name="vehicleName" id="vehiclename"
+																		class="form-control" placeholder="Vehicle Name" />
 																</div>
 																<span id="vehiclenameError" class="error"></span>
 															</div>
@@ -530,12 +534,12 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-copy"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-copy"></i>
 																		</span>
 																	</div>
 																	<input type="text" name="model" class="form-control"
-																		id="modal" placeholder="Model" />
+																		id="modal" placeholder="Model X" />
 																</div>
 																<span id="modelError" class="error"></span>
 															</div>
@@ -549,21 +553,21 @@
 															<div class="col-md-5">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-sort-numeric-asc"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-sort-numeric-asc"></i>
 																		</span>
 																	</div>
 																	<input type="number" name="numberofVehicle"
 																		id="numberofvehicle" class="form-control"
-																		placeholder="eg:2" />
+																		placeholder="eg:1" />
 																</div>
 																<span id="numberError" class="error"></span>
 															</div>
 															<div class="col-md-4">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-copy"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-copy"></i>
 																		</span>
 																	</div>
 																	<input type="text" name="color" class="form-control"
@@ -582,13 +586,13 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-id-card"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-id-card"></i>
 																		</span>
 																	</div>
-																	<input type="text" name="plateNumber"
-																		id="platnumber" class="form-control"
-																		placeholder=" Plate Number" />
+																	<input type="text" name="plateNumber" id="platnumber"
+																		class="form-control"
+																		placeholder="Eg:-PROVINCE X AB 0123" />
 																</div>
 															</div>
 														</div>
@@ -596,18 +600,17 @@
 													<div class="col-md-6">
 														<div class="row">
 															<div class="col-md-3">
-																<label for="color">License Number
-																</label>
+																<label for="color">License Number </label>
 															</div>
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-pencil"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-pencil"></i>
 																		</span>
 																	</div>
 																	<input type="text" name="licenceNumber"
-																		id="licensenumber" placeholder="Licence Number"
+																		id="licensenumber" placeholder="Eg:-LC 01-01-00012345"
 																		class="form-control" />
 																</div>
 																<span id="licenseError" class="error"></span>
@@ -621,9 +624,7 @@
 															<button id="step-3-button"
 																class="btn btn-outline-primary text-center"
 																style="color: #0f2027;" type="button"
-																onclick="onValidVehicle()">
-																Next
-															</button>
+																onclick="onValidVehicle()">Next</button>
 														</div>
 													</div>
 												</div>
@@ -635,10 +636,9 @@
 
 
 									<div class="card">
-										<div id="headingThree">
-
-										</div>
-										<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+										<div id="headingThree"></div>
+										<div id="collapseThree" class="collapse"
+											aria-labelledby="headingThree"
 											data-bs-parent="#accordionExample">
 											<div class="card-body">
 												<!--	<div class="row mb-4">
@@ -687,8 +687,10 @@
 													</div>
 												</div> -->
 												<div class="row">
-													<div "col-md-12">
-														<h3 class="mb-0"><b><u>Parking Location</u></b></h3>
+													<div"col-md-12">
+														<h3 class="mb-0">
+															<b><u>Parking Location</u></b>
+														</h3>
 													</div>
 												</div>
 
@@ -701,14 +703,12 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-map"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-map"></i>
 																		</span>
 																	</div>
-																	<select id="state" name="state"
-																		class="form-control">
-																		<option value="" hidden>Select State
-																		</option>
+																	<select id="state" name="state" class="form-control">
+																		<option value="" hidden>Select State</option>
 																		<option value="Koshi">Koshi</option>
 																		<option value="Madesh">Madesh</option>
 																		<option value="Bagmati">Bagmati</option>
@@ -717,9 +717,7 @@
 																			Pradesh</option>
 																		<option value="Karnali Pradesh">Karnali
 																			Pradesh</option>
-																		<option value="Sudurpashchim">
-																			Sudurpashchim
-																		</option>
+																		<option value="Sudurpashchim">Sudurpashchim</option>
 																	</select>
 
 
@@ -735,8 +733,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-area-chart"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-area-chart"></i>
 																		</span>
 																	</div>
 																	<input type="text" name="district" id="district"
@@ -756,8 +754,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-building"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-building"></i>
 																		</span>
 																	</div>
 																	<input type="text" placeholder="Municipality"
@@ -775,8 +773,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-city"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-city"></i>
 																		</span>
 																	</div>
 																	<input type="text" placeholder="city" id="city"
@@ -795,8 +793,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-road"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-road"></i>
 																		</span>
 																	</div>
 																	<input type="text" name="street" id="street"
@@ -813,8 +811,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-map-marker"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-map-marker"></i>
 																		</span>
 																	</div>
 																	<input type="text" name="spot" id="spot"
@@ -830,9 +828,7 @@
 															<button id="step-4-button"
 																class="btn btn-outline-primary text-center"
 																style="color: #0f2027;" type="button"
-																onclick="onPaymentService()">
-																Next
-															</button>
+																onclick="onPaymentService()">Next</button>
 														</div>
 													</div>
 												</div>
@@ -842,14 +838,16 @@
 
 
 									<div class="card">
-										<div id="headingFour">
-										</div>
-										<div id="collapseFour" class="collapse" aria-labelledby="headingThree"
+										<div id="headingFour"></div>
+										<div id="collapseFour" class="collapse"
+											aria-labelledby="headingThree"
 											data-bs-parent="#accordionExample">
 											<div class="card-body">
 												<div class="row">
-													<div "col-md-12">
-														<h3 class="mb-0"><b><u>Payment</u></b></h3>
+													<div"col-md-12">
+														<h3 class="mb-0">
+															<b><u>Payment</u></b>
+														</h3>
 													</div>
 												</div>
 												<div class="row">
@@ -861,8 +859,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-clock"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-clock"></i>
 																		</span>
 																	</div>
 																	<input type="text" name="duration" id="duration"
@@ -879,8 +877,8 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-sort-amount-asc"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-sort-amount-asc"></i>
 																		</span>
 																	</div>
 																	<input type="text" class="form-control" id="cost"
@@ -899,12 +897,12 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fa fa-sort-amount-asc"></i>
+																		<span class="input-group-text"> <i
+																			class="fa fa-sort-amount-asc"></i>
 																		</span>
 																	</div>
-																	<input type="text" class="form-control"
-																		name="amount" placeholder="amount" id="amount">
+																	<input type="text" class="form-control" name="amount"
+																		placeholder="amount" id="amount">
 																</div>
 															</div>
 														</div>
@@ -917,13 +915,12 @@
 															<div class="col-md-9">
 																<div class="form-group input-group mb-0">
 																	<div class="input-group-prepend">
-																		<span class="input-group-text">
-																			<i class="fas fa-calendar"></i>
+																		<span class="input-group-text"> <i
+																			class="fas fa-calendar"></i>
 																		</span>
 																	</div>
-																	<input type="date" name="paymentDate"
-																		id="paymentdate" class="form-control"
-																		oninput="onSubmitPaymentdate()"
+																	<input type="date" name="paymentDate" id="paymentdate"
+																		class="form-control" oninput="onSubmitPaymentdate()"
 																		placeholder="Duration" />
 																</div>
 																<span id="paymentdateError" class="error"></span>
@@ -946,28 +943,28 @@
 
 								<div class="steps mt-2">
 									<div class="step-item">
-										<button id="step-1-button" class="btn btn-outline-primary text-center"
-											style="color: #0f2027;" type="button">
-											1
-										</button>
+										<button id="step-1-button"
+											class="btn btn-outline-primary text-center"
+											style="color: #0f2027;" type="button">1</button>
 									</div>
 
 									<div class="step-item">
-										<button id="step-2-button" class="btn btn-outline-primary text-center"
+										<button id="step-2-button"
+											class="btn btn-outline-primary text-center"
 											style="color: #0f2027; display: inline;" type="button">2
 										</button>
 									</div>
 
 									<div class="step-item">
-										<button id="step-3-button" class="btn btn-outline-primary text-center"
-											style="color: #0f2027;" type="button">3
-										</button>
+										<button id="step-3-button"
+											class="btn btn-outline-primary text-center"
+											style="color: #0f2027;" type="button">3</button>
 
 									</div>
 									<div class="step-item">
-										<button id="step-4-button" class="btn btn-outline-primary text-center"
-											style="color: #0f2027;" type="button">4
-										</button>
+										<button id="step-4-button"
+											class="btn btn-outline-primary text-center"
+											style="color: #0f2027;" type="button">4</button>
 									</div>
 								</div>
 
@@ -1005,7 +1002,8 @@
 							<div class="card">
 								<div class="card-body">
 
-									<div th:each="fileName : ${imgProfile}" class="container-fluid text-center">
+									<div th:each="fileName : ${imgProfile}"
+										class="container-fluid text-center">
 										<img th:src="@{'/profile/' + ${fileName}}" alt="Profile Image"
 											style="max-width: 100px; max-height: 100px; border-radius: 50%;" />
 									</div>
@@ -1019,26 +1017,34 @@
 								<div class="card-body">
 									<div class="row">
 										<div class="col-md-6">
-											<h6>FullName : <b><span style="color: black;" th:text="${user.fname}"
-														th:if="${user != null}"></span> <span style="color: black;"
-														th:text="${user.lname}" th:if="${user != null}"></span></b>
+											<h6>
+												FullName : <b><span style="color: black;"
+													th:text="${user.fname}" th:if="${user != null}"></span> <span
+													style="color: black;" th:text="${user.lname}"
+													th:if="${user != null}"></span></b>
 											</h6>
-											<h6>Email : <b><span style="color: black;" th:text="${user.email}"
-														th:if="${user != null}"></span></b></h6>
-											<h6>Mobile : <b><span style="color: black;" th:text="${user.mobile}"
-														th:if="${user != null}"></span></b>
+											<h6>
+												Email : <b><span style="color: black;"
+													th:text="${user.email}" th:if="${user != null}"></span></b>
+											</h6>
+											<h6>
+												Mobile : <b><span style="color: black;"
+													th:text="${user.mobile}" th:if="${user != null}"></span></b>
 											</h6>
 
 										</div>
 										<div class="col-md-6">
-											<h6>Agreement : <b><span style="color: black;" th:text="${user.agreement}"
-														th:if="${user != null}"></span></b>
+											<h6>
+												Agreement : <b><span style="color: black;"
+													th:text="${user.agreement}" th:if="${user != null}"></span></b>
 											</h6>
-											<h6>Date of Birth : <b><span style="color: black;" th:text="${user.dob}"
-														th:if="${user != null}"></span></b>
+											<h6>
+												Date of Birth : <b><span style="color: black;"
+													th:text="${user.dob}" th:if="${user != null}"></span></b>
 											</h6>
-											<h6>UserRole : <b><span style="color: black;" th:text="${user.userrolename}"
-														th:if="${user != null}"></span></b>
+											<h6>
+												UserRole : <b><span style="color: black;"
+													th:text="${user.userrolename}" th:if="${user != null}"></span></b>
 											</h6>
 										</div>
 									</div>
@@ -1125,7 +1131,7 @@
 				selectedDate.setDate(selectedDate.getDate() + 1); // Add 1 day to make it the end of the selected day
 
 				if (selectedDate <= currentDate) {
-					document.getElementById('exitdateError').innerHTML = 'Exit Date must be Next OR Same Date from Today !';
+					document.getElementById('exitdateError').innerHTML = 'Exit Date must be Next Date OR Same Date from Today !';
 					document.getElementById('exitdateError').style.display = 'block'
 					return false;
 				}
@@ -1295,7 +1301,7 @@
 
 
 
-			var duration = 2000; // 2 seconds
+			var duration = 1000; // 2 seconds
 			var messageElement = document.getElementById('messageHIDE');
 			messageElement.style.display = 'block';
 

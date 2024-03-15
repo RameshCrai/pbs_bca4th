@@ -202,7 +202,7 @@
 		</a>
 
 		<a href="#" onclick="showServiceAnalysis()">
-			<i class="fa fa-line-chart"></i>Analytics
+			<i class="fa fa-line-chart"></i>Analysis
 		</a>
 
 
@@ -245,27 +245,30 @@
 
 
 			<div class="row mt-4 mb-4">
+			<div class="col-md-4"></div>
 				<div class="col-md-4  text-center">
 					<div class="card" style="background-color: #ccdef0">
 						<div class="card-body">
 							<article onclick="showService1()">
-								PAYTOPARK
+								Buy Ticket <br>
 							</article>
-							<p>Hourly Package !</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4  text-center">
+				<div class="col-md-4"></div>
+				<!--
+				<div class="col-md-6  text-center">
 					<div class="card" style="background-color: #a8b1ba">
 						<div class="card-body">
 							<article onclick="showService2()">
-								SUBSCRIPTION
+								SUBSCRIPTION <br>
+								Minimum 5 days
 							</article>
 							<p>Monthly Package !</p>
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
+			 <div class="col-md-4">
 					<div class="card" style="background-color: #888fc2">
 						<div class="card-body">
 							<div class="container-fluid text-center">
@@ -276,7 +279,7 @@
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 
@@ -305,8 +308,8 @@
 				<div class="row">
 					<div class="col-md-6">
 						<h3 class="mb-0" id="paytoparkd">PayToPark Package !</h3>
-						<h3 class="mb-0" id="subscriptiond">Subscription Package !</h3>
-						<h3 class="mb-0" id="officiald">Official Package !</h3>
+					<!-- 	<h3 class="mb-0" id="subscriptiond">Subscription Package !</h3>
+						<h3 class="mb-0" id="officiald">Official Package !</h3> > -->
 					</div>
 					<div class="col-md-6 text-right">
 						<h3 class="mb-0" onclick="showDashboard()">Dashboard</h3>
@@ -361,9 +364,9 @@
 																				services
 																			</option>
 																			<option value="paytopark">PayToPark</option>
-																			<option value="official">Official</option>
+																		<!-- 	<option value="official">Official</option>
 																			<option value="subscription">Subscription
-																			</option>
+																			</option> -->
 																		</select>
 																	</div>
 																</div>
@@ -535,7 +538,7 @@
 																		</div>
 																		<input type="text" name="model"
 																			class="form-control" id="modal"
-																			placeholder="Model" />
+																			placeholder="Model X" />
 																	</div>
 																</div>
 															</div>
@@ -554,7 +557,7 @@
 																		</div>
 																		<input type="number" name="numberofVehicle"
 																			id="numberofvehicle" class="form-control"
-																			placeholder="eg:2" />
+																			placeholder="eg:1" />
 																	</div>
 																</div>
 																<div class="col-md-4">
@@ -587,7 +590,7 @@
 																		</div>
 																		<input type="text" name="plateNumber"
 																			id="platnumber" class="form-control"
-																			placeholder=" Plate Number" />
+																			placeholder="Eg:-PROVINCE X AB 0123" />
 																	</div>
 																</div>
 															</div>
@@ -607,7 +610,7 @@
 																		</div>
 																		<input type="text" name="licenceNumber"
 																			id="licencenumber"
-																			placeholder="Licence Number"
+																			placeholder="Eg:-LC 01-01-00012345"
 																			class="form-control" />
 																	</div>
 																</div>

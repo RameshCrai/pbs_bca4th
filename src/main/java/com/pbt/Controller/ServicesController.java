@@ -99,12 +99,13 @@ public class ServicesController {
 
 //		session Encounter
 		if (this.sessionTimecounter) {
-			session.setMaxInactiveInterval(10);
+			session.setMaxInactiveInterval(600);
 
 			model.addAttribute("redirectScript",
-					"setTimeout(function(){ window.location.href = '/pbt/login'; }, 10000);");
+					"setTimeout(function(){ window.location.href = '/pbt/login'; }, 100000);");
 
 		}
+		
 		int totalVehicle = 0;
 		int car = 0;
 		int bike = 0;
@@ -182,10 +183,10 @@ public class ServicesController {
 
 //		session Encounter
 		if (this.sessionTimecounter) {
-			session.setMaxInactiveInterval(10);
+			session.setMaxInactiveInterval(600);
 
 			model.addAttribute("redirectScript",
-					"setTimeout(function(){ window.location.href = '/pbt/login'; }, 10000);");
+					"setTimeout(function(){ window.location.href = '/pbt/login'; }, 100000);");
 
 		}
 
@@ -324,9 +325,14 @@ public class ServicesController {
 					this.parkinglocationRepo.save(plocation);
 
 					this.GoogleRepo.save(googleMap);
+					
 
-					this.emailSend.sendEmail(email, "PBTS service ",
-							"pbts service have been verified " + service.getServiceType());
+					this.emailSend.sendEmail(email, 
+					"Parking Booking Ticketing System ",
+					"Parking Booking Successfully " +
+					" Enter Date  "+service.getEnterDate() 
+					+" to " + service.getExitDate()+ " Enter Time "+
+					service.getEnterTime() +" to " + service.getExitTime());
 
 					session.setAttribute("mes",
 							new MessageMaster("Parking Booking Ticketing System Applied Succesfully", "alert-success"));
@@ -396,8 +402,12 @@ public class ServicesController {
 
 					this.GoogleRepo.save(googleMap);
 
-					this.emailSend.sendEmail(email, "PBTS service ",
-							"pbts service have been verified " + service.getServiceType());
+					this.emailSend.sendEmail(email, 
+							"Parking Booking Ticketing System ",
+							"Parking Booking Successfully " +
+							" Enter Date  "+service.getEnterDate() 
+							+" to " + service.getExitDate()+ " Enter Time "+
+							service.getEnterTime() +" to " + service.getExitTime());
 
 					session.setAttribute("mes",
 							new MessageMaster("Parking Booking Ticketing System Applied Succesfully", "alert-success"));
