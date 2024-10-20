@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql_db_docker
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: pbts
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+
+  springboot:
+    container_name: pbt_springboot_project
+    build: ./springboot
+    environment:
+      SERVER_PORT: 8084
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DB: pbts
+      MYSQL_USER: root
+      MYSQL_PASSWORD: admin
+    ports:
+      - "8084:8085"
+    depends_on:
+      - mysql
+
+volumes:
+  mysql_data:
